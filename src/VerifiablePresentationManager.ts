@@ -131,12 +131,20 @@ export interface VerifiablePresentationManagerStatus {
  */
 export type DSRJSON = string;
 
+/**
+ * Abstract all complexity about the Verifiable Credentials handling by providing utility methods
+ * to access user verified data in a secure way unless the security behavior is explicit flexed.
+ *
+ * By Default the only check not performed is the blockchain anchor check that must be explicit enable
+ * by providing a verification plugin that can handle the verification in a async way.
+ */
 export class VerifiablePresentationManager {
 
     /**
      * @param options - Defines the global behavior and security of VerifiablePresentationManager
+     * @param verifyAnchor - An async function that is able to verify the presentation anchor in a public Blockchain
      */
-    constructor(options: VPMOptions) {
+    constructor(options: VPMOptions, verifyAnchor=null) {
 
     }
 
@@ -208,6 +216,16 @@ export class VerifiablePresentationManager {
      */
     // @ts-ignore
     async getClaimValue(availableClaim: AvailableClaim): Promise<string | null> {
+
+    }
+
+    //TODO complete documentation
+    async listEvidences() {
+
+    }
+
+    //TODO complete documentation
+    async getEvidenceValue() {
 
     }
 
