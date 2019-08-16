@@ -11,7 +11,7 @@
     "lint": "tslint -p tsconfig.json",
     "build": "tsc",
     "test": "jest --config jestconfig.json",
-    "docs": "typedoc --out docs src",
+    "docs": "typedoc --out docs src && touch docs/.nojekyll",
     "prepare": "npm run build",
     "prepublishOnly": "npm test && npm run lint",
     "preversion": "npm run lint",

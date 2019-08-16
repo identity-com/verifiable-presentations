@@ -126,6 +126,11 @@ export interface VerifiablePresentationManagerStatus {
     totalEvidences: number;
 }
 
+/**
+ * JSON contain a DSR
+ */
+export type DSRJSON = string;
+
 export class VerifiablePresentationManager {
 
     /**
@@ -182,7 +187,7 @@ export class VerifiablePresentationManager {
      *
      */
     // @ts-ignore
-    async listPresentationClaims(credentialIdentifier: ClaimIdentifier): Promise<Array<AvailableClaim>>{
+    async listPresentationClaims(presentationRef: PresentationReference): Promise<Array<AvailableClaim>>{
 
     };
 
@@ -208,6 +213,10 @@ export class VerifiablePresentationManager {
 
     // @ts-ignore
     async verifyAllArtifacts(): Promise<VerifiablePresentationManagerStatus> {
+
+    }
+
+    async wasGrantedForDSR(presentationRef: PresentationReference, originalRequestDSR: DSRJSON) {
 
     }
 
