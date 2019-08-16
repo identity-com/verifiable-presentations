@@ -216,6 +216,15 @@ export class VerifiablePresentationManager {
 
     }
 
+    /**
+     * Verify if an presentation was GRANTED for a specif DSR
+     *
+     * This will first verify that the DSR is valid and not tampered,
+     * them will verify if the presentation was shared with user consent and signatures
+     *
+     * @param presentationRef the managed presentation to verify
+     * @param originalRequestDSR the original Dynamic Scope Request that receive the presentation as result
+     */
     async wasGrantedForDSR(presentationRef: PresentationReference, originalRequestDSR: DSRJSON) {
 
     }
