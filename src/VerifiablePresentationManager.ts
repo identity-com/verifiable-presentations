@@ -5,27 +5,27 @@ export interface VPMOptions {
     /**
      * disable the verification when adding new items to manager control
      */
-    skipAddVerify: boolean;
+    skipAddVerify?: boolean;
     /**
      * disable the verification when getting managed values. default, false.
      */
-    skipGetVerify: boolean;
+    skipGetVerify?: boolean;
     /**
      * Allow to get values if both verifications are disabled. default, false.
      */
-    allowGetUnverified: boolean;
+    allowGetUnverified?: boolean;
     /**
      * Allow to list managed content if both verifications are disabled. default, false.
      */
-    allowListUnverified: boolean;
+    allowListUnverified?: boolean;
     /**
      * Allow usage os the mock API and to return mocked unverified values. default, false.
      */
-    allowMocks: boolean
+    allowMocks?: boolean
     /**
      *  Avoid to throw exceptions. Useful for batch operation but is not a good practice. default, false.
      */
-    notThrow: boolean
+    notThrow?: boolean
 }
 
 /**
