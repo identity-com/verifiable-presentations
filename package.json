@@ -9,6 +9,7 @@
   "scripts": {
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "lint": "tslint -p tsconfig.json",
+    "lint:fix": "tslint -p tsconfig.json --fix",
     "build": "tsc",
     "test": "jest --config jestconfig.json",
     "docs": "typedoc --out docs src && touch docs/.nojekyll",

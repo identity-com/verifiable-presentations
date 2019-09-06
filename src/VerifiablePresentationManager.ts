@@ -33,7 +33,8 @@ export interface VPMOptions {
  * This define the type of the verifiable credential or verifiable presentation
  */
 // TODO complete the list
-export type CredentialIdentifier = 'credential-cvc:Email-v1' | 'credential-cvc:PhoneNumber-v1'
+export type CredentialIdentifier = 'credential-cvc:Email-v1'
+    | 'credential-cvc:PhoneNumber-v1'
     | 'credential-cvc:GenericDocumentId-v1';
 
 /**
@@ -43,7 +44,7 @@ export interface PresentationReference {
     /**
      * see [[CredentialIdentifier]]
      */
-    identifier: ClaimIdentifier;
+    identifier: CredentialIdentifier;
     /**
      * an unverified human readable value
      */
@@ -58,7 +59,8 @@ export interface PresentationReference {
  * A Verifiable Claim Identifier
  */
 // TODO complete the list
-export type ClaimIdentifier = 'credential-cvc:Email-v1' | 'credential-cvc:PhoneNumber-v1';
+export type ClaimIdentifier = 'credential-cvc:Email-v1'
+    | 'credential-cvc:PhoneNumber-v1';
 
 /**
  * An unique reference to a managed claim
@@ -86,15 +88,16 @@ export interface SearchClaimCriteria {
     credentialRef?: PresentationReference;
     claimPath?: string;
 }
+
 /**
  * An Manager to secure handle Verifiable Presentations and Evidences.
  *
- * A Verifiable Presentation is a filtered credential that don't have all the expected claims for
+ * A Verifiable Presentation is a filtered credential that doesn't have all the expected claims for
  * an Verifiable Credential of the type but still holds all verification properties for the claims
  * presented in the shared JSON structure.
  *
- * An Evidence as data collect during the validations process the is present as a Verifiable Claim
- * but can be linked to a claim. Making ppossible to verify if that data was the same used to issue
+ * An Evidence is data collect during the validation process that is present as a Verifiable Claim
+ * but can be linked to a claim. Making it possible to verify if that data was the same used to issue
  * the credential. This is useful for document images, selfies, etc...
  */
 
@@ -106,16 +109,16 @@ export interface CredentialArtifacts {
     /**
      * an array of JSONs with Verifiable (Credentials or Presentation)
      */
-    presentations?: Array<string>;
+    presentations?: string[];
     /**
      * an array of JSONs with Evidences (Credentials or Presentation)
      */
-    evidences?: Array<string>;
+    evidences?: string[];
 }
 
 
 /**
- * Summary the VerifiablePresentationManager status exposing the current configuration
+ * Summary of the VerifiablePresentationManager status exposing the current configuration
  * and an aggregation of it managed state
  */
 export interface VerifiablePresentationManagerStatus {
@@ -139,15 +142,17 @@ export type DSRJSON = string;
  * by providing a verification plugin that can handle the verification in a async way.
  */
 export class VerifiablePresentationManager {
+    options: VPMOptions;
+    verifyAnchor: () => void;
 
     /**
      * @param options - Defines the global behavior and security of VerifiablePresentationManager
      * @param verifyAnchor - An async function that is able to verify the presentation anchor in a public Blockchain
      */
-    constructor(options: VPMOptions, verifyAnchor=null) {
-
+    constructor(options: VPMOptions, verifyAnchor = null) {
+        this.options = options;
+        this.verifyAnchor = verifyAnchor;
     }
-
 
     /**
      * Adds a set Verifiable Presentations and Evidences to the manager control
@@ -158,9 +163,8 @@ export class VerifiablePresentationManager {
      * @param artifacts
      *
      */
-    // @ts-ignore
     async addCredentialArtifacts(artifacts: CredentialArtifacts): Promise<VerifiablePresentationManagerStatus> {
-
+        // @ts-ignore
     }
 
     /**
@@ -170,9 +174,8 @@ export class VerifiablePresentationManager {
      * but known invalid presentations are never returned
      *
      */
-    // @ts-ignore
-    async listPresentations(): Promise<Array<PresentationReference>>{
-
+    async listPresentations(): Promise<PresentationReference[]>{
+        // @ts-ignore
     };
 
     /**
@@ -182,9 +185,8 @@ export class VerifiablePresentationManager {
      * but known invalid presentations are never returned
      *
      */
-    // @ts-ignore
-    async listClaims(): Promise<Array<AvailableClaim>> {
-
+    async listClaims(): Promise<AvailableClaim[]> {
+        // @ts-ignore
     };
 
     /**
@@ -194,9 +196,8 @@ export class VerifiablePresentationManager {
      * but known invalid presentations are never returned
      *
      */
-    // @ts-ignore
-    async listPresentationClaims(presentationRef: PresentationReference): Promise<Array<AvailableClaim>>{
-
+    async listPresentationClaims(presentationRef: PresentationReference): Promise<AvailableClaim[]>{
+        // @ts-ignore
     };
 
     /**
@@ -204,9 +205,8 @@ export class VerifiablePresentationManager {
      * if `allowGetUnverified` is true the search also include claim not verified yet.
      * the search never includes known invalid claims
      */
-    // @ts-ignore
     findClaim(criteria: SearchClaimCriteria): AvailableClaim | null {
-
+        // @ts-ignore
     }
 
     /**
@@ -214,24 +214,22 @@ export class VerifiablePresentationManager {
      * if `allowGetUnverified` is true it return unverified values.
      * if `notThrow` is true return null for known invalid claims
      */
-    // @ts-ignore
     async getClaimValue(availableClaim: AvailableClaim): Promise<string | null> {
-
+        // @ts-ignore
     }
 
-    //TODO complete documentation
+    // TODO complete documentation
     async listEvidences() {
-
+        // @ts-ignore
     }
 
-    //TODO complete documentation
+    // TODO complete documentation
     async getEvidenceValue() {
-
+        // @ts-ignore
     }
 
-    // @ts-ignore
     async verifyAllArtifacts(): Promise<VerifiablePresentationManagerStatus> {
-
+        // @ts-ignore
     }
 
     /**
@@ -244,15 +242,14 @@ export class VerifiablePresentationManager {
      * @param originalRequestDSR the original Dynamic Scope Request that receive the presentation as result
      */
     async wasGrantedForDSR(presentationRef: PresentationReference, originalRequestDSR: DSRJSON) {
-
+        // @ts-ignore
     }
 
     isAllArtifactsVerified() {
-
+        // @ts-ignore
     }
 
     purgeInvalidArtifacts() {
-
+        // @ts-ignore
     }
-
 }
