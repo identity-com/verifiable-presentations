@@ -142,16 +142,12 @@ export type DSRJSON = string;
  * by providing a verification plugin that can handle the verification in a async way.
  */
 export class VerifiablePresentationManager {
-    options: VPMOptions;
-    verifyAnchor: () => void;
-
     /**
      * @param options - Defines the global behavior and security of VerifiablePresentationManager
      * @param verifyAnchor - An async function that is able to verify the presentation anchor in a public Blockchain
      */
     constructor(options: VPMOptions, verifyAnchor = null) {
-        this.options = options;
-        this.verifyAnchor = verifyAnchor;
+        // @ts-ignore
     }
 
     /**
@@ -163,6 +159,7 @@ export class VerifiablePresentationManager {
      * @param artifacts
      *
      */
+    // @ts-ignore
     async addCredentialArtifacts(artifacts: CredentialArtifacts): Promise<VerifiablePresentationManagerStatus> {
         // @ts-ignore
     }
@@ -174,6 +171,7 @@ export class VerifiablePresentationManager {
      * but known invalid presentations are never returned
      *
      */
+    // @ts-ignore
     async listPresentations(): Promise<PresentationReference[]>{
         // @ts-ignore
     };
@@ -185,6 +183,7 @@ export class VerifiablePresentationManager {
      * but known invalid presentations are never returned
      *
      */
+    // @ts-ignore
     async listClaims(): Promise<AvailableClaim[]> {
         // @ts-ignore
     };
@@ -196,6 +195,7 @@ export class VerifiablePresentationManager {
      * but known invalid presentations are never returned
      *
      */
+    // @ts-ignore
     async listPresentationClaims(presentationRef: PresentationReference): Promise<AvailableClaim[]>{
         // @ts-ignore
     };
@@ -205,6 +205,7 @@ export class VerifiablePresentationManager {
      * if `allowGetUnverified` is true the search also include claim not verified yet.
      * the search never includes known invalid claims
      */
+    // @ts-ignore
     findClaim(criteria: SearchClaimCriteria): AvailableClaim | null {
         // @ts-ignore
     }
@@ -214,6 +215,7 @@ export class VerifiablePresentationManager {
      * if `allowGetUnverified` is true it return unverified values.
      * if `notThrow` is true return null for known invalid claims
      */
+    // @ts-ignore
     async getClaimValue(availableClaim: AvailableClaim): Promise<string | null> {
         // @ts-ignore
     }
@@ -228,6 +230,7 @@ export class VerifiablePresentationManager {
         // @ts-ignore
     }
 
+    // @ts-ignore
     async verifyAllArtifacts(): Promise<VerifiablePresentationManagerStatus> {
         // @ts-ignore
     }
@@ -241,6 +244,7 @@ export class VerifiablePresentationManager {
      * @param presentationRef the managed presentation to verify
      * @param originalRequestDSR the original Dynamic Scope Request that receive the presentation as result
      */
+    // @ts-ignore
     async wasGrantedForDSR(presentationRef: PresentationReference, originalRequestDSR: DSRJSON) {
         // @ts-ignore
     }
