@@ -40,5 +40,8 @@
     "tslint-config-prettier": "^1.18.0",
     "typedoc": "^0.15.0",
     "typescript": "^3.5.3"
+  },
+  "dependencies": {
+    "@types/lodash": "^4.14.138"
   }
 }
