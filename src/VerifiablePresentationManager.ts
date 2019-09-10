@@ -1,3 +1,5 @@
+import * as _ from 'lodash';
+
 /**
  * Used to setup VerifiablePresentationManager global behavior
  */
@@ -56,7 +58,6 @@ export interface PresentationReference {
  */
 // TODO complete the list
 export type ClaimIdentifier = 'credential-cvc:Email-v1'
-    | 'credential-cvc:PhoneNumber-v1'
     | 'claim-cvc:Contact.phoneNumber-v1';
 
 /**
@@ -102,8 +103,17 @@ export interface SearchClaimCriteria {
  * Credential Proof Leave Representation
  */
 export interface CredentialProofLeave {
+    /**
+     * see [[ClaimIdentifier]]
+     */
     identifier: ClaimIdentifier;
+    /**
+     * The leave value
+     */
     value: string;
+    /**
+     * The claim path
+     */
     claimPath: string;
 }
 
@@ -111,6 +121,9 @@ export interface CredentialProofLeave {
  * Credential Proof Representation
  */
 export interface CredentialProof {
+    /**
+     * A list of [[CredentialProofLeave]]
+     */
     leaves: CredentialProofLeave[];
 }
 
@@ -118,8 +131,17 @@ export interface CredentialProof {
  * Credential representation
  */
 export interface Credential {
+    /**
+     * Unique identifier
+     */
     id: string;
+    /**
+     * see [[CredentialIdentifier]]
+     */
     identifier: CredentialIdentifier;
+    /**
+     * see [[CredentialProof]]
+     */
     proof: CredentialProof;
 }
 
@@ -269,9 +291,8 @@ export class VerifiablePresentationManager {
      * but known invalid presentations are never returned
      *
      */
-    // @ts-ignore
     async listPresentationClaims(presentationRef: PresentationReference): Promise<AvailableClaim[]>{
-        // @ts-ignore
+        return _.filter(this.claims, { credentialRef: presentationRef });
     };
 
     /**
