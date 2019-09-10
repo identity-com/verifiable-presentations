@@ -1,5 +1,4 @@
 import { VerifiablePresentationManager } from './VerifiablePresentationManager';
-export const Greeter = (name: string) => `Hello ${name}`;
 
 /**
  * Most secure manager verify data in a redundant way

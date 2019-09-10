@@ -46,10 +46,6 @@ export interface PresentationReference {
      */
     identifier: CredentialIdentifier;
     /**
-     * an unverified human readable value
-     */
-    title: string;
-    /**
      * an unique key
      */
     uid: string;
@@ -60,7 +56,8 @@ export interface PresentationReference {
  */
 // TODO complete the list
 export type ClaimIdentifier = 'credential-cvc:Email-v1'
-    | 'credential-cvc:PhoneNumber-v1';
+    | 'credential-cvc:PhoneNumber-v1'
+    | 'claim-cvc:Contact.phoneNumber-v1';
 
 /**
  * An unique reference to a managed claim
@@ -101,6 +98,52 @@ export interface SearchClaimCriteria {
  * the credential. This is useful for document images, selfies, etc...
  */
 
+/**
+ * Credential Proof Leave Representation
+ */
+export interface CredentialProofLeave {
+    identifier: ClaimIdentifier;
+    value: string;
+    claimPath: string;
+}
+
+/**
+ * Credential Proof Representation
+ */
+export interface CredentialProof {
+    leaves: CredentialProofLeave[];
+}
+
+/**
+ * Credential representation
+ */
+export interface Credential {
+    id: string;
+    identifier: CredentialIdentifier;
+    proof: CredentialProof;
+}
+
+/**
+ * Evidence representation
+ */
+export interface Evidence {
+    /**
+     * The Evidence content ("selfie", "idDocumentBack", "idDocumentFront")
+     */
+    content: string;
+    /**
+     * The Evidence content-type
+     */
+    contentType: string;
+    /**
+     * The Evidence sha256
+     */
+    sha256: string;
+    /**
+     * The base 64 encoded representation of the evidence
+     */
+    base64Encoded: string;
+}
 
 /**
  * Optional sets of Verifiable Presentations and/or Evidences in a JSONformat
@@ -109,11 +152,12 @@ export interface CredentialArtifacts {
     /**
      * an array of JSONs with Verifiable (Credentials or Presentation)
      */
-    presentations?: string[];
+    presentations?: Credential[];
+
     /**
      * an array of JSONs with Evidences (Credentials or Presentation)
      */
-    evidences?: string[];
+    evidences?: Evidence[];
 }
 
 
@@ -142,12 +186,27 @@ export type DSRJSON = string;
  * by providing a verification plugin that can handle the verification in a async way.
  */
 export class VerifiablePresentationManager {
+    options: VPMOptions;
+    artifacts?: CredentialArtifacts;
+    presentations: PresentationReference[];
+    claims: AvailableClaim[];
+    status: VerifiablePresentationManagerStatus;
+
     /**
      * @param options - Defines the global behavior and security of VerifiablePresentationManager
      * @param verifyAnchor - An async function that is able to verify the presentation anchor in a public Blockchain
      */
     constructor(options: VPMOptions, verifyAnchor = null) {
-        // @ts-ignore
+        this.options = options;
+        this.presentations = [];
+        this.claims = [];
+        this.status = {
+            config: options,
+            verifiedPresentations: 0,
+            totalPresentations: 0,
+            verifiedEvidences: 0,
+            totalEvidences: 0
+        }
     }
 
     /**
@@ -161,7 +220,21 @@ export class VerifiablePresentationManager {
      */
     // @ts-ignore
     async addCredentialArtifacts(artifacts: CredentialArtifacts): Promise<VerifiablePresentationManagerStatus> {
-        // @ts-ignore
+        // FIXME aggregate artifacts
+        this.artifacts = artifacts;
+
+        if (artifacts.presentations) {
+            artifacts.presentations.forEach(presentation => {
+                const presentationReference = this.getPresentationReference(presentation);
+                this.presentations.push(presentationReference);
+
+                const availableClaims = this.getAvailableClaims(presentation.proof.leaves, presentationReference);
+                this.claims = this.claims.concat(availableClaims);
+            });
+        }
+
+        this.status.totalPresentations += this.presentations.length;
+        return this.status;
     }
 
     /**
@@ -171,9 +244,8 @@ export class VerifiablePresentationManager {
      * but known invalid presentations are never returned
      *
      */
-    // @ts-ignore
     async listPresentations(): Promise<PresentationReference[]>{
-        // @ts-ignore
+        return this.presentations;
     };
 
     /**
@@ -183,9 +255,8 @@ export class VerifiablePresentationManager {
      * but known invalid presentations are never returned
      *
      */
-    // @ts-ignore
     async listClaims(): Promise<AvailableClaim[]> {
-        // @ts-ignore
+        return this.claims;
     };
 
     /**
@@ -205,9 +276,10 @@ export class VerifiablePresentationManager {
      * if `allowGetUnverified` is true the search also include claim not verified yet.
      * the search never includes known invalid claims
      */
-    // @ts-ignore
+    // @ts-igno
     findClaim(criteria: SearchClaimCriteria): AvailableClaim | null {
         // @ts-ignore
+        return null;
     }
 
     /**
@@ -255,5 +327,26 @@ export class VerifiablePresentationManager {
 
     purgeInvalidArtifacts() {
         // @ts-ignore
+    }
+
+    /*
+     * Private methods
+     */
+
+    private getPresentationReference(credential: Credential) : PresentationReference {
+        return {
+            identifier: credential.identifier,
+            uid: credential.id
+        };
+    }
+
+    private getAvailableClaims(claims: CredentialProofLeave[], presentation: PresentationReference) {
+        return claims.map((claim: any) => (
+            {
+                identifier: claim.identifier,
+                credentialRef: presentation,
+                claimPath: claim.claimPath
+            }
+        ));
     }
 }
