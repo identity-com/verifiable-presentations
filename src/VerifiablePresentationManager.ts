@@ -187,7 +187,7 @@ export type DSRJSON = string;
  */
 export class VerifiablePresentationManager {
     options: VPMOptions;
-    artifacts?: CredentialArtifacts;
+    artifacts: CredentialArtifacts;
     presentations: PresentationReference[];
     claims: AvailableClaim[];
     status: VerifiablePresentationManagerStatus;
@@ -200,6 +200,10 @@ export class VerifiablePresentationManager {
         this.options = options;
         this.presentations = [];
         this.claims = [];
+        this.artifacts = {
+            presentations: [],
+            evidences: []
+        }
         this.status = {
             config: options,
             verifiedPresentations: 0,
@@ -220,8 +224,7 @@ export class VerifiablePresentationManager {
      */
     // @ts-ignore
     async addCredentialArtifacts(artifacts: CredentialArtifacts): Promise<VerifiablePresentationManagerStatus> {
-        // FIXME aggregate artifacts
-        this.artifacts = artifacts;
+        this.aggregateCredentialArtifects(artifacts);
 
         if (artifacts.presentations) {
             artifacts.presentations.forEach(presentation => {
@@ -333,6 +336,15 @@ export class VerifiablePresentationManager {
      * Private methods
      */
 
+    private aggregateCredentialArtifects(artifacts : CredentialArtifacts) {
+        if (this.artifacts.presentations && artifacts.presentations) {
+            this.artifacts.presentations = this.artifacts.presentations.concat(artifacts.presentations);
+        }
+        if (this.artifacts.evidences && artifacts.evidences) {
+            this.artifacts.evidences = this.artifacts.evidences.concat(artifacts.evidences);
+        }
+    }
+
     private getPresentationReference(credential: Credential) : PresentationReference {
         return {
             identifier: credential.identifier,
@@ -341,12 +353,10 @@ export class VerifiablePresentationManager {
     }
 
     private getAvailableClaims(claims: CredentialProofLeave[], presentation: PresentationReference) {
-        return claims.map((claim: any) => (
-            {
-                identifier: claim.identifier,
-                credentialRef: presentation,
-                claimPath: claim.claimPath
-            }
-        ));
+        return claims.map((claim: CredentialProofLeave) => ({
+            identifier: claim.identifier,
+            credentialRef: presentation,
+            claimPath: claim.claimPath
+        }));
     }
 }
