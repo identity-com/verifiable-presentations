@@ -143,6 +143,10 @@ export interface Credential {
      * see [[CredentialProof]]
      */
     proof: CredentialProof;
+    /**
+     * Claim values (dynamic object)
+     */
+    claim: any;
 }
 
 /**
@@ -246,7 +250,7 @@ export class VerifiablePresentationManager {
      */
     // @ts-ignore
     async addCredentialArtifacts(artifacts: CredentialArtifacts): Promise<VerifiablePresentationManagerStatus> {
-        this.aggregateCredentialArtifects(artifacts);
+        this.aggregateCredentialArtifacts(artifacts);
 
         if (artifacts.presentations) {
             artifacts.presentations.forEach(presentation => {
@@ -311,9 +315,12 @@ export class VerifiablePresentationManager {
      * if `allowGetUnverified` is true it return unverified values.
      * if `notThrow` is true return null for known invalid claims
      */
-    // @ts-ignore
-    async getClaimValue(availableClaim: AvailableClaim): Promise<string | null> {
-        // @ts-ignore
+    async getClaimValue(availableClaim: AvailableClaim): Promise<any | null> {
+        const presentation = this.getPresentation(availableClaim);
+        if (presentation && presentation.claim) {
+            return _.get(presentation.claim, availableClaim.claimPath);
+        }
+        return null;
     }
 
     // TODO complete documentation
@@ -357,7 +364,13 @@ export class VerifiablePresentationManager {
      * Private methods
      */
 
-    private aggregateCredentialArtifects(artifacts : CredentialArtifacts) {
+    private getPresentation(availableClaim : AvailableClaim) : Credential | undefined {
+        return _.find(this.artifacts.presentations, (presentation : Credential) => (
+            presentation.id === availableClaim.credentialRef.uid
+        ));
+    }
+
+    private aggregateCredentialArtifacts(artifacts : CredentialArtifacts) {
         if (this.artifacts.presentations && artifacts.presentations) {
             this.artifacts.presentations = this.artifacts.presentations.concat(artifacts.presentations);
         }

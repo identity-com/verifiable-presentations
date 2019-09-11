@@ -2,7 +2,8 @@ import * as _ from 'lodash';
 import {
     Credential,
     VerifiablePresentationManager,
-    PresentationReference
+    PresentationReference,
+    AvailableClaim
 } from '../VerifiablePresentationManager';
 import phoneNumberCredential from './fixtures/phoneNumberCredential.json';
 import emailCredential from './fixtures/emailCredential.json';
@@ -85,6 +86,41 @@ describe('VerifiablePresentationManager', () => {
             emailCredential.proof.leaves.length
         );
         expect(claims[0].credentialRef.identifier).toEqual(emailCredential.identifier);
+        done();
+    });
+
+    it('should get a claim value', async (done) => {
+        const presentationManager = new VerifiablePresentationManager(options);
+
+        await presentationManager.addCredentialArtifacts(credentialArtifacts);
+
+        const claims = await presentationManager.listClaims();
+        const claimValue = await presentationManager.getClaimValue(claims[0]);
+
+        expect(claimValue).toBeDefined();
+        expect(JSON.stringify(phoneNumberCredential.claim)).toEqual(
+            expect.stringContaining(JSON.stringify(claimValue))
+        );
+        done();
+    });
+
+    it('should get null if requesting a value of a not found claim', async (done) => {
+        const presentationManager = new VerifiablePresentationManager(options);
+
+        await presentationManager.addCredentialArtifacts(credentialArtifacts);
+
+        const notFoundClaim = {
+            identifier: 'any',
+            credentialRef: {
+                identifier: 'any',
+                uid: 'any'
+            },
+            claimPath: 'any'
+        };
+
+        const claimValue = await presentationManager.getClaimValue(notFoundClaim as AvailableClaim);
+
+        expect(claimValue).toBeNull();
         done();
     });
 });
