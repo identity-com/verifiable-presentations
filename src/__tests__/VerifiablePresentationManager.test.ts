@@ -3,7 +3,8 @@ import {
     Credential,
     VerifiablePresentationManager,
     PresentationReference,
-    AvailableClaim
+    AvailableClaim,
+    SearchClaimCriteria
 } from '../VerifiablePresentationManager';
 import phoneNumberCredential from './fixtures/phoneNumberCredential.json';
 import emailCredential from './fixtures/emailCredential.json';
@@ -75,7 +76,6 @@ describe('VerifiablePresentationManager', () => {
 
     it('should get the list of the claims of a presentation', async (done) => {
         const presentationManager = new VerifiablePresentationManager(options);
-
         await presentationManager.addCredentialArtifacts(credentialArtifacts);
 
         const presentations = await presentationManager.listPresentations();
@@ -91,7 +91,6 @@ describe('VerifiablePresentationManager', () => {
 
     it('should get a claim value', async (done) => {
         const presentationManager = new VerifiablePresentationManager(options);
-
         await presentationManager.addCredentialArtifacts(credentialArtifacts);
 
         const claims = await presentationManager.listClaims();
@@ -106,7 +105,6 @@ describe('VerifiablePresentationManager', () => {
 
     it('should get null if requesting a value of a not found claim', async (done) => {
         const presentationManager = new VerifiablePresentationManager(options);
-
         await presentationManager.addCredentialArtifacts(credentialArtifacts);
 
         const notFoundClaim = {
@@ -121,6 +119,54 @@ describe('VerifiablePresentationManager', () => {
         const claimValue = await presentationManager.getClaimValue(notFoundClaim as AvailableClaim);
 
         expect(claimValue).toBeNull();
+        done();
+    });
+
+    it('should return the the available claims that matches the search', async (done) => {
+        const presentationManager = new VerifiablePresentationManager(options);
+        await presentationManager.addCredentialArtifacts(credentialArtifacts);
+
+        const searchByIdentifierOnly = {
+            identifier: 'cvc:Meta:issuanceDate'
+        };
+        let claims = await presentationManager.findClaims(searchByIdentifierOnly as SearchClaimCriteria);
+        expect(claims).toHaveLength(2);
+
+        const searchByIdentifierAndClaimPath = {
+            identifier: 'claim-cvc:Email.domain-v1',
+            claimPath: 'contact.email.domain'
+        };
+        claims = await presentationManager.findClaims(searchByIdentifierAndClaimPath as SearchClaimCriteria);
+        expect(claims).toHaveLength(1);
+
+        const searchByAll = {
+            identifier: 'claim-cvc:Email.domain-v1',
+            claimPath: 'contact.email.domain',
+            credentialRef: {
+                identifier: emailCredential.identifier,
+                uid: emailCredential.id
+            },
+        };
+        claims = await presentationManager.findClaims(searchByAll as SearchClaimCriteria);
+        expect(claims).toHaveLength(1);
+        done();
+    });
+
+    it('should return an empty array when there is no matches in claim search', async (done) => {
+        const presentationManager = new VerifiablePresentationManager(options);
+        await presentationManager.addCredentialArtifacts(credentialArtifacts);
+
+        const criteria = {
+            identifier: 'claim-cvc:Email.domain-v1',
+            claimPath: 'not.existing.claim.path',
+            credentialRef: {
+                identifier: emailCredential.identifier,
+                uid: emailCredential.id
+            },
+        };
+
+        const claims = await presentationManager.findClaims(criteria as SearchClaimCriteria);
+        expect(claims).toHaveLength(0);
         done();
     });
 });

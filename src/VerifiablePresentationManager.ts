@@ -304,10 +304,8 @@ export class VerifiablePresentationManager {
      * if `allowGetUnverified` is true the search also include claim not verified yet.
      * the search never includes known invalid claims
      */
-    // @ts-igno
-    findClaim(criteria: SearchClaimCriteria): AvailableClaim | null {
-        // @ts-ignore
-        return null;
+    async findClaims(criteria: SearchClaimCriteria): Promise<AvailableClaim[] | null> {
+        return _.filter(this.claims, criteria);
     }
 
     /**
