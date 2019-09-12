@@ -4,10 +4,19 @@ import {
     VerifiablePresentationManager,
     PresentationReference,
     AvailableClaim,
-    SearchClaimCriteria
+    SearchClaimCriteria,
+    Evidence
 } from '../VerifiablePresentationManager';
 import phoneNumberCredential from './fixtures/phoneNumberCredential.json';
 import emailCredential from './fixtures/emailCredential.json';
+
+const sampleEvidence = {
+    content: 'selfie',
+    contentType: 'image/jpeg',
+    sha256: 'sha256-hash-value',
+    base64Encoded: 'base64-encoded-value'
+};
+
 
 describe('VerifiablePresentationManager', () => {
     const options = {
@@ -23,6 +32,9 @@ describe('VerifiablePresentationManager', () => {
         presentations: [
             phoneNumberCredential as Credential,
             emailCredential as Credential
+        ],
+        evidences: [
+            sampleEvidence as Evidence
         ]
     };
 
@@ -36,6 +48,7 @@ describe('VerifiablePresentationManager', () => {
         const status = await presentationManager.addCredentialArtifacts(credentialArtifacts);
         expect(status).toBeDefined();
         expect(status.totalPresentations).toEqual(2);
+        expect(status.totalEvidences).toEqual(1);
         done();
     });
 
@@ -53,6 +66,15 @@ describe('VerifiablePresentationManager', () => {
         expect(presentations[0].uid).toEqual(phoneNumberCredential.id);
         expect(presentations[1].identifier).toEqual('credential-cvc:Email-v1');
         expect(presentations[1].uid).toEqual(emailCredential.id);
+        done();
+    });
+
+    it('should get the list of evidences', async (done) => {
+        const presentationManager = new VerifiablePresentationManager(options);
+        await presentationManager.addCredentialArtifacts(credentialArtifacts);
+
+        const evidences = await presentationManager.listEvidences();
+        expect(evidences).toEqual([sampleEvidence]);true
         done();
     });
 

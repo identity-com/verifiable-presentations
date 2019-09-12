@@ -204,6 +204,9 @@ export interface VerifiablePresentationManagerStatus {
  */
 export type DSRJSON = string;
 
+
+export type VerifyFunction = (credential : Credential) => boolean;
+
 /**
  * Abstract all complexity about the Verifiable Credentials handling by providing utility methods
  * to access user verified data in a secure way unless the security behavior is explicit flexed.
@@ -217,12 +220,13 @@ export class VerifiablePresentationManager {
     presentations: PresentationReference[];
     claims: AvailableClaim[];
     status: VerifiablePresentationManagerStatus;
+    verifyAnchor : VerifyFunction;
 
     /**
      * @param options - Defines the global behavior and security of VerifiablePresentationManager
      * @param verifyAnchor - An async function that is able to verify the presentation anchor in a public Blockchain
      */
-    constructor(options: VPMOptions, verifyAnchor = null) {
+    constructor(options: VPMOptions, verifyAnchor? : VerifyFunction) {
         this.options = options;
         this.presentations = [];
         this.claims = [];
@@ -237,6 +241,7 @@ export class VerifiablePresentationManager {
             verifiedEvidences: 0,
             totalEvidences: 0
         }
+        this.verifyAnchor = verifyAnchor;
     }
 
     /**
@@ -262,7 +267,8 @@ export class VerifiablePresentationManager {
             });
         }
 
-        this.status.totalPresentations += this.presentations.length;
+        this.status.totalPresentations = this.presentations.length;
+        this.status.totalEvidences = this.artifacts.evidences.length;
         return this.status;
     }
 
@@ -321,9 +327,11 @@ export class VerifiablePresentationManager {
         return null;
     }
 
-    // TODO complete documentation
-    async listEvidences() {
-        // @ts-ignore
+    /**
+     * List managed evidences
+     */
+    async listEvidences() : Promise<Evidence[]> {
+        return this.artifacts.evidences;
     }
 
     // TODO complete documentation
