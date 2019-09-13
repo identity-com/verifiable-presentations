@@ -15,6 +15,14 @@ export type CredentialIdentifier = 'credential-cvc:Email-v1'
     | 'credential-cvc:GenericDocumentId-v1';
 
 /**
+ * Credential Proof Leave Node Representation
+ */
+export interface CredentialProofLeaveNode {
+    right? : string;
+    left? : string;
+}
+
+/**
  * Credential Proof Leave Representation
  */
 export interface CredentialProofLeave {
@@ -30,6 +38,14 @@ export interface CredentialProofLeave {
      * The claim path
      */
     claimPath: string;
+    /**
+     * The target hash
+     */
+    targetHash: string;
+    /**
+     * node
+     */
+    node: CredentialProofLeaveNode[];
 }
 
 /**
@@ -40,6 +56,10 @@ export interface CredentialProof {
      * A list of [[CredentialProofLeave]]
      */
     leaves: CredentialProofLeave[];
+    /**
+     * The proof anchor information
+     */
+    anchor : any;
 }
 
 /**
