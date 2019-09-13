@@ -55,6 +55,10 @@ export interface Credential {
      */
     identifier: CredentialIdentifier;
     /**
+     * The expiration credential date
+     */
+    expirationDate: string;
+    /**
      * see [[CredentialProof]]
      */
     proof: CredentialProof;

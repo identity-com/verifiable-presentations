@@ -1,11 +1,11 @@
-import * as _ from 'lodash';
+import _ from 'lodash';
 import {
     ClaimIdentifier,
     CredentialIdentifier,
     CredentialProofLeave,
     Credential
 } from './Credential';
-import { VerifyAnchorFunction } from './PresentationVerifier';
+import { VerifyFunction } from './PresentationVerifier';
 
 /**
  * Used to setup VerifiablePresentationManager global behavior
@@ -159,13 +159,13 @@ export class VerifiablePresentationManager {
     presentations: PresentationReference[];
     claims: AvailableClaim[];
     status: VerifiablePresentationManagerStatus;
-    verifyAnchor : VerifyAnchorFunction;
+    verifyAnchor : VerifyFunction;
 
     /**
      * @param options - Defines the global behavior and security of VerifiablePresentationManager
      * @param verifyAnchor - An async function that is able to verify the presentation anchor in a public Blockchain
      */
-    constructor(options: VPMOptions, verifyAnchor? : VerifyAnchorFunction) {
+    constructor(options: VPMOptions, verifyAnchor? : VerifyFunction) {
         this.options = options;
         this.presentations = [];
         this.claims = [];
@@ -306,7 +306,7 @@ export class VerifiablePresentationManager {
     }
 
     /*
-     * Private methods
+     * Private functions
      */
 
     private getPresentation(availableClaim : AvailableClaim) : Credential | undefined {

@@ -1,4 +1,4 @@
-import * as _ from 'lodash';
+import _ from 'lodash';
 import { Credential } from '../Credential';
 import {
     VerifiablePresentationManager,
@@ -49,6 +49,21 @@ describe('VerifiablePresentationManager', () => {
         expect(status).toBeDefined();
         expect(status.totalPresentations).toEqual(2);
         expect(status.totalEvidences).toEqual(1);
+        done();
+    });
+
+    it('should add credential artifacts with no presentations or evidences', async (done) => {
+        let presentationManager = new VerifiablePresentationManager(options);
+        const artifactsWithNoEvidences = _.clone(credentialArtifacts);
+        delete artifactsWithNoEvidences.evidences;
+        let status = await presentationManager.addCredentialArtifacts(artifactsWithNoEvidences);
+        expect(status.totalEvidences).toEqual(0);
+
+        presentationManager = new VerifiablePresentationManager(options);
+        const artifactsWithNoPresentations = _.clone(credentialArtifacts);
+        delete artifactsWithNoPresentations.presentations;
+        status = await presentationManager.addCredentialArtifacts(artifactsWithNoPresentations);
+        expect(status.totalPresentations).toEqual(0);
         done();
     });
 

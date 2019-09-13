@@ -1,7 +1,17 @@
-import * as _ from 'lodash';
+import _ from 'lodash';
+import { VC } from '@identity.com/credential-commons/src';
 import { Credential } from './Credential';
 
-export type VerifyAnchorFunction = (credential : Credential) => boolean;
+export type VerifyFunction = (credential : Credential) => boolean;
 
 export class PresentationVerifier {
+    verifyAnchor : VerifyFunction;
+
+    constructor(verifyAnchor? : VerifyFunction) {
+        this.verifyAnchor = verifyAnchor;
+    }
+
+    nonCryptographicallySecureVerify(credential : Credential) {
+        return VC.nonCryptographicallySecureVerify(credential);
+    }
 }
