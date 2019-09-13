@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
+import { Credential } from '../Credential';
 import {
-    Credential,
     VerifiablePresentationManager,
     PresentationReference,
     AvailableClaim,
