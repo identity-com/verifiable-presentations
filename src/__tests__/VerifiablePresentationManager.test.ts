@@ -54,13 +54,13 @@ describe('VerifiablePresentationManager', () => {
 
     it('should add credential artifacts with no presentations or evidences', async (done) => {
         let presentationManager = new VerifiablePresentationManager(options);
-        const artifactsWithNoEvidences = _.clone(credentialArtifacts);
+        const artifactsWithNoEvidences = _.cloneDeep(credentialArtifacts);
         delete artifactsWithNoEvidences.evidences;
         let status = await presentationManager.addCredentialArtifacts(artifactsWithNoEvidences);
         expect(status.totalEvidences).toEqual(0);
 
         presentationManager = new VerifiablePresentationManager(options);
-        const artifactsWithNoPresentations = _.clone(credentialArtifacts);
+        const artifactsWithNoPresentations = _.cloneDeep(credentialArtifacts);
         delete artifactsWithNoPresentations.presentations;
         status = await presentationManager.addCredentialArtifacts(artifactsWithNoPresentations);
         expect(status.totalPresentations).toEqual(0);

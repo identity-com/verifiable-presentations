@@ -25,4 +25,16 @@ export class PresentationVerifier {
     nonCryptographicallySecureVerify(credential : Credential) {
         return VC.nonCryptographicallySecureVerify(credential);
     }
+
+    /**
+     * Cryptographically secure verify the Credential.
+     * Performs a non cryptographically secure verification, attestation check and signature validation.
+     * @param credential - A credential object with expirationDate, claim and proof
+     * @param verifyAttestationFunc - Async method to verify a credential attestation
+     * @param verifySignatureFunc - Async method to verify a credential signature
+     * @return true if verified, false otherwise.
+     */
+    async cryptographicallySecureVerify(credential : Credential) {
+        return VC.cryptographicallySecureVerify(credential, this.verifyAnchor, this.verifySignature);
+    }
 }
