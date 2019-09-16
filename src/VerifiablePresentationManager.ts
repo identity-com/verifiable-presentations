@@ -5,7 +5,7 @@ import {
     CredentialProofLeave,
     Credential
 } from './Credential';
-import { VerifyFunction } from './PresentationVerifier';
+import { PresentationVerifier, VerifyFunction } from './PresentationVerifier';
 
 /**
  * Used to setup VerifiablePresentationManager global behavior
@@ -145,7 +145,6 @@ export interface VerifiablePresentationManagerStatus {
 export type DSRJSON = string;
 
 
-
 /**
  * Abstract all complexity about the Verifiable Credentials handling by providing utility methods
  * to access user verified data in a secure way unless the security behavior is explicit flexed.
@@ -159,7 +158,7 @@ export class VerifiablePresentationManager {
     presentations: PresentationReference[];
     claims: AvailableClaim[];
     status: VerifiablePresentationManagerStatus;
-    verifyAnchor : VerifyFunction;
+    verifier : PresentationVerifier;
 
     /**
      * @param options - Defines the global behavior and security of VerifiablePresentationManager
@@ -180,11 +179,11 @@ export class VerifiablePresentationManager {
             verifiedEvidences: 0,
             totalEvidences: 0
         }
-        this.verifyAnchor = verifyAnchor;
+        this.verifier = new PresentationVerifier(verifyAnchor);
     }
 
     /**
-     * Adds a set Verifiable Presentations and Evidences to the manager control
+     * Adds a set of Verifiable Presentations and Evidences to the manager control
      *
      * if neither `skipAddVerify` or `notThrow` are true, it throws an acception
      * once it process one invalid artifact.
@@ -206,9 +205,7 @@ export class VerifiablePresentationManager {
             });
         }
 
-        this.status.totalPresentations = this.presentations.length;
-        this.status.totalEvidences = this.artifacts.evidences.length;
-        return this.status;
+        return this.verifyAllArtifacts();
     }
 
     /**
@@ -218,7 +215,7 @@ export class VerifiablePresentationManager {
      * but known invalid presentations are never returned
      *
      */
-    async listPresentations(): Promise<PresentationReference[]>{
+    async listPresentations(): Promise<PresentationReference[]> {
         return this.presentations;
     };
 
@@ -278,9 +275,23 @@ export class VerifiablePresentationManager {
         // @ts-ignore
     }
 
-    // @ts-ignore
+    /**
+     * Verify all artifacts and return a status of all presentations and evidences
+     *
+     * if neither `skipAddVerify` or `notThrow` are true, it throws an acception
+     * once it process one invalid artifact.
+     */
     async verifyAllArtifacts(): Promise<VerifiablePresentationManagerStatus> {
-        // @ts-ignore
+        const verifiedPresentations = await this.verifyPresentations();
+        const verifiedEvidences = this.verifyEvidences(verifiedPresentations);
+        this.status = {
+            config: this.options,
+            verifiedPresentations: verifiedPresentations.length,
+            totalPresentations: this.artifacts.presentations.length,
+            verifiedEvidences: verifiedEvidences.length,
+            totalEvidences: this.artifacts.evidences.length,
+        }
+        return this.status;
     }
 
     /**
@@ -315,6 +326,13 @@ export class VerifiablePresentationManager {
         ));
     }
 
+    private findEvidencePresentation(evidence : Evidence) : Credential | undefined {
+        return _.find(this.artifacts.presentations, (presentation : Credential) => {
+            const presentationClaims = JSON.stringify(presentation.claim);
+            return presentationClaims.includes(evidence.sha256);
+        });
+    }
+
     private aggregateCredentialArtifacts(artifacts : CredentialArtifacts) {
         if (this.artifacts.presentations && artifacts.presentations) {
             this.artifacts.presentations = this.artifacts.presentations.concat(artifacts.presentations);
@@ -338,4 +356,28 @@ export class VerifiablePresentationManager {
             claimPath: claim.claimPath
         }));
     }
+
+    private async verifyPresentations() : Promise<Credential[]> {
+        const verifiedPresentations : Credential[] = [];
+        for (const presentation of this.artifacts.presentations) {
+            const verified = await this.verifier.cryptographicallySecureVerify(presentation);
+            if (verified) {
+                verifiedPresentations.push(presentation);
+            }
+        }
+        return verifiedPresentations;
+    }
+
+    private verifyEvidences(verifiedPresentations : Credential[]) : Evidence[] {
+        const verifiedEvidences : Evidence[] = [];
+        this.artifacts.evidences.forEach(evidence => {
+            //TODO check sha256
+            const presentation = this.findEvidencePresentation(evidence);
+            if (presentation && _.find(verifiedPresentations, { id: presentation.id })) {
+                verifiedEvidences.push(evidence);
+            }
+        });
+        return verifiedEvidences;
+    }
+
 }

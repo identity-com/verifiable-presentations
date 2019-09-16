@@ -5,10 +5,14 @@ import {
     PresentationReference,
     AvailableClaim,
     SearchClaimCriteria,
-    Evidence
+    Evidence,
+    CredentialArtifacts
 } from '../VerifiablePresentationManager';
 import phoneNumberCredential from './fixtures/phoneNumberCredential.json';
 import emailCredential from './fixtures/emailCredential.json';
+import invalidEmailCredential from './fixtures/invalidEmailCredential.json';
+import idDocumentCredential from './fixtures/idDocumentCredential.json';
+import idDocumentEvidence from './fixtures/idDocumentSelfieEvidence.json';
 
 const sampleEvidence = {
     content: 'selfie',
@@ -48,6 +52,7 @@ describe('VerifiablePresentationManager', () => {
         const status = await presentationManager.addCredentialArtifacts(credentialArtifacts);
         expect(status).toBeDefined();
         expect(status.totalPresentations).toEqual(2);
+        expect(status.verifiedPresentations).toEqual(2);
         expect(status.totalEvidences).toEqual(1);
         done();
     });
@@ -204,6 +209,46 @@ describe('VerifiablePresentationManager', () => {
 
         const claims = await presentationManager.findClaims(criteria as SearchClaimCriteria);
         expect(claims).toHaveLength(0);
+        done();
+    });
+
+    it('should verify all artifacts and return the total of verified items', async (done) => {
+        const artifacts : CredentialArtifacts = {
+            presentations: [ idDocumentCredential as Credential ],
+            evidences: [ idDocumentEvidence as Evidence ] 
+        };
+        const presentationManager = new VerifiablePresentationManager(options);
+        await presentationManager.addCredentialArtifacts(artifacts);
+        const status = await presentationManager.verifyAllArtifacts();
+        expect(status.totalPresentations).toBe(1);
+        expect(status.verifiedPresentations).toBe(1);
+        expect(status.totalEvidences).toBe(1);
+        expect(status.verifiedEvidences).toBe(1);
+        done();
+    });
+
+    it('should not verify an invalid credential', async (done) => {
+        const artifacts : CredentialArtifacts = {
+            presentations: [invalidEmailCredential as Credential],
+        };
+        const presentationManager = new VerifiablePresentationManager(options);
+        await presentationManager.addCredentialArtifacts(artifacts);
+        const status = await presentationManager.verifyAllArtifacts();
+        expect(status.totalPresentations).toBe(1);
+        expect(status.verifiedPresentations).toBe(0);
+        done();
+    });
+
+    it('should not verify an evidence when there is not a valid credential referencing it', async (done) => {
+        const artifacts : CredentialArtifacts = {
+            presentations: [],
+            evidences: [ idDocumentEvidence as Evidence ] 
+        };
+        const presentationManager = new VerifiablePresentationManager(options);
+        await presentationManager.addCredentialArtifacts(artifacts);
+        const status = await presentationManager.verifyAllArtifacts();
+        expect(status.totalEvidences).toBe(1);
+        expect(status.verifiedEvidences).toBe(0);
         done();
     });
 });
