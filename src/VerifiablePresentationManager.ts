@@ -12,7 +12,7 @@ import { PresentationVerifier, VerifyFunction } from './PresentationVerifier';
  */
 export interface VPMOptions {
     /**
-     * disable the verification when adding new items to manager control
+     * disable the verification when adding new items to manager control. default, false.
      */
     skipAddVerify?: boolean;
     /**
@@ -27,10 +27,6 @@ export interface VPMOptions {
      * Allow to list managed content if both verifications are disabled. default, false.
      */
     allowListUnverified?: boolean;
-    /**
-     * Allow usage os the mock API and to return mocked unverified values. default, false.
-     */
-    allowMocks?: boolean
     /**
      *  Avoid to throw exceptions. Useful for batch operation but is not a good practice. default, false.
      */
@@ -165,7 +161,14 @@ export class VerifiablePresentationManager {
      * @param verifyAnchor - An async function that is able to verify the presentation anchor in a public Blockchain
      */
     constructor(options: VPMOptions, verifyAnchor? : VerifyFunction) {
-        this.options = options;
+        this.options = {
+            skipAddVerify: false,
+            skipGetVerify: false,
+            allowGetUnverified: false,
+            allowListUnverified: false,
+            notThrow: false,
+            ...options
+        };
         this.presentations = [];
         this.claims = [];
         this.artifacts = {
@@ -205,7 +208,13 @@ export class VerifiablePresentationManager {
             });
         }
 
-        return this.verifyAllArtifacts();
+        if (!this.options.skipAddVerify) {
+            return this.verifyAllArtifacts();
+        }
+
+        this.status.totalPresentations = this.artifacts.presentations.length;
+        this.status.totalEvidences = this.artifacts.evidences.length;
+        return this.status;
     }
 
     /**
@@ -268,11 +277,6 @@ export class VerifiablePresentationManager {
      */
     async listEvidences() : Promise<Evidence[]> {
         return this.artifacts.evidences;
-    }
-
-    // TODO complete documentation
-    async getEvidenceValue() {
-        // @ts-ignore
     }
 
     /**
@@ -365,6 +369,15 @@ export class VerifiablePresentationManager {
                 verifiedPresentations.push(presentation);
             }
         }
+
+        if (!this.options.notThrow) {
+            const unverifiedPresentations = _.difference(this.artifacts.presentations, verifiedPresentations);
+            if (!_.isEmpty(unverifiedPresentations)) {
+                const unverifiedIds = _.map(unverifiedPresentations, (presentation : Credential) => presentation.id);
+                throw new Error(`Unverified Presentations: ${_.join(unverifiedIds)}`);
+            }
+        }
+
         return verifiedPresentations;
     }
 
@@ -377,7 +390,15 @@ export class VerifiablePresentationManager {
                 verifiedEvidences.push(evidence);
             }
         });
+
+        if (!this.options.notThrow) {
+            const unverifiedEvidences = _.difference(this.artifacts.evidences, verifiedEvidences);
+            if (!_.isEmpty(unverifiedEvidences)) {
+                const unverifiedIds = _.map(unverifiedEvidences, (evidence : Evidence) => evidence.content);
+                throw new Error(`Unverified Evidences: ${_.join(unverifiedIds)}`);
+            }
+        }
+
         return verifiedEvidences;
     }
-
 }
