@@ -29,7 +29,6 @@ describe('VerifiablePresentationManager', () => {
         evidences: [
             idDocumentEvidence as Evidence
         ]
-
     };
 
     it('should initialize a VerifiablePresentationManager', () => {
@@ -53,6 +52,7 @@ describe('VerifiablePresentationManager', () => {
             skipAddVerify: true
         }
         const presentationManager = new VerifiablePresentationManager(options);
+
         const status = await presentationManager.addCredentialArtifacts(artifacts);
         expect(status).toBeDefined();
         expect(status.totalPresentations).toEqual(2);
@@ -77,9 +77,9 @@ describe('VerifiablePresentationManager', () => {
         done();
     });
 
-    it('should get the list of presentations including the unverified if allowListUnverified is true', async (done) => {
+    it('should get the list of presentations including the unverified if allowGetUnverified is true', async (done) => {
         const options = {
-            allowListUnverified: true,
+            allowGetUnverified: true,
             notThrow: true
         };
         const presentationManager = new VerifiablePresentationManager(options);
@@ -94,9 +94,9 @@ describe('VerifiablePresentationManager', () => {
         done();
     });
 
-    it('should get the list of presentations excluding the unverified if allowListUnverified is false', async (done) => {
+    it('should get the list of presentations excluding the unverified if allowGetUnverified is false', async (done) => {
         const options = {
-            allowListUnverified: false,
+            allowGetUnverified: false,
             notThrow: true
         };
         const presentationManager = new VerifiablePresentationManager(options);
@@ -120,6 +120,49 @@ describe('VerifiablePresentationManager', () => {
         done();
     });
 
+    it('should get only the list of evidences including unverified if allowGetUnverified is true', async (done) => {
+        const options = {
+            allowGetUnverified: true,
+            notThrow: true
+        };
+        const presentationManager = new VerifiablePresentationManager(options);
+
+        const artifacts = {
+            presentations: [
+                invalidEmailCredential as Credential
+            ],
+            evidences: [
+                idDocumentEvidence as Evidence
+            ]
+        };
+        await presentationManager.addCredentialArtifacts(artifacts);
+
+        const evidences = await presentationManager.listEvidences();
+        expect(evidences).toEqual([idDocumentEvidence]);
+        done();
+    });
+
+    it('should get a list of evidences filtering by invalid if allowGetUnverified is false (default)', async (done) => {
+        const options = {
+            notThrow: true
+        };
+        const presentationManager = new VerifiablePresentationManager(options);
+
+        const artifacts = {
+            presentations: [
+                invalidEmailCredential as Credential
+            ],
+            evidences: [
+                idDocumentEvidence as Evidence
+            ]
+        };
+        await presentationManager.addCredentialArtifacts(artifacts);
+
+        const evidences = await presentationManager.listEvidences();
+        expect(evidences).toHaveLength(0);
+        done();
+    });
+
     it('should get the list of all claims', async (done) => {
         const presentationManager = new VerifiablePresentationManager({});
 
@@ -138,6 +181,26 @@ describe('VerifiablePresentationManager', () => {
         done();
     });
 
+    it('should get the list of claims from verified presentations only if allowGetUnverified is false', async (done) => {
+        const options = {
+            allowGetUnverified: false,
+            notThrow: true
+        };
+        const presentationManager = new VerifiablePresentationManager(options);
+
+        const artifacts : CredentialArtifacts = {
+            presentations: [
+                invalidEmailCredential as Credential,
+                phoneNumberCredential as Credential
+            ],
+        };
+        await presentationManager.addCredentialArtifacts(artifacts);
+
+        const claims = await presentationManager.listClaims();
+        expect(claims).toHaveLength(phoneNumberCredential.proof.leaves.length);
+        done();
+    });
+
     it('should get the list of the claims of a presentation', async (done) => {
         const presentationManager = new VerifiablePresentationManager({});
         await presentationManager.addCredentialArtifacts(artifacts);
@@ -153,6 +216,29 @@ describe('VerifiablePresentationManager', () => {
         done();
     });
 
+    it('should get an empty list if the presentation is not verified and allowGetUnverified is false', async (done) => {
+        const options = {
+            allowGetUnverified: false,
+            notThrow: true
+        };
+        const presentationManager = new VerifiablePresentationManager(options);
+
+        const artifacts : CredentialArtifacts = {
+            presentations: [
+                invalidEmailCredential as Credential,
+            ],
+        };
+        await presentationManager.addCredentialArtifacts(artifacts);
+
+        const emailPresentation = {
+            identifier: invalidEmailCredential.identifier,
+            uid: invalidEmailCredential.id
+        };
+        const claims = await presentationManager.listPresentationClaims(emailPresentation as PresentationReference);
+        expect(claims).toHaveLength(0);
+        done();
+    });
+
     it('should get a claim value', async (done) => {
         const presentationManager = new VerifiablePresentationManager({});
         await presentationManager.addCredentialArtifacts(artifacts);
@@ -164,6 +250,27 @@ describe('VerifiablePresentationManager', () => {
         expect(JSON.stringify(phoneNumberCredential.claim)).toEqual(
             expect.stringContaining(JSON.stringify(claimValue))
         );
+        done();
+    });
+
+    it('should get unverified values if allowGetUnverified is true', async (done) => {
+        const options = {
+            allowGetUnverified: true,
+            notThrow: true
+        };
+        const presentationManager = new VerifiablePresentationManager(options);
+
+        const artifacts : CredentialArtifacts = {
+            presentations: [
+                invalidEmailCredential as Credential,
+            ],
+        };
+
+        await presentationManager.addCredentialArtifacts(artifacts);
+        const claims = await presentationManager.listClaims();
+        const claimValue = await presentationManager.getClaimValue(claims[0]);
+
+        expect(claimValue).toBeDefined();
         done();
     });
 
@@ -234,6 +341,30 @@ describe('VerifiablePresentationManager', () => {
         done();
     });
 
+    it('should only return the claims that matches the search and the presentation is verified if allowGetUnverified is false', async (done) => {
+        const options = {
+            allowGetUnverified: false,
+            notThrow: true
+        };
+        const presentationManager = new VerifiablePresentationManager(options);
+
+        const artifacts : CredentialArtifacts = {
+            presentations: [
+                invalidEmailCredential as Credential,
+                phoneNumberCredential as Credential
+            ],
+        };
+        await presentationManager.addCredentialArtifacts(artifacts);
+
+        const criteria = {
+            identifier: 'cvc:Meta:issuanceDate'
+        };
+
+        const claims = await presentationManager.findClaims(criteria as SearchClaimCriteria);
+        expect(claims).toHaveLength(1); // only the claim from phone number
+        done();
+    });
+
     it('should verify all artifacts and return the total of verified items', async (done) => {
         const presentationManager = new VerifiablePresentationManager({});
         await presentationManager.addCredentialArtifacts(artifactsWithEvidences);
@@ -294,6 +425,63 @@ describe('VerifiablePresentationManager', () => {
         const status = await presentationManager.verifyAllArtifacts();
         expect(status.totalEvidences).toBe(1);
         expect(status.verifiedEvidences).toBe(0);
+        done();
+    });
+
+    it('should return true if all artifacts is verified', async (done) => {
+        const presentationManager = new VerifiablePresentationManager({});
+        await presentationManager.addCredentialArtifacts(artifactsWithEvidences);
+
+        const isAllVerified = await presentationManager.isAllArtifactsVerified();
+        expect(isAllVerified).toBeTruthy();
+        done();
+    });
+
+    it('should return false if not all artifacts is verified', async (done) => {
+        const options = {
+            notThrow: true
+        }
+        const presentationManager = new VerifiablePresentationManager(options);
+
+        const artifacts : CredentialArtifacts = {
+            presentations: [invalidEmailCredential as Credential],
+        };
+        await presentationManager.addCredentialArtifacts(artifacts);
+
+        const isAllVerified = await presentationManager.isAllArtifactsVerified();
+        expect(isAllVerified).toBeFalsy();
+        done();
+    });
+
+    it('should purge the invalid artifacts', async (done) => {
+        const options = {
+            notThrow: true
+        }
+        const presentationManager = new VerifiablePresentationManager(options);
+
+        const artifacts : CredentialArtifacts = {
+            presentations: [
+                phoneNumberCredential as Credential,
+                invalidEmailCredential as Credential
+            ],
+            evidences: [ idDocumentEvidence as Evidence ]
+        };
+        const statusBefore = await presentationManager.addCredentialArtifacts(artifacts);
+        expect(statusBefore.totalPresentations).toBe(2);
+        expect(statusBefore.totalEvidences).toBe(1);
+
+        const statusAfterPurge = await presentationManager.purgeInvalidArtifacts();
+        expect(statusAfterPurge.totalPresentations).toBe(1);
+        expect(statusAfterPurge.totalEvidences).toBe(0);
+
+        const presentations = await presentationManager.listPresentations();
+        expect(presentations).toHaveLength(1);
+
+        const evidences = await presentationManager.listEvidences();
+        expect(evidences).toHaveLength(0);
+
+        const claims = await presentationManager.listClaims();
+        expect(claims).toHaveLength(phoneNumberCredential.proof.leaves.length);
         done();
     });
 });

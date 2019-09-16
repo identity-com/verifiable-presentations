@@ -16,10 +16,9 @@ export const secureFastReadManager = new VerifiablePresentationManager({skipGetV
  * Mock manager that should only be used in test or development
  */
 export const insecureManager = new VerifiablePresentationManager({
-    skipGetVerify: true,
     skipAddVerify: true,
-    allowListUnverified: true,
+    skipGetVerify: true,
     allowGetUnverified: true,
-    allowMocks:true
+    notThrow: true
 });
 

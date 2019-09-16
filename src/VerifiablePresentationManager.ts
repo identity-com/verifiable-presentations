@@ -24,10 +24,6 @@ export interface VPMOptions {
      */
     allowGetUnverified?: boolean;
     /**
-     * Allow to list managed content if both verifications are disabled. default, false.
-     */
-    allowListUnverified?: boolean;
-    /**
      *  Avoid to throw exceptions. Useful for batch operation but is not a good practice. default, false.
      */
     notThrow?: boolean
@@ -165,16 +161,15 @@ export class VerifiablePresentationManager {
             skipAddVerify: false,
             skipGetVerify: false,
             allowGetUnverified: false,
-            allowListUnverified: false,
             notThrow: false,
             ...options
         };
-        this.presentations = [];
-        this.claims = [];
         this.artifacts = {
             presentations: [],
             evidences: []
         }
+        this.presentations = [];
+        this.claims = [];
         this.status = {
             config: options,
             verifiedPresentations: 0,
@@ -220,7 +215,7 @@ export class VerifiablePresentationManager {
     /**
      * List managed presentations returning in accordance with the config
      *
-     * if `allowListUnverified` is true, presentations that were not verified yet will be returned.
+     * if `allowGetUnverified` is true, presentations that were not verified yet will be returned.
      * but known invalid presentations are never returned
      *
      */
@@ -229,29 +224,42 @@ export class VerifiablePresentationManager {
         if (!this.options.skipGetVerify) {
             verifiedPresentationRefs = await this.getVerifiedPresentationRefs();
         }
-        return (this.options.allowListUnverified) ? this.presentations : verifiedPresentationRefs;
+        return (this.options.allowGetUnverified) ? this.presentations : verifiedPresentationRefs;
     };
 
     /**
      * List managed claim returning in accordance with the config
      *
-     * if `allowListUnverified` is true, claim that were not verified yet will be returned.
+     * if `allowGetUnverified` is true, claim that were not verified yet will be returned.
      * but known invalid presentations are never returned
      *
      */
     async listClaims(): Promise<AvailableClaim[]> {
-        return this.claims;
+        let claimsFromVerifiedPresentations : AvailableClaim[] = [];
+        if (!this.options.skipGetVerify) {
+            const verifiedPresentationRefs = await this.getVerifiedPresentationRefs();
+             claimsFromVerifiedPresentations = _.filter(
+                this.claims,
+                (claim : AvailableClaim) => verifiedPresentationRefs.includes(claim.credentialRef)
+            );
+        }
+        return (this.options.allowGetUnverified) ? this.claims : claimsFromVerifiedPresentations;
     };
 
     /**
      * List managed claim of a given Credential type returning in accordance with the config
      *
-     * if `allowListUnverified` is true, claim that were not verified yet will be returned.
+     * if `allowGetUnverified` is true, claim that were not verified yet will be returned.
      * but known invalid presentations are never returned
      *
      */
     async listPresentationClaims(presentationRef: PresentationReference): Promise<AvailableClaim[]> {
-        return _.filter(this.claims, { credentialRef: presentationRef });
+        let verified = false;
+        if (!this.options.skipGetVerify) {
+            verified = await this.verifyPresentation(presentationRef);
+        }
+        const claims = _.filter(this.claims, { credentialRef: presentationRef });
+        return (this.options.allowGetUnverified || verified) ? claims : [];
     };
 
     /**
@@ -260,27 +268,55 @@ export class VerifiablePresentationManager {
      * the search never includes known invalid claims
      */
     async findClaims(criteria: SearchClaimCriteria): Promise<AvailableClaim[] | null> {
-        return _.filter(this.claims, criteria);
+        const claims = _.filter(this.claims, criteria);
+
+        const verifiedPresentations : PresentationReference[] = [];
+        if (!this.options.skipGetVerify) {
+            const presentationRefs = claims.map((claim : AvailableClaim) => claim.credentialRef);
+            for (const presentationRef of presentationRefs) {
+                const verified = await this.verifyPresentation(presentationRef);
+                if (verified) verifiedPresentations.push(presentationRef);
+            }
+        }
+
+        return (this.options.allowGetUnverified)
+            ? claims
+            : _.filter(claims, (claim : AvailableClaim) => verifiedPresentations.includes(claim.credentialRef));
     }
 
     /**
      * return the STRING value of a valid avaliable claim.
-     * if `allowGetUnverified` is true it return unverified values.
+     * if `allowGetUnverified` is true it returns unverified values.
      * if `notThrow` is true return null for known invalid claims
      */
     async getClaimValue(availableClaim: AvailableClaim): Promise<any | null> {
         const presentation = this.getPresentation(availableClaim);
-        if (presentation && presentation.claim) {
-            return _.get(presentation.claim, availableClaim.claimPath);
+        if (!presentation || !presentation.claim) {
+            return null;
         }
-        return null;
+
+        let verified = false;
+        if (!this.options.skipGetVerify) {
+           verified = await this.verifyPresentation(availableClaim.credentialRef);
+        };
+        if (!verified && !this.options.allowGetUnverified) {
+            return null; 
+        }
+
+        return _.get(presentation.claim, availableClaim.claimPath);
     }
 
     /**
      * List managed evidences
+     * if `allowGetUnverified` is true it return unverified values.
      */
     async listEvidences() : Promise<Evidence[]> {
-        return this.artifacts.evidences;
+        let verifiedEvidences : Evidence[] = [];
+        if (!this.options.skipGetVerify) {
+            const verifiedPresentations = await this.verifyPresentations(true);
+            verifiedEvidences = this.verifyEvidences(verifiedPresentations);
+        }
+        return (this.options.allowGetUnverified) ? this.artifacts.evidences : verifiedEvidences;
     }
 
     /**
@@ -314,14 +350,42 @@ export class VerifiablePresentationManager {
     // @ts-ignore
     async wasGrantedForDSR(presentationRef: PresentationReference, originalRequestDSR: DSRJSON) {
         // @ts-ignore
+        // TODO
     }
 
-    isAllArtifactsVerified() {
-        // @ts-ignore
+    /**
+     * Return true if all artifacts are verified, otherwise return false
+     *
+     * if neither `skipGetVerify` or `notThrow` are true, it throws an acception
+     */
+    async isAllArtifactsVerified() {
+        const status = this.options.skipGetVerify ? this.status : await this.verifyAllArtifacts();
+        return (status.totalPresentations === status.verifiedPresentations)
+            && (status.totalEvidences === status.verifiedEvidences);
     }
 
-    purgeInvalidArtifacts() {
-        // @ts-ignore
+    /**
+     * Remove the invalid artifacts and return a status of the resultant artifacts 
+     */
+    async purgeInvalidArtifacts() : Promise<VerifiablePresentationManagerStatus> {
+        const verifiedPresentations = await this.verifyPresentations();
+        const verifiedIds = _.map(verifiedPresentations, (presentation : Credential) => presentation.id);
+        const verifiedEvidences = this.verifyEvidences(verifiedPresentations);
+        this.artifacts = {
+            presentations: verifiedPresentations,
+            evidences: verifiedEvidences 
+        }
+        _.remove(
+            this.presentations,
+            (presentationRef : PresentationReference) => !verifiedIds.includes(presentationRef.uid)
+        );
+        _.remove(
+            this.claims,
+            (claim : AvailableClaim) => !verifiedIds.includes(claim.credentialRef.uid)
+        );
+        this.status.totalPresentations = this.artifacts.presentations.length;
+        this.status.totalEvidences = this.artifacts.evidences.length;
+        return this.status;
     }
 
     /*
@@ -365,7 +429,20 @@ export class VerifiablePresentationManager {
         }));
     }
 
-    private async verifyPresentations() : Promise<Credential[]> {
+    private async verifyPresentation(presentationRef : PresentationReference) : Promise<boolean> {
+        const presentation = _.find(this.artifacts.presentations, (presentation : Credential) => (
+            presentation.id === presentationRef.uid
+        ));
+        const verified = await this.verifier.cryptographicallySecureVerify(presentation);
+
+        if (!this.options.notThrow && !verified) {
+            throw new Error(`Unverified Presentation: ${presentation.id}`);
+        }
+
+        return verified;
+    }
+
+    private async verifyPresentations(notThrow = this.options.notThrow) : Promise<Credential[]> {
         const verifiedPresentations : Credential[] = [];
         for (const presentation of this.artifacts.presentations) {
             const verified = await this.verifier.cryptographicallySecureVerify(presentation);
@@ -373,19 +450,17 @@ export class VerifiablePresentationManager {
                 verifiedPresentations.push(presentation);
             }
         }
-
-        if (!this.options.notThrow) {
+        if (!notThrow) {
             const unverifiedPresentations = _.difference(this.artifacts.presentations, verifiedPresentations);
             if (!_.isEmpty(unverifiedPresentations)) {
                 const unverifiedIds = _.map(unverifiedPresentations, (presentation : Credential) => presentation.id);
                 throw new Error(`Unverified Presentations: ${_.join(unverifiedIds)}`);
             }
         }
-
         return verifiedPresentations;
     }
 
-    private verifyEvidences(verifiedPresentations : Credential[]) : Evidence[] {
+    private verifyEvidences(verifiedPresentations : Credential[], notThrow = this.options.notThrow) : Evidence[] {
         const verifiedEvidences : Evidence[] = [];
         this.artifacts.evidences.forEach(evidence => {
             //TODO check sha256
@@ -394,15 +469,13 @@ export class VerifiablePresentationManager {
                 verifiedEvidences.push(evidence);
             }
         });
-
-        if (!this.options.notThrow) {
+        if (!notThrow) {
             const unverifiedEvidences = _.difference(this.artifacts.evidences, verifiedEvidences);
             if (!_.isEmpty(unverifiedEvidences)) {
                 const unverifiedIds = _.map(unverifiedEvidences, (evidence : Evidence) => evidence.content);
                 throw new Error(`Unverified Evidences: ${_.join(unverifiedIds)}`);
             }
         }
-
         return verifiedEvidences;
     }
 
