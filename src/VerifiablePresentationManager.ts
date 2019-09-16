@@ -275,7 +275,9 @@ export class VerifiablePresentationManager {
             const presentationRefs = claims.map((claim : AvailableClaim) => claim.credentialRef);
             for (const presentationRef of presentationRefs) {
                 const verified = await this.verifyPresentation(presentationRef);
-                if (verified) verifiedPresentations.push(presentationRef);
+                if (verified) {
+                    verifiedPresentations.push(presentationRef);
+                }
             }
         }
 
@@ -389,7 +391,7 @@ export class VerifiablePresentationManager {
     }
 
     /*
-     * Private functions
+     * Private mthods
      */
 
     private getPresentation(availableClaim : AvailableClaim) : Credential | undefined {
@@ -430,13 +432,13 @@ export class VerifiablePresentationManager {
     }
 
     private async verifyPresentation(presentationRef : PresentationReference) : Promise<boolean> {
-        const presentation = _.find(this.artifacts.presentations, (presentation : Credential) => (
+        const credential = _.find(this.artifacts.presentations, (presentation : Credential) => (
             presentation.id === presentationRef.uid
         ));
-        const verified = await this.verifier.cryptographicallySecureVerify(presentation);
+        const verified = await this.verifier.cryptographicallySecureVerify(credential);
 
         if (!this.options.notThrow && !verified) {
-            throw new Error(`Unverified Presentation: ${presentation.id}`);
+            throw new Error(`Unverified Presentation: ${credential.id}`);
         }
 
         return verified;
@@ -463,7 +465,7 @@ export class VerifiablePresentationManager {
     private verifyEvidences(verifiedPresentations : Credential[], notThrow = this.options.notThrow) : Evidence[] {
         const verifiedEvidences : Evidence[] = [];
         this.artifacts.evidences.forEach(evidence => {
-            //TODO check sha256
+            // TODO check sha256
             const presentation = this.findEvidencePresentation(evidence);
             if (presentation && _.find(verifiedPresentations, { id: presentation.id })) {
                 verifiedEvidences.push(evidence);
