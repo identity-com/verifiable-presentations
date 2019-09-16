@@ -225,7 +225,11 @@ export class VerifiablePresentationManager {
      *
      */
     async listPresentations(): Promise<PresentationReference[]> {
-        return this.presentations;
+        let verifiedPresentationRefs : PresentationReference[] = [];
+        if (!this.options.skipGetVerify) {
+            verifiedPresentationRefs = await this.getVerifiedPresentationRefs();
+        }
+        return (this.options.allowListUnverified) ? this.presentations : verifiedPresentationRefs;
     };
 
     /**
@@ -246,7 +250,7 @@ export class VerifiablePresentationManager {
      * but known invalid presentations are never returned
      *
      */
-    async listPresentationClaims(presentationRef: PresentationReference): Promise<AvailableClaim[]>{
+    async listPresentationClaims(presentationRef: PresentationReference): Promise<AvailableClaim[]> {
         return _.filter(this.claims, { credentialRef: presentationRef });
     };
 
@@ -400,5 +404,14 @@ export class VerifiablePresentationManager {
         }
 
         return verifiedEvidences;
+    }
+
+    private async getVerifiedPresentationRefs(): Promise<PresentationReference[]> {
+        const verifiedPresentations = await this.verifyPresentations();
+        const verifiedIds = _.map(verifiedPresentations, (presentation : Credential) => presentation.id);
+        return _.filter(
+            this.presentations,
+            (presentation : PresentationReference) => verifiedIds.includes(presentation.uid)
+        );
     }
 }

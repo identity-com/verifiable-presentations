@@ -77,6 +77,40 @@ describe('VerifiablePresentationManager', () => {
         done();
     });
 
+    it('should get the list of presentations including the unverified if allowListUnverified is true', async (done) => {
+        const options = {
+            allowListUnverified: true,
+            notThrow: true
+        };
+        const presentationManager = new VerifiablePresentationManager(options);
+
+        const artifacts : CredentialArtifacts = {
+            presentations: [invalidEmailCredential as Credential],
+        };
+        await presentationManager.addCredentialArtifacts(artifacts);
+
+        const presentations = await presentationManager.listPresentations();
+        expect(presentations).toHaveLength(1);
+        done();
+    });
+
+    it('should get the list of presentations excluding the unverified if allowListUnverified is false', async (done) => {
+        const options = {
+            allowListUnverified: false,
+            notThrow: true
+        };
+        const presentationManager = new VerifiablePresentationManager(options);
+
+        const artifacts : CredentialArtifacts = {
+            presentations: [invalidEmailCredential as Credential],
+        };
+        await presentationManager.addCredentialArtifacts(artifacts);
+
+        const presentations = await presentationManager.listPresentations();
+        expect(presentations).toHaveLength(0);
+        done();
+    });
+
     it('should get the list of evidences', async (done) => {
         const presentationManager = new VerifiablePresentationManager({});
         await presentationManager.addCredentialArtifacts(artifactsWithEvidences);
