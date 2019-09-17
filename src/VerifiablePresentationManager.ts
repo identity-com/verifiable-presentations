@@ -353,6 +353,7 @@ export class VerifiablePresentationManager {
     async wasGrantedForDSR(presentationRef: PresentationReference, originalRequestDSR: DSRJSON) {
         // @ts-ignore
         // TODO
+        throw new Error(`Not implemented`);
     }
 
     /**

@@ -484,4 +484,11 @@ describe('VerifiablePresentationManager', () => {
         expect(claims).toHaveLength(phoneNumberCredential.proof.leaves.length);
         done();
     });
+
+    it('should throw not implemented exception when calling wasGrantedForDSR', async (done) => {
+        const presentationManager = new VerifiablePresentationManager({});
+        await presentationManager.addCredentialArtifacts(artifacts);
+        expect(presentationManager.wasGrantedForDSR(null, null)).rejects.toThrow();
+        done();
+    })
 });
