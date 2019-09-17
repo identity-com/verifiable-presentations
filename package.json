@@ -12,6 +12,7 @@
     "lint:fix": "tslint -p tsconfig.json --fix",
     "build": "tsc",
     "test": "jest --config jestconfig.json --coverage",
+    "test:file": "jest --config jestconfig.json --",
     "docs": "typedoc --out docs src && touch docs/.nojekyll",
     "prepare": "npm run build",
     "prepublishOnly": "npm test && npm run lint",
@@ -42,7 +43,7 @@
     "typescript": "^3.5.3"
   },
   "dependencies": {
-    "@identity.com/credential-commons": "git+https://github.com/identity-com/credential-commons.git#bump-version",
+    "@identity.com/credential-commons": "^1.0.27",
     "@types/lodash": "^4.14.138"
   }
 }
