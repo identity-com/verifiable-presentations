@@ -45,3 +45,5 @@ claims = await presentationManager.findClaims(criteria);
 
 const claimValue = await presentationManager.getClaimValue(claims[0]);
 ```
+
+For more detailed working examples, please, refer to the tests in [`index.test.ts`](src/__tests__/index.test.ts).

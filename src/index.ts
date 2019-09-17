@@ -7,11 +7,16 @@ export const secureRedundantManager = new VerifiablePresentationManager({});
 /**
  * Good secure manager that favor the ingestion performance by skipping the verify only on that process
  */
-export const secureFastIngestManager = new VerifiablePresentationManager({skipAddVerify: true});
+export const secureFastIngestManager = new VerifiablePresentationManager({
+    skipAddVerify: true
+});
 /**
  * Good secure manager that favor the read performance by skipping the verify only on that process
  */
-export const secureFastReadManager = new VerifiablePresentationManager({skipGetVerify: true});
+export const secureFastReadManager = new VerifiablePresentationManager({
+    skipGetVerify: true,
+    allowGetUnverified: true
+});
 /**
  * Mock manager that should only be used in test or development
  */

@@ -371,9 +371,9 @@ export class VerifiablePresentationManager {
      * Remove the invalid artifacts and return a status of the resultant artifacts 
      */
     async purgeInvalidArtifacts() : Promise<VerifiablePresentationManagerStatus> {
-        const verifiedPresentations = await this.verifyPresentations();
+        const verifiedPresentations = await this.verifyPresentations(true);
         const verifiedIds = _.map(verifiedPresentations, (presentation : Credential) => presentation.id);
-        const verifiedEvidences = this.verifyEvidences(verifiedPresentations);
+        const verifiedEvidences = this.verifyEvidences(verifiedPresentations, true);
         this.artifacts = {
             presentations: verifiedPresentations,
             evidences: verifiedEvidences 
