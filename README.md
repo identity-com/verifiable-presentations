@@ -14,9 +14,9 @@ import { secureRedundantManager } from '../index';
 
 const artifacts = {
     presentations: [
-        emailCredential,
-        phoneNumberCredential,
-        idDocumentCredential
+        emailCredentialJson,
+        phoneNumberCredentialJson,
+        idDocumentCredentialJson
     ],
     evidences: [
         idDocumentEvidence

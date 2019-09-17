@@ -13,6 +13,7 @@ import emailCredential from './fixtures/emailCredential.json';
 import invalidEmailCredential from './fixtures/invalidEmailCredential.json';
 import idDocumentCredential from './fixtures/idDocumentCredential.json';
 import idDocumentEvidence from './fixtures/idDocumentSelfieEvidence.json';
+import idDocumentPartialCredential from './fixtures/idDocumentPartialCredential.json';
 
 describe('VerifiablePresentationManager', () => {
     const artifacts = {
@@ -44,6 +45,23 @@ describe('VerifiablePresentationManager', () => {
         expect(status.verifiedPresentations).toEqual(1);
         expect(status.totalEvidences).toEqual(1);
         expect(status.verifiedEvidences).toEqual(1);
+        done();
+    });
+
+    it('should add and verify a partial credential, with a subset of claims', async (done) => {
+        const presentationManager = new VerifiablePresentationManager({});
+        const artifacts = {
+            presentations: [
+                idDocumentPartialCredential as Credential
+            ]
+        };
+        const status = await presentationManager.addCredentialArtifacts(artifacts);
+        expect(status).toBeDefined();
+        expect(status.totalPresentations).toEqual(1);
+        expect(status.verifiedPresentations).toEqual(1);
+
+        const claims = await presentationManager.listClaims();
+        expect(claims).toHaveLength(1);
         done();
     });
 
