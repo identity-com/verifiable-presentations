@@ -57,6 +57,11 @@ describe('Index', () => {
             phoneNumberCredential.proof.leaves.length + idDocumentCredential.proof.leaves.length
         );
 
+        const presentationClaims = await secureRedundantManager.listPresentationClaims(presentations[0]);
+        expect(presentationClaims).toHaveLength(
+            phoneNumberCredential.proof.leaves.length
+        );
+
         const claimValue = await secureRedundantManager.getClaimValue(claims[0]);
         expect(claimValue).toBeDefined();
 
@@ -111,6 +116,11 @@ describe('Index', () => {
             phoneNumberCredential.proof.leaves.length + idDocumentCredential.proof.leaves.length
         );
 
+        const presentationClaims = await secureFastIngestManager.listPresentationClaims(presentations[0]);
+        expect(presentationClaims).toHaveLength(
+            phoneNumberCredential.proof.leaves.length
+        );
+
         const claimValue = await secureFastIngestManager.getClaimValue(claims[0]);
         expect(claimValue).toBeDefined();
 
@@ -160,6 +170,11 @@ describe('Index', () => {
         const claims = await secureFastReadManager.listClaims();
         expect(claims).toHaveLength(
             phoneNumberCredential.proof.leaves.length + idDocumentCredential.proof.leaves.length
+        );
+
+        const presentationClaims = await secureFastReadManager.listPresentationClaims(presentations[0]);
+        expect(presentationClaims).toHaveLength(
+            phoneNumberCredential.proof.leaves.length
         );
 
         const claimValue = await secureFastReadManager.getClaimValue(claims[0]);
@@ -215,6 +230,11 @@ describe('Index', () => {
         const claims = await insecureManager.listClaims();
         expect(claims).toHaveLength(
             phoneNumberCredential.proof.leaves.length + idDocumentCredential.proof.leaves.length
+        );
+
+        const presentationClaims = await insecureManager.listPresentationClaims(presentations[0]);
+        expect(presentationClaims).toHaveLength(
+            phoneNumberCredential.proof.leaves.length
         );
 
         const claimValue = await insecureManager.getClaimValue(claims[0]);
