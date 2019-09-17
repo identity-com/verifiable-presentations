@@ -1,18 +1,13 @@
 /**
  * A Verifiable Claim Identifier
  */
-// TODO complete the list
-export type ClaimIdentifier = 'credential-cvc:Email-v1'
-    | 'claim-cvc:Contact.phoneNumber-v1';
+export type ClaimIdentifier = string;
 
 /**
  * A VerifiableCredential Identifier
  * This define the type of the verifiable credential or verifiable presentation
  */
-// TODO complete the list
-export type CredentialIdentifier = 'credential-cvc:Email-v1'
-    | 'credential-cvc:PhoneNumber-v1'
-    | 'credential-cvc:GenericDocumentId-v1';
+export type CredentialIdentifier = string;
 
 /**
  * Credential Proof Leave Node Representation
