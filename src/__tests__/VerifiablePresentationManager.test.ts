@@ -446,6 +446,27 @@ describe('VerifiablePresentationManager', () => {
         done();
     });
 
+    it('should consider an evidence invalid if the base64Encoded hash does not match the sha256 value', async (done) => {
+        const options = {
+            notThrow: true
+        }
+        const presentationManager = new VerifiablePresentationManager(options);
+
+        const invalidEvidence = _.cloneDeep(idDocumentEvidence);
+        invalidEvidence.base64Encoded = _.replace(invalidEvidence.base64Encoded, /=$/, 'extra-str=');
+
+        const artifacts : CredentialArtifacts = {
+            presentations: [ idDocumentCredential as Credential ],
+            evidences: [ invalidEvidence as Evidence ]
+        };
+        await presentationManager.addCredentialArtifacts(artifacts);
+
+        const status = await presentationManager.verifyAllArtifacts();
+        expect(status.totalEvidences).toBe(1);
+        expect(status.verifiedEvidences).toBe(0);
+        done();
+    });
+
     it('should return true if all artifacts is verified', async (done) => {
         const presentationManager = new VerifiablePresentationManager({});
         await presentationManager.addCredentialArtifacts(artifactsWithEvidences);

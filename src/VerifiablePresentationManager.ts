@@ -1,3 +1,4 @@
+import crypto from 'crypto';
 import _ from 'lodash';
 import {
     ClaimIdentifier,
@@ -463,15 +464,25 @@ export class VerifiablePresentationManager {
         return verifiedPresentations;
     }
 
+    private verifyEvidence(evidence : Evidence, verifiedPresentations : Credential[]) : boolean {
+        // check if there is a valid presentation referencing the evidence
+        const presentation = this.findEvidencePresentation(evidence);
+        if (!presentation || !_.find(verifiedPresentations, { id: presentation.id })) {
+            return false;
+        }
+
+        // check if the base64 data hash matches the sha256 value
+        const dataPrefix = /^data:.*;base64,/;
+        const base64Data = _.replace(evidence.base64Encoded, dataPrefix, ''); // remove prefix
+        const decodedData = Buffer.from(base64Data, 'base64');
+        const calculatedSha256 = crypto.createHash('sha256').update(decodedData).digest('hex');
+        return (calculatedSha256 === evidence.sha256);
+    }
+
     private verifyEvidences(verifiedPresentations : Credential[], notThrow = this.options.notThrow) : Evidence[] {
-        const verifiedEvidences : Evidence[] = [];
-        this.artifacts.evidences.forEach(evidence => {
-            // TODO check sha256
-            const presentation = this.findEvidencePresentation(evidence);
-            if (presentation && _.find(verifiedPresentations, { id: presentation.id })) {
-                verifiedEvidences.push(evidence);
-            }
-        });
+        const verifiedEvidences = _.filter(this.artifacts.evidences, (evidence : Evidence) => (
+            this.verifyEvidence(evidence, verifiedPresentations)
+        ));
         if (!notThrow) {
             const unverifiedEvidences = _.difference(this.artifacts.evidences, verifiedEvidences);
             if (!_.isEmpty(unverifiedEvidences)) {

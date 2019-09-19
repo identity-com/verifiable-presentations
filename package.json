@@ -44,6 +44,7 @@
   },
   "dependencies": {
     "@identity.com/credential-commons": "^1.0.27",
-    "@types/lodash": "^4.14.138"
+    "@types/lodash": "^4.14.138",
+    "crypto": "^1.0.1"
   }
 }
