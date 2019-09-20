@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>CredentialArtifacts | verifiable-presentations</title>
+	<title>PresentationVerifier | verifiable-presentations</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,13 +56,13 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_verifiablepresentationmanager_.html">&quot;VerifiablePresentationManager&quot;</a>
+					<a href="../modules/_presentationverifier_.html">&quot;PresentationVerifier&quot;</a>
 				</li>
 				<li>
-					<a href="_verifiablepresentationmanager_.credentialartifacts.html">CredentialArtifacts</a>
+					<a href="_presentationverifier_.presentationverifier.html">PresentationVerifier</a>
 				</li>
 			</ul>
-			<h1>Interface CredentialArtifacts</h1>
+			<h1>Class PresentationVerifier</h1>
 		</div>
 	</div>
 </header>
@@ -72,7 +72,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Optional sets of Verifiable Presentations and/or Evidences in a JSONformat</p>
+						<p>Provide utility methods to verify a presentation/credential</p>
 					</div>
 				</div>
 			</section>
@@ -80,7 +80,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">CredentialArtifacts</span>
+						<span class="target">PresentationVerifier</span>
 					</li>
 				</ul>
 			</section>
@@ -89,46 +89,147 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
+							<h3>Constructors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="_presentationverifier_.presentationverifier.html#constructor" class="tsd-kind-icon">constructor</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_verifiablepresentationmanager_.credentialartifacts.html#evidences" class="tsd-kind-icon">evidences</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_verifiablepresentationmanager_.credentialartifacts.html#presentations" class="tsd-kind-icon">presentations</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_presentationverifier_.presentationverifier.html#verifyanchor" class="tsd-kind-icon">verify<wbr>Anchor</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_presentationverifier_.presentationverifier.html#verifysignature" class="tsd-kind-icon">verify<wbr>Signature</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_presentationverifier_.presentationverifier.html#cryptographicallysecureverify" class="tsd-kind-icon">cryptographically<wbr>Secure<wbr>Verify</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_presentationverifier_.presentationverifier.html#noncryptographicallysecureverify" class="tsd-kind-icon">non<wbr>Cryptographically<wbr>Secure<wbr>Verify</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="evidences" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> evidences</h3>
-					<div class="tsd-signature tsd-kind-icon">evidences<span class="tsd-signature-symbol">:</span> <a href="_verifiablepresentationmanager_.evidence.html" class="tsd-signature-type">Evidence</a><span class="tsd-signature-symbol">[]</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f1f7481/src/VerifiablePresentationManager.ts#L119">VerifiablePresentationManager.ts:119</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>an array of JSONs with Evidences (Credentials or Presentation)</p>
-						</div>
-					</div>
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Presentation<wbr>Verifier<span class="tsd-signature-symbol">(</span>verifyAnchor<span class="tsd-signature-symbol">?: </span><a href="../modules/_presentationverifier_.html#verifyfunction" class="tsd-signature-type">VerifyFunction</a>, verifySignature<span class="tsd-signature-symbol">?: </span><a href="../modules/_presentationverifier_.html#verifyfunction" class="tsd-signature-type">VerifyFunction</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_presentationverifier_.presentationverifier.html" class="tsd-signature-type">PresentationVerifier</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f1f7481/src/PresentationVerifier.ts#L12">PresentationVerifier.ts:12</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> verifyAnchor: <a href="../modules/_presentationverifier_.html#verifyfunction" class="tsd-signature-type">VerifyFunction</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> verifySignature: <a href="../modules/_presentationverifier_.html#verifyfunction" class="tsd-signature-type">VerifyFunction</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="_presentationverifier_.presentationverifier.html" class="tsd-signature-type">PresentationVerifier</a></h4>
+						</li>
+					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="presentations" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> presentations</h3>
-					<div class="tsd-signature tsd-kind-icon">presentations<span class="tsd-signature-symbol">:</span> <a href="_credential_.credential.html" class="tsd-signature-type">Credential</a><span class="tsd-signature-symbol">[]</span></div>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="verifyanchor" class="tsd-anchor"></a>
+					<h3>verify<wbr>Anchor</h3>
+					<div class="tsd-signature tsd-kind-icon">verify<wbr>Anchor<span class="tsd-signature-symbol">:</span> <a href="../modules/_presentationverifier_.html#verifyfunction" class="tsd-signature-type">VerifyFunction</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f1f7481/src/VerifiablePresentationManager.ts#L114">VerifiablePresentationManager.ts:114</a></li>
+							<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f1f7481/src/PresentationVerifier.ts#L11">PresentationVerifier.ts:11</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>an array of JSONs with Verifiable (Credentials or Presentation)</p>
-						</div>
-					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="verifysignature" class="tsd-anchor"></a>
+					<h3>verify<wbr>Signature</h3>
+					<div class="tsd-signature tsd-kind-icon">verify<wbr>Signature<span class="tsd-signature-symbol">:</span> <a href="../modules/_presentationverifier_.html#verifyfunction" class="tsd-signature-type">VerifyFunction</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f1f7481/src/PresentationVerifier.ts#L12">PresentationVerifier.ts:12</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="cryptographicallysecureverify" class="tsd-anchor"></a>
+					<h3>cryptographically<wbr>Secure<wbr>Verify</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">cryptographically<wbr>Secure<wbr>Verify<span class="tsd-signature-symbol">(</span>credential<span class="tsd-signature-symbol">: </span><a href="../interfaces/_credential_.credential.html" class="tsd-signature-type">Credential</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f1f7481/src/PresentationVerifier.ts#L37">PresentationVerifier.ts:37</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Cryptographically secure verify the Credential.
+									Performs a non cryptographically secure verification, attestation check and signature validation.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>credential: <a href="../interfaces/_credential_.credential.html" class="tsd-signature-type">Credential</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A credential object with expirationDate, claim and proof</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>true if verified, false otherwise.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="noncryptographicallysecureverify" class="tsd-anchor"></a>
+					<h3>non<wbr>Cryptographically<wbr>Secure<wbr>Verify</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">non<wbr>Cryptographically<wbr>Secure<wbr>Verify<span class="tsd-signature-symbol">(</span>credential<span class="tsd-signature-symbol">: </span><a href="../interfaces/_credential_.credential.html" class="tsd-signature-type">Credential</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f1f7481/src/PresentationVerifier.ts#L25">PresentationVerifier.ts:25</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Non cryptographically secure verify the Credential
+									Performs a synchronous proof verification only.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>credential: <a href="../interfaces/_credential_.credential.html" class="tsd-signature-type">Credential</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A credential object with expirationDate, claim and proof</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							<p>true if verified, false otherwise.</p>
+						</li>
+					</ul>
 				</section>
 			</section>
 		</div>
@@ -144,10 +245,10 @@
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_credential_.html">"<wbr>Credential"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class="current tsd-kind-external-module">
 						<a href="../modules/_presentationverifier_.html">"<wbr>Presentation<wbr>Verifier"</a>
 					</li>
-					<li class="current tsd-kind-external-module">
+					<li class=" tsd-kind-external-module">
 						<a href="../modules/_verifiablepresentationmanager_.html">"<wbr>Verifiable<wbr>Presentation<wbr>Manager"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -187,44 +288,32 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="../classes/_verifiablepresentationmanager_.verifiablepresentationmanager.html" class="tsd-kind-icon">Verifiable<wbr>Presentation<wbr>Manager</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
-						<a href="_verifiablepresentationmanager_.availableclaim.html" class="tsd-kind-icon">Available<wbr>Claim</a>
-					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-interface tsd-parent-kind-external-module">
-						<a href="_verifiablepresentationmanager_.credentialartifacts.html" class="tsd-kind-icon">Credential<wbr>Artifacts</a>
+					<li class="current tsd-kind-class tsd-parent-kind-external-module">
+						<a href="_presentationverifier_.presentationverifier.html" class="tsd-kind-icon">Presentation<wbr>Verifier</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_verifiablepresentationmanager_.credentialartifacts.html#evidences" class="tsd-kind-icon">evidences</a>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+								<a href="_presentationverifier_.presentationverifier.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_verifiablepresentationmanager_.credentialartifacts.html#presentations" class="tsd-kind-icon">presentations</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_presentationverifier_.presentationverifier.html#verifyanchor" class="tsd-kind-icon">verify<wbr>Anchor</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_presentationverifier_.presentationverifier.html#verifysignature" class="tsd-kind-icon">verify<wbr>Signature</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_presentationverifier_.presentationverifier.html#cryptographicallysecureverify" class="tsd-kind-icon">cryptographically<wbr>Secure<wbr>Verify</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_presentationverifier_.presentationverifier.html#noncryptographicallysecureverify" class="tsd-kind-icon">non<wbr>Cryptographically<wbr>Secure<wbr>Verify</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
-						<a href="_verifiablepresentationmanager_.evidence.html" class="tsd-kind-icon">Evidence</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
-						<a href="_verifiablepresentationmanager_.presentationreference.html" class="tsd-kind-icon">Presentation<wbr>Reference</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
-						<a href="_verifiablepresentationmanager_.searchclaimcriteria.html" class="tsd-kind-icon">Search<wbr>Claim<wbr>Criteria</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
-						<a href="_verifiablepresentationmanager_.vpmoptions.html" class="tsd-kind-icon">VPMOptions</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
-						<a href="_verifiablepresentationmanager_.verifiablepresentationmanagerstatus.html" class="tsd-kind-icon">Verifiable<wbr>Presentation<wbr>Manager<wbr>Status</a>
-					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
-						<a href="../modules/_verifiablepresentationmanager_.html#dsrjson" class="tsd-kind-icon">DSRJSON</a>
+						<a href="../modules/_presentationverifier_.html#verifyfunction" class="tsd-kind-icon">Verify<wbr>Function</a>
 					</li>
 				</ul>
 			</nav>
