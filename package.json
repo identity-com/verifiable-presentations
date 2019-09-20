@@ -9,8 +9,10 @@
   "scripts": {
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "lint": "tslint -p tsconfig.json",
+    "lint:fix": "tslint -p tsconfig.json --fix",
     "build": "tsc",
-    "test": "jest --config jestconfig.json",
+    "test": "jest --config jestconfig.json --coverage",
+    "test:file": "jest --config jestconfig.json --",
     "docs": "typedoc --out docs src && touch docs/.nojekyll",
     "prepare": "npm run build",
     "prepublishOnly": "npm test && npm run lint",
@@ -39,5 +41,10 @@
     "tslint-config-prettier": "^1.18.0",
     "typedoc": "^0.15.0",
     "typescript": "^3.5.3"
+  },
+  "dependencies": {
+    "@identity.com/credential-commons": "^1.0.27",
+    "@types/lodash": "^4.14.138",
+    "crypto": "^1.0.1"
   }
 }
