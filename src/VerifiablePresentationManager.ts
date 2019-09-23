@@ -43,6 +43,7 @@ export interface PresentationReference {
      */
     uid: string;
 }
+
 /**
  * An unique reference to a managed claim
  */
@@ -68,6 +69,20 @@ export interface SearchClaimCriteria {
     identifier?: ClaimIdentifier;
     credentialRef?: PresentationReference;
     claimPath?: string;
+}
+
+/**
+ * A mapping from key (an identifier) to a search claim criteria
+ */
+export interface ClaimCriteriaMap {
+    [key: string] : SearchClaimCriteria;
+}
+
+/**
+ * A mapping from key (an identifier) to claim value (an object)
+ */
+export interface ClaimValueMap {
+    [key: string] : any;
 }
 
 /**
@@ -264,7 +279,7 @@ export class VerifiablePresentationManager {
     };
 
     /**
-     * search for a valid claim tha matches the criterias.
+     * Search for a valid claim tha matches the criterias.
      * if `allowGetUnverified` is true the search also include claim not verified yet.
      * the search never includes known invalid claims
      */
@@ -285,6 +300,29 @@ export class VerifiablePresentationManager {
         return (this.options.allowGetUnverified)
             ? claims
             : _.filter(claims, (claim : AvailableClaim) => verifiedPresentations.includes(claim.credentialRef));
+    }
+
+    /**
+     * Get a mapping from key to a claim search criteria and resolve the claim search criterias,
+     * returning a mapping from the same keys to the relative claim value.
+     * if `allowGetUnverified` is true the search also include claim not verified yet.
+     * if no claim matches a claim criteria, the value for the relative key will be null.
+     */
+    async mapClaimValues(claimCriteriaMap: ClaimCriteriaMap, flatten? : boolean): Promise<ClaimValueMap> {
+        const claimMappedValues : ClaimValueMap = {};
+        for (const key of _.keys(claimCriteriaMap)) {
+            const criteria = claimCriteriaMap[key];
+            const claims = await this.findClaims(criteria);
+            claimMappedValues[key] = claims.length ? await this.getClaimValue(claims[0]) : null;
+        }
+
+        if (flatten) {
+            return _.keys(claimMappedValues).map(key => (
+                { name: key, value: claimMappedValues[key] }
+            ));
+        }
+
+        return claimMappedValues;
     }
 
     /**
