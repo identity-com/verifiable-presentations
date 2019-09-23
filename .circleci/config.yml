@@ -114,10 +114,8 @@ jobs:
           name: create release
           command: npm run release:create
       - run:
-          name: delete release tag
-          command: git push --delete origin $CIRCLE_TAG
-      - run: |
-          hub release delete $CIRCLE_TAG
+          name: clean up release
+          command: hub release delete $CIRCLE_TAG
 
   deploy:
     <<: *defaults

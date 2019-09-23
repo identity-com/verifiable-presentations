@@ -2,10 +2,10 @@
   "name": "@identity.com/verifiable-presentations",
   "version": "0.0.1",
   "description": "Utility Library to securely handle verifiable presentations",
-  "main": "lib/index.ts",
-  "types": "lib/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
-    "lib/**/*"
+    "dist/**/*"
   ],
   "scripts": {
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
