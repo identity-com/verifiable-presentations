@@ -1,8 +1,9 @@
 {
-  "name": "verifiable-presentations",
+  "name": "@identity.com/verifiable-presentations",
   "version": "0.0.1",
   "description": "Utility Library to securely handle verifiable presentations",
-  "main": "index.js",
+  "main": "lib/index.ts",
+  "types": "lib/index.d.ts",
   "files": [
     "lib/**/*"
   ],
@@ -15,17 +16,25 @@
     "test:file": "jest --config jestconfig.json --",
     "docs": "typedoc --out docs src && touch docs/.nojekyll",
     "prepare": "npm run build",
+    "prepublish": "npm run build",
     "prepublishOnly": "npm test && npm run lint",
     "preversion": "npm run lint",
     "version": "npm run format && git add -A src",
-    "postversion": "git push && git push --tags"
+    "postversion": "git push && git push --tags",
+    "pretag": "git fetch --tags",
+    "tag": "git tag v$npm_package_version && git push origin --tags",
+    "release:create": "hub release create -m v$npm_package_version v$npm_package_version"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/identity-com/verifiable-presentations.git"
   },
-  "keywords": [],
-  "author": "jpsantosbh",
+  "keywords": [
+    "DynamicScopeRequest",
+    "Credential",
+    "Identity"
+  ],
+  "author": "Identity.com",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/identity-com/verifiable-presentations/issues"

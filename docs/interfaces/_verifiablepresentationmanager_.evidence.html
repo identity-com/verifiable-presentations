@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>CredentialArtifacts | verifiable-presentations</title>
+	<title>Evidence | verifiable-presentations</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -59,10 +59,10 @@
 					<a href="../modules/_verifiablepresentationmanager_.html">&quot;VerifiablePresentationManager&quot;</a>
 				</li>
 				<li>
-					<a href="_verifiablepresentationmanager_.credentialartifacts.html">CredentialArtifacts</a>
+					<a href="_verifiablepresentationmanager_.evidence.html">Evidence</a>
 				</li>
 			</ul>
-			<h1>Interface CredentialArtifacts</h1>
+			<h1>Interface Evidence</h1>
 		</div>
 	</div>
 </header>
@@ -72,7 +72,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Optional sets of Verifiable Presentations and/or Evidences in a JSONformat</p>
+						<p>Evidence representation</p>
 					</div>
 				</div>
 			</section>
@@ -80,7 +80,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">CredentialArtifacts</span>
+						<span class="target">Evidence</span>
 					</li>
 				</ul>
 			</section>
@@ -91,8 +91,10 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_verifiablepresentationmanager_.credentialartifacts.html#evidences" class="tsd-kind-icon">evidences</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_verifiablepresentationmanager_.credentialartifacts.html#presentations" class="tsd-kind-icon">presentations</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_verifiablepresentationmanager_.evidence.html#base64encoded" class="tsd-kind-icon">base64<wbr>Encoded</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_verifiablepresentationmanager_.evidence.html#content" class="tsd-kind-icon">content</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_verifiablepresentationmanager_.evidence.html#contenttype" class="tsd-kind-icon">content<wbr>Type</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_verifiablepresentationmanager_.evidence.html#sha256" class="tsd-kind-icon">sha256</a></li>
 							</ul>
 						</section>
 					</div>
@@ -101,32 +103,62 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="evidences" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> evidences</h3>
-					<div class="tsd-signature tsd-kind-icon">evidences<span class="tsd-signature-symbol">:</span> <a href="_verifiablepresentationmanager_.evidence.html" class="tsd-signature-type">Evidence</a><span class="tsd-signature-symbol">[]</span></div>
+					<a name="base64encoded" class="tsd-anchor"></a>
+					<h3>base64<wbr>Encoded</h3>
+					<div class="tsd-signature tsd-kind-icon">base64<wbr>Encoded<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f1f7481/src/VerifiablePresentationManager.ts#L119">VerifiablePresentationManager.ts:119</a></li>
+							<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f1f7481/src/VerifiablePresentationManager.ts#L104">VerifiablePresentationManager.ts:104</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>an array of JSONs with Evidences (Credentials or Presentation)</p>
+							<p>The base 64 encoded representation of the evidence</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="presentations" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> presentations</h3>
-					<div class="tsd-signature tsd-kind-icon">presentations<span class="tsd-signature-symbol">:</span> <a href="_credential_.credential.html" class="tsd-signature-type">Credential</a><span class="tsd-signature-symbol">[]</span></div>
+					<a name="content" class="tsd-anchor"></a>
+					<h3>content</h3>
+					<div class="tsd-signature tsd-kind-icon">content<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f1f7481/src/VerifiablePresentationManager.ts#L114">VerifiablePresentationManager.ts:114</a></li>
+							<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f1f7481/src/VerifiablePresentationManager.ts#L92">VerifiablePresentationManager.ts:92</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>an array of JSONs with Verifiable (Credentials or Presentation)</p>
+							<p>The Evidence content (&quot;selfie&quot;, &quot;idDocumentBack&quot;, &quot;idDocumentFront&quot;)</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="contenttype" class="tsd-anchor"></a>
+					<h3>content<wbr>Type</h3>
+					<div class="tsd-signature tsd-kind-icon">content<wbr>Type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f1f7481/src/VerifiablePresentationManager.ts#L96">VerifiablePresentationManager.ts:96</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The Evidence content-type</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="sha256" class="tsd-anchor"></a>
+					<h3>sha256</h3>
+					<div class="tsd-signature tsd-kind-icon">sha256<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f1f7481/src/VerifiablePresentationManager.ts#L100">VerifiablePresentationManager.ts:100</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The Evidence sha256</p>
 						</div>
 					</div>
 				</section>
@@ -193,24 +225,30 @@
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
 						<a href="_verifiablepresentationmanager_.availableclaim.html" class="tsd-kind-icon">Available<wbr>Claim</a>
 					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="_verifiablepresentationmanager_.credentialartifacts.html" class="tsd-kind-icon">Credential<wbr>Artifacts</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-parent-kind-external-module">
-						<a href="_verifiablepresentationmanager_.credentialartifacts.html" class="tsd-kind-icon">Credential<wbr>Artifacts</a>
+						<a href="_verifiablepresentationmanager_.evidence.html" class="tsd-kind-icon">Evidence</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_verifiablepresentationmanager_.credentialartifacts.html#evidences" class="tsd-kind-icon">evidences</a>
+								<a href="_verifiablepresentationmanager_.evidence.html#base64encoded" class="tsd-kind-icon">base64<wbr>Encoded</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_verifiablepresentationmanager_.credentialartifacts.html#presentations" class="tsd-kind-icon">presentations</a>
+								<a href="_verifiablepresentationmanager_.evidence.html#content" class="tsd-kind-icon">content</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_verifiablepresentationmanager_.evidence.html#contenttype" class="tsd-kind-icon">content<wbr>Type</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_verifiablepresentationmanager_.evidence.html#sha256" class="tsd-kind-icon">sha256</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
-						<a href="_verifiablepresentationmanager_.evidence.html" class="tsd-kind-icon">Evidence</a>
-					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
 						<a href="_verifiablepresentationmanager_.presentationreference.html" class="tsd-kind-icon">Presentation<wbr>Reference</a>
 					</li>

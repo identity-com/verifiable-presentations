@@ -13,6 +13,42 @@ workflows:
     jobs:
       - build
 
+  build-tag:
+    jobs:
+      - build:
+          filters:
+            tags:
+              only: /^release\..*$/
+            branches:
+              ignore: /.*/
+      - release:
+          context: Production
+          requires:
+            - build
+          filters:
+            tags:
+              only: /^release\..*$/
+            branches:
+              ignore: /.*/
+
+  deploy-npm:
+    jobs:
+      - build:
+          filters:
+            tags:
+              only: /^v\d+\.\d+\.\d+.*/
+            branches:
+              ignore: /.*/
+      - deploy:
+          context: Production
+          requires:
+            - build
+          filters:
+            tags:
+              only: /^v\d+\.\d+\.\d+.*/
+            branches:
+              ignore: /.*/
+
 
 jobs:
   build:
@@ -39,3 +75,58 @@ jobs:
       - persist_to_workspace:
           root: ~/repo
           paths: .
+
+  release:
+    <<: *defaults
+    environment:
+      HUB_ARTIFACT_VERSION: 2.7.0
+      HUB_ARTIFACT: hub-linux-amd64-2.7.0
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}-{{checksum "package-lock.json"}}
+      - run: sudo apt-get update
+      - run: sudo npm install -g npm
+      - run: |
+          sh ./.circleci/install_hub.sh
+          mkdir -p ~/.config/ && echo -e "github.com:\n- user: civictechuser\n  oauth_token: $GITHUB_API_KEY\n  protocol: https\n" > ~/.config/hub
+      - run: npm ci
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}-{{checksum "package-lock.json"}}
+      - run:
+          name: run lint check
+          command: npm run lint
+      - run:
+          name: run tests
+          command: npm run test
+      - run: npm run build
+      - run:
+          name: git config
+          command: |
+            git config credential.helper 'cache --timeout=120'
+            git config user.email "no-reply@civic.com"
+            git config user.name "CI Deployer"
+            git config --global push.default simple
+      - run:
+          name: create release
+          command: npm run release:create
+      - run:
+          name: delete release tag
+          command: git push --delete origin $CIRCLE_TAG
+      - run: |
+          hub release delete $CIRCLE_TAG
+
+  deploy:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: authenticate with registry
+          command: echo "//registry.npmjs.org/:_authToken=$IDENTITY_NPM_TOKEN" > ~/repo/.npmrc
+      - run:
+          name: publish package
+          command: npm publish --access=public

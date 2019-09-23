@@ -81,6 +81,7 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-interface tsd-parent-kind-external-module"><a href="../interfaces/_verifiablepresentationmanager_.availableclaim.html" class="tsd-kind-icon">Available<wbr>Claim</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-external-module"><a href="../interfaces/_verifiablepresentationmanager_.credentialartifacts.html" class="tsd-kind-icon">Credential<wbr>Artifacts</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-external-module"><a href="../interfaces/_verifiablepresentationmanager_.evidence.html" class="tsd-kind-icon">Evidence</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-external-module"><a href="../interfaces/_verifiablepresentationmanager_.presentationreference.html" class="tsd-kind-icon">Presentation<wbr>Reference</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-external-module"><a href="../interfaces/_verifiablepresentationmanager_.searchclaimcriteria.html" class="tsd-kind-icon">Search<wbr>Claim<wbr>Criteria</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-external-module"><a href="../interfaces/_verifiablepresentationmanager_.vpmoptions.html" class="tsd-kind-icon">VPMOptions</a></li>
@@ -90,8 +91,6 @@
 						<section class="tsd-index-section ">
 							<h3>Type aliases</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-type-alias tsd-parent-kind-external-module"><a href="_verifiablepresentationmanager_.html#claimidentifier" class="tsd-kind-icon">Claim<wbr>Identifier</a></li>
-								<li class="tsd-kind-type-alias tsd-parent-kind-external-module"><a href="_verifiablepresentationmanager_.html#credentialidentifier" class="tsd-kind-icon">Credential<wbr>Identifier</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-external-module"><a href="_verifiablepresentationmanager_.html#dsrjson" class="tsd-kind-icon">DSRJSON</a></li>
 							</ul>
 						</section>
@@ -101,43 +100,12 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Type aliases</h2>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-external-module">
-					<a name="claimidentifier" class="tsd-anchor"></a>
-					<h3>Claim<wbr>Identifier</h3>
-					<div class="tsd-signature tsd-kind-icon">Claim<wbr>Identifier<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"credential-cvc:Email-v1"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"credential-cvc:PhoneNumber-v1"</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f064365/src/VerifiablePresentationManager.ts#L61">VerifiablePresentationManager.ts:61</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>A Verifiable Claim Identifier</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-external-module">
-					<a name="credentialidentifier" class="tsd-anchor"></a>
-					<h3>Credential<wbr>Identifier</h3>
-					<div class="tsd-signature tsd-kind-icon">Credential<wbr>Identifier<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"credential-cvc:Email-v1"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"credential-cvc:PhoneNumber-v1"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"credential-cvc:GenericDocumentId-v1"</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f064365/src/VerifiablePresentationManager.ts#L36">VerifiablePresentationManager.ts:36</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>A VerifiableCredential Identifier
-							This define the type of the verifiable credential or verifiable presentation</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-external-module">
 					<a name="dsrjson" class="tsd-anchor"></a>
 					<h3>DSRJSON</h3>
 					<div class="tsd-signature tsd-kind-icon">DSRJSON<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f064365/src/VerifiablePresentationManager.ts#L132">VerifiablePresentationManager.ts:132</a></li>
+							<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f1f7481/src/VerifiablePresentationManager.ts#L138">VerifiablePresentationManager.ts:138</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -154,14 +122,50 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
+					<li class="label tsd-is-external">
+						<span>Internals</span>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="_credential_.html">"<wbr>Credential"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="_presentationverifier_.html">"<wbr>Presentation<wbr>Verifier"</a>
+					</li>
 					<li class="current tsd-kind-external-module">
 						<a href="_verifiablepresentationmanager_.html">"<wbr>Verifiable<wbr>Presentation<wbr>Manager"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="___tests___greeter_test_.html">"__tests__/<wbr>Greeter.test"</a>
+						<a href="___tests___presentationverifier_test_.html">"__tests__/<wbr>Presentation<wbr>Verifier.test"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="___tests___verifiablepresentationmanager_test_.html">"__tests__/<wbr>Verifiable<wbr>Presentation<wbr>Manager.test"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="___tests___index_test_.html">"__tests__/index.test"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="_index_.html">"index"</a>
+					</li>
+					<li class="label tsd-is-external">
+						<span>Externals</span>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="___tests___fixtures_emailcredential_.html">"__tests__/fixtures/email<wbr>Credential"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="___tests___fixtures_iddocumentcredential_.html">"__tests__/fixtures/id<wbr>Document<wbr>Credential"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="___tests___fixtures_iddocumentpartialcredential_.html">"__tests__/fixtures/id<wbr>Document<wbr>Partial<wbr>Credential"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="___tests___fixtures_iddocumentselfieevidence_.html">"__tests__/fixtures/id<wbr>Document<wbr>Selfie<wbr>Evidence"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="___tests___fixtures_invalidemailcredential_.html">"__tests__/fixtures/invalid<wbr>Email<wbr>Credential"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="___tests___fixtures_phonenumbercredential_.html">"__tests__/fixtures/phone<wbr>Number<wbr>Credential"</a>
 					</li>
 				</ul>
 			</nav>
@@ -177,6 +181,9 @@
 						<a href="../interfaces/_verifiablepresentationmanager_.credentialartifacts.html" class="tsd-kind-icon">Credential<wbr>Artifacts</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="../interfaces/_verifiablepresentationmanager_.evidence.html" class="tsd-kind-icon">Evidence</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
 						<a href="../interfaces/_verifiablepresentationmanager_.presentationreference.html" class="tsd-kind-icon">Presentation<wbr>Reference</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
@@ -187,12 +194,6 @@
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
 						<a href="../interfaces/_verifiablepresentationmanager_.verifiablepresentationmanagerstatus.html" class="tsd-kind-icon">Verifiable<wbr>Presentation<wbr>Manager<wbr>Status</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
-						<a href="_verifiablepresentationmanager_.html#claimidentifier" class="tsd-kind-icon">Claim<wbr>Identifier</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
-						<a href="_verifiablepresentationmanager_.html#credentialidentifier" class="tsd-kind-icon">Credential<wbr>Identifier</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
 						<a href="_verifiablepresentationmanager_.html#dsrjson" class="tsd-kind-icon">DSRJSON</a>
