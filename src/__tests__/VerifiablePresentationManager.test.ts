@@ -359,7 +359,7 @@ describe('VerifiablePresentationManager', () => {
         done();
     });
 
-    it('should only return the claims that matches the search and the presentation is verified if allowGetUnverified is false', async (done) => {
+    it('should only return the searched claims of invalid credential if allowGetUnverified is false', async (done) => {
         const options = {
             allowGetUnverified: false,
             notThrow: true
@@ -380,6 +380,126 @@ describe('VerifiablePresentationManager', () => {
 
         const claims = await presentationManager.findClaims(criteria as SearchClaimCriteria);
         expect(claims).toHaveLength(1); // only the claim from phone number
+        done();
+    });
+
+    it('should resolve the key to claim search map by returning a map from key to claim value', async (done) => {
+        const presentationManager = new VerifiablePresentationManager({});
+        const artifacts = {
+            presentations: [
+                phoneNumberCredential as Credential,
+                idDocumentCredential as Credential
+            ]
+        };
+        await presentationManager.addCredentialArtifacts(artifacts);
+
+        const mapping = {
+            contact : {
+                claimPath: 'contact.phoneNumber.number',
+                credentialRef: {
+                    identifier: phoneNumberCredential.identifier,
+                    uid: phoneNumberCredential.id
+                },
+            },
+            docNumber : {
+                claimPath: 'document.number',
+            },
+            name: {
+                identifier: 'claim-cvc:Name.givenNames-v1',
+            }
+        };
+
+        const mappedClaimValues = await presentationManager.mapClaimValues(mapping);
+        expect(mappedClaimValues).toEqual({
+            contact: '31988889999',
+            docNumber: '9999999999',
+            name: 'Civic'
+        });
+        done();
+    });
+
+    it('should return a flat object with claim values if mapClaimValues is called with flatten true', async (done) => {
+        const presentationManager = new VerifiablePresentationManager({});
+        const artifacts = {
+            presentations: [
+                phoneNumberCredential as Credential,
+                idDocumentCredential as Credential
+            ]
+        };
+        await presentationManager.addCredentialArtifacts(artifacts);
+
+        const mapping = {
+            contact : {
+                claimPath: 'contact.phoneNumber.number',
+                credentialRef: {
+                    identifier: phoneNumberCredential.identifier,
+                    uid: phoneNumberCredential.id
+                },
+            },
+            docNumber : {
+                claimPath: 'document.number',
+            },
+            name: {
+                identifier: 'claim-cvc:Name.givenNames-v1',
+            }
+        };
+
+        const mappedClaimValues = await presentationManager.mapClaimValues(mapping, true);
+        expect(mappedClaimValues).toEqual([
+            {
+                name: 'contact',
+                value: '31988889999'
+            },
+            {
+                name: 'docNumber',
+                value: '9999999999'
+            },
+            {
+                name: 'name',
+                value: 'Civic'
+            }
+        ]);
+        done();
+    });
+
+    it('should resolve the key to null if the criteria in the claim map is not matched', async (done) => {
+        const presentationManager = new VerifiablePresentationManager({});
+        await presentationManager.addCredentialArtifacts(artifacts);
+
+        const mapping = {
+            docNumber : {
+                claimPath: 'document.number.wrong.path',
+            }
+        };
+
+        const mappedClaimValues = await presentationManager.mapClaimValues(mapping);
+        expect(mappedClaimValues).toEqual({
+            docNumber: null,
+        });
+        done();
+    });
+
+    it('should resolve the key to the first value if the criteria in the claim map matches multiple claims', async (done) => {
+        const presentationManager = new VerifiablePresentationManager({});
+
+        const artifacts = {
+            presentations: [
+                phoneNumberCredential as Credential,
+                phoneNumberCredential as Credential, // duplicated credential
+            ]
+        };
+        await presentationManager.addCredentialArtifacts(artifacts);
+
+        const mapping = {
+           contact : {
+                claimPath: 'contact.phoneNumber.number',
+            }
+        };
+
+        const mappedClaimValues = await presentationManager.mapClaimValues(mapping);
+        expect(mappedClaimValues).toEqual({
+            contact: '31988889999'
+        });
         done();
     });
 
@@ -529,5 +649,5 @@ describe('VerifiablePresentationManager', () => {
         await presentationManager.addCredentialArtifacts(artifacts);
         expect(presentationManager.wasGrantedForDSR(null, null)).rejects.toThrow();
         done();
-    })
+    });
 });
