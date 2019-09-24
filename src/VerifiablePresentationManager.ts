@@ -279,7 +279,7 @@ export class VerifiablePresentationManager {
     };
 
     /**
-     * Search for a valid claim tha matches the criterias.
+     * Search for a valid claim that matches the criterias.
      * if `allowGetUnverified` is true the search also include claim not verified yet.
      * the search never includes known invalid claims
      */
@@ -305,12 +305,12 @@ export class VerifiablePresentationManager {
     /**
      * Get a mapping from key to a claim search criteria and resolve the claim search criterias,
      * returning a mapping from the same keys to the relative claim value.
-     * if `allowGetUnverified` is true the search also include claim not verified yet.
+     * if `allowGetUnverified` is true, then the search also includes claims not verified yet.
      * if no claim matches a claim criteria, the value for the relative key will be null.
      */
     async mapClaimValues(claimCriteriaMap: ClaimCriteriaMap, flatten? : boolean): Promise<ClaimValueMap> {
         const claimMappedValues : ClaimValueMap = {};
-        for (const key of _.keys(claimCriteriaMap)) {
+        for (const key of Object.keys(claimCriteriaMap)) {
             const criteria = claimCriteriaMap[key];
             const claims = await this.findClaims(criteria);
             claimMappedValues[key] = claims.length ? await this.getClaimValue(claims[0]) : null;
