@@ -380,15 +380,15 @@ export class VerifiablePresentationManager {
     }
 
     /**
-     * Verify if a presentation was GRANTED for a specif DSR
+     * Verify if a presentation was GRANTED for a specific DSR
      *
-     * This will first verify that the DSR is valid and not tampered,
-     * them will verify if the presentation was shared with user consent and signatures
+     * Verify if the presentation was shared with user consent and signatures
      *
      * @param presentationRef the managed presentation to verify
      * @param originalRequestDSR the original Dynamic Scope Request that receive the presentation as result
      */
     wasGrantedForDSR(presentationRef: PresentationReference, originalRequestDSR: DSRJSON) {
+        // TODO verify that the DSR is valid and was not tampered
         const dsr = JSON.parse(originalRequestDSR);
         const requesterId = _.get(dsr, 'payload.requesterInfo.requesterId');
         const requestId = _.get(dsr, 'payload.id');
