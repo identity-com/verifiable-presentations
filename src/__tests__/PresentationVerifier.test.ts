@@ -2,6 +2,8 @@ import _ from 'lodash';
 import { Credential } from '../Credential';
 import { PresentationVerifier, VerifyFunction } from '../PresentationVerifier';
 import emailCredential from './fixtures/emailCredential.json';
+import idDocumentCredential from './fixtures/idDocumentCredential.json';
+import idDocumentDSR from './fixtures/idDocumentDSR.json';
 
 describe('PresentationVerifier', () => {
     it('should initialize a PresentationVerifier', () => {
@@ -83,6 +85,35 @@ describe('PresentationVerifier', () => {
             const verified = await verifier.cryptographicallySecureVerify(emailCredential as Credential);
             expect(verified).toBeFalsy();
             done();
+        });
+    });
+
+    describe('Verify grant', () => {
+        it('should verify grant', () => {
+            const requesterId = idDocumentDSR.payload.requesterInfo.requesterId;
+            const requestId = idDocumentDSR.payload.id;
+
+            const verifier = new PresentationVerifier();
+            const verified = verifier.verifyGrant(idDocumentCredential, requesterId, requestId);
+            expect(verified).toBeTruthy();
+        });
+
+        it('should fail grant verification if the requesterId is not equal to the value in the original DSR', () => {
+            const requesterId = idDocumentDSR.payload.requesterInfo.requesterId + 'extra-str';
+            const requestId = idDocumentDSR.payload.id;
+
+            const verifier = new PresentationVerifier();
+            const verified = verifier.verifyGrant(idDocumentCredential, requesterId, requestId);
+            expect(verified).toBeFalsy();
+        });
+
+        it('should fail grant verification if the requestId is not equal to the value in the original DSR', () => {
+            const requesterId = idDocumentDSR.payload.requesterInfo.requesterId;
+            const requestId = idDocumentDSR.payload.id + 'extra-str';
+
+            const verifier = new PresentationVerifier();
+            const verified = verifier.verifyGrant(idDocumentCredential, requesterId, requestId);
+            expect(verified).toBeFalsy();
         });
     });
 });

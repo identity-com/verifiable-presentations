@@ -37,4 +37,16 @@ export class PresentationVerifier {
     async cryptographicallySecureVerify(credential : Credential) {
         return VC.cryptographicallySecureVerify(credential, this.verifyAnchor, this.verifySignature);
     }
+
+    /**
+     * Verify if a credential was granted for a specific requesterId and requestId.
+     *
+     * @param credential - A credential object
+     * @param requesterId - A requester Id used to calculate the granted signature
+     * @param requesterId - A request Id used to calculate the granted signature
+     * @return true if verified, false otherwise.
+     */
+    verifyGrant(credential : Credential, requesterId : string, requestId : string) {
+        return VC.requesterGrantVerify(credential, requesterId, requestId);
+    }
 }
