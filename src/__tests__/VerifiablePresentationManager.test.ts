@@ -14,6 +14,8 @@ import invalidEmailCredential from './fixtures/invalidEmailCredential.json';
 import idDocumentCredential from './fixtures/idDocumentCredential.json';
 import idDocumentEvidence from './fixtures/idDocumentSelfieEvidence.json';
 import idDocumentPartialCredential from './fixtures/idDocumentPartialCredential.json';
+import idDocumentDSR from './fixtures/idDocumentDSR.json';
+
 
 describe('VerifiablePresentationManager', () => {
     const artifacts = {
@@ -644,10 +646,45 @@ describe('VerifiablePresentationManager', () => {
         done();
     });
 
-    it('should throw not implemented exception when calling wasGrantedForDSR', async (done) => {
+    it('should verifiy if a presentation was granted for a specific dsr', async (done) => {
         const presentationManager = new VerifiablePresentationManager({});
+        const artifacts : CredentialArtifacts = {
+            presentations: [idDocumentCredential as Credential]
+        };
         await presentationManager.addCredentialArtifacts(artifacts);
-        expect(presentationManager.wasGrantedForDSR(null, null)).rejects.toThrow();
+        const presentations = await presentationManager.listPresentations();
+
+        const wasGranted = presentationManager.wasGrantedForDSR(presentations[0], JSON.stringify(idDocumentDSR));
+        expect(wasGranted).toBeTruthy();
+        done();
+    });
+
+    it('should fail grant verification if a credential is tested with a dsr not used to request it', async (done) => {
+        const presentationManager = new VerifiablePresentationManager({});
+        const artifacts : CredentialArtifacts = {
+            presentations: [phoneNumberCredential as Credential]
+        };
+        await presentationManager.addCredentialArtifacts(artifacts);
+        const presentations = await presentationManager.listPresentations();
+
+        const phoneCredential = presentations[0];
+
+        const wasGranted = presentationManager.wasGrantedForDSR(phoneCredential, JSON.stringify(idDocumentDSR));
+        expect(wasGranted).toBeFalsy();
+        done();
+    });
+
+    it('should fail grant verification if a credential is tested with an invalid dsr string', async (done) => {
+        const presentationManager = new VerifiablePresentationManager({});
+        const artifacts : CredentialArtifacts = {
+            presentations: [phoneNumberCredential as Credential]
+        };
+        await presentationManager.addCredentialArtifacts(artifacts);
+        const presentations = await presentationManager.listPresentations();
+
+        const invalidDsr = '{}';
+        const wasGranted = presentationManager.wasGrantedForDSR(presentations[0], invalidDsr);
+        expect(wasGranted).toBeFalsy();
         done();
     });
 });

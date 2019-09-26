@@ -331,7 +331,7 @@ export class VerifiablePresentationManager {
      * if `notThrow` is true return null for known invalid claims
      */
     async getClaimValue(availableClaim: AvailableClaim): Promise<any | null> {
-        const presentation = this.getPresentation(availableClaim);
+        const presentation = this.getClaimPresentation(availableClaim);
         if (!presentation || !presentation.claim) {
             return null;
         }
@@ -380,7 +380,7 @@ export class VerifiablePresentationManager {
     }
 
     /**
-     * Verify if an presentation was GRANTED for a specif DSR
+     * Verify if a presentation was GRANTED for a specif DSR
      *
      * This will first verify that the DSR is valid and not tampered,
      * them will verify if the presentation was shared with user consent and signatures
@@ -388,11 +388,17 @@ export class VerifiablePresentationManager {
      * @param presentationRef the managed presentation to verify
      * @param originalRequestDSR the original Dynamic Scope Request that receive the presentation as result
      */
-    // @ts-ignore
-    async wasGrantedForDSR(presentationRef: PresentationReference, originalRequestDSR: DSRJSON) {
-        // @ts-ignore
-        // TODO
-        throw new Error(`Not implemented`);
+    wasGrantedForDSR(presentationRef: PresentationReference, originalRequestDSR: DSRJSON) {
+        const dsr = JSON.parse(originalRequestDSR);
+        const requesterId = _.get(dsr, 'payload.requesterInfo.requesterId');
+        const requestId = _.get(dsr, 'payload.id');
+
+        if (_.isEmpty(requesterId) || _.isEmpty(requestId)) {
+            return false;
+        }
+
+        const presentation = this.getPresentation(presentationRef);
+        return this.verifier.verifyGrant(presentation, requesterId, requestId)
     }
 
     /**
@@ -434,7 +440,14 @@ export class VerifiablePresentationManager {
      * Private mthods
      */
 
-    private getPresentation(availableClaim : AvailableClaim) : Credential | undefined {
+    private getPresentation(presentationRef : PresentationReference) : Credential {
+        return _.find(this.artifacts.presentations, (presentation : Credential) => (
+            presentation.id === presentationRef.uid
+                && presentation.identifier === presentationRef.identifier
+        ));
+    }
+
+    private getClaimPresentation(availableClaim : AvailableClaim) : Credential | undefined {
         return _.find(this.artifacts.presentations, (presentation : Credential) => (
             presentation.id === availableClaim.credentialRef.uid
         ));
@@ -472,9 +485,7 @@ export class VerifiablePresentationManager {
     }
 
     private async verifyPresentation(presentationRef : PresentationReference) : Promise<boolean> {
-        const credential = _.find(this.artifacts.presentations, (presentation : Credential) => (
-            presentation.id === presentationRef.uid
-        ));
+        const credential = this.getPresentation(presentationRef);
         const verified = await this.verifier.cryptographicallySecureVerify(credential);
 
         if (!this.options.notThrow && !verified) {
