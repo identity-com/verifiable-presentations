@@ -10,6 +10,7 @@ import {
 } from '../VerifiablePresentationManager';
 import phoneNumberCredential from './fixtures/phoneNumberCredential.json';
 import emailCredential from './fixtures/emailCredential.json';
+import unverifiedSSN from './fixtures/UnverifiedSSNCredential.json'
 import invalidEmailCredential from './fixtures/invalidEmailCredential.json';
 import idDocumentCredential from './fixtures/idDocumentCredential.json';
 import idDocumentEvidence from './fixtures/idDocumentSelfieEvidence.json';
@@ -66,6 +67,26 @@ describe('VerifiablePresentationManager', () => {
         expect(claims).toHaveLength(1);
         done();
     });
+    
+    it('should add and verify a unverified transient', async (done) => {
+        const presentationManager = new VerifiablePresentationManager({});
+        const artifacts = {
+            presentations: [
+                unverifiedSSN as Credential
+            ]
+        };
+        const status = await presentationManager.addCredentialArtifacts(artifacts);
+        expect(status).toBeDefined();
+        expect(status.totalPresentations).toEqual(1);
+        expect(status.verifiedPresentations).toEqual(1);
+        
+        const claims = await presentationManager.listClaims();
+        
+        expect(claims).toHaveLength(5);
+        done();
+    });
+    
+    
 
     it('should skip validation on add presentions if skipAddVerify is true', async (done) => {
         const options = {
@@ -528,7 +549,7 @@ describe('VerifiablePresentationManager', () => {
     it('should throw exception when adding an unverified evidence if notThrow is false (default)', async (done) => {
         const artifacts : CredentialArtifacts = {
             presentations: [],
-            evidences: [ idDocumentEvidence as Evidence ] 
+            evidences: [ idDocumentEvidence as Evidence ]
         };
         const presentationManager = new VerifiablePresentationManager({});
         expect(presentationManager.addCredentialArtifacts(artifacts)).rejects.toThrow();
@@ -558,7 +579,7 @@ describe('VerifiablePresentationManager', () => {
         const presentationManager = new VerifiablePresentationManager(options);
         const artifacts : CredentialArtifacts = {
             presentations: [],
-            evidences: [ idDocumentEvidence as Evidence ] 
+            evidences: [ idDocumentEvidence as Evidence ]
         };
         await presentationManager.addCredentialArtifacts(artifacts);
 
