@@ -1,6 +1,6 @@
 {
   "name": "@identity.com/verifiable-presentations",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Utility Library to securely handle verifiable presentations",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -41,19 +41,19 @@
   },
   "homepage": "https://github.com/identity-com/verifiable-presentations#readme",
   "devDependencies": {
-    "@types/jest": "^24.0.17",
-    "@types/node": "^12.7.2",
+    "@types/jest": "^24.9.1",
+    "@types/node": "^12.12.31",
     "jest": "^24.9.0",
-    "prettier": "^1.18.2",
-    "ts-jest": "^24.0.2",
-    "tslint": "^5.18.0",
+    "prettier": "^1.19.1",
+    "ts-jest": "^24.3.0",
+    "tslint": "^5.20.1",
     "tslint-config-prettier": "^1.18.0",
-    "typedoc": "^0.15.0",
-    "typescript": "^3.5.3"
+    "typedoc": "^0.15.8",
+    "typescript": "^3.8.3"
   },
   "dependencies": {
-    "@identity.com/credential-commons": "^1.0.28",
-    "@types/lodash": "^4.14.138",
+    "@identity.com/credential-commons": "^1.0.32",
+    "@types/lodash": "^4.14.149",
     "crypto": "^1.0.1"
   }
 }
