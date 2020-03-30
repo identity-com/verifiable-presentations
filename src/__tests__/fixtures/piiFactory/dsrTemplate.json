@@ -1,0 +1,100 @@
+{
+  "payload": {
+    "version": "1",
+    "requesterInfo": {
+      "app": {
+        "id": "000",
+        "name": "Test",
+        "logo": "https://",
+        "description": "The Test Payment Provider",
+        "primaryColor": "#000000",
+        "secondaryColor": "#000000"
+      }
+    },
+    "credentialItems": [
+      {
+        "identifier": "credential-cvc:UnverifiedSsn-v1",
+        "constraints": {
+          "meta": {
+            "credential": "credential-cvc:UnverifiedSsn-v1",
+            "issuer": {
+              "is": {
+                "$eq": ""
+              }
+            }
+          }
+        }
+      },
+      {
+        "identifier": "credential-cvc:UnverifiedAddress-v1",
+        "constraints": {
+          "meta": {
+            "credential": "credential-cvc:UnverifiedAddress-v1",
+            "issuer": {
+              "is": {
+                "$eq": ""
+              }
+            }
+          }
+        }
+      },
+      {
+        "identifier": "credential-cvc:IdDocument-v2",
+        "constraints": {
+          "meta": {
+            "credential": "credential-cvc:IdDocument-v2",
+            "issuer": {
+              "is": {
+                "$eq": ""
+              }
+            }
+          }
+        }
+      },
+      {
+        "identifier": "credential-cvc:Email-v1",
+        "constraints": {
+          "meta": {
+            "credential": "credential-cvc:Email-v1",
+            "issuer": {
+              "is": {
+                "$eq": ""
+              }
+            }
+          }
+        }
+      },
+      {
+        "identifier": "credential-cvc:PhoneNumber-v1",
+        "constraints": {
+          "meta": {
+            "credential": "credential-cvc:PhoneNumber-v1",
+            "issuer": {
+              "is": {
+                "$eq": ""
+              }
+            }
+          }
+        }
+      }
+    ],
+    "channels": {
+      "evidences": {
+        "idDocumentFront": {
+          "accepts": "application/json",
+          "method": "put",
+          "headers": {
+            "Content-Type": "application/json"
+          }
+        },
+        "idDocumentBack": {
+          "accepts": "application/json",
+          "method": "put",
+          "headers": {
+            "Content-Type": "application/json"
+          }
+        }
+      }
+    }
+  }
+}
