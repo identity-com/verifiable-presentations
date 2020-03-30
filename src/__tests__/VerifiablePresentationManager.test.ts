@@ -63,7 +63,7 @@ describe('VerifiablePresentationManager', () => {
         expect(status.verifiedPresentations).toEqual(1);
 
         const claims = await presentationManager.listClaims();
-        expect(claims).toHaveLength(1);
+        expect(claims).toHaveLength(14);
         done();
     });
 
@@ -413,7 +413,7 @@ describe('VerifiablePresentationManager', () => {
 
         const mappedClaimValues = await presentationManager.mapClaimValues(mapping);
         expect(mappedClaimValues).toEqual({
-            contact: '31988889999',
+            contact: '69276577',
             docNumber: '9999999999',
             name: 'Civic'
         });
@@ -450,7 +450,7 @@ describe('VerifiablePresentationManager', () => {
         expect(mappedClaimValues).toEqual([
             {
                 name: 'contact',
-                value: '31988889999'
+                value: '69276577'
             },
             {
                 name: 'docNumber',
@@ -500,7 +500,7 @@ describe('VerifiablePresentationManager', () => {
 
         const mappedClaimValues = await presentationManager.mapClaimValues(mapping);
         expect(mappedClaimValues).toEqual({
-            contact: '31988889999'
+            contact: '69276577'
         });
         done();
     });

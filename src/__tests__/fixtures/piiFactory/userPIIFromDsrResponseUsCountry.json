@@ -34,7 +34,7 @@
                 "name": "civic",
                 "tld": "com"
               },
-              "username": "lucas"
+              "username": "testUsername"
             }
           }
         },
@@ -71,7 +71,7 @@
           "leaves": [
             {
               "identifier": "claim-cvc:Contact.email-v1",
-              "value": "urn:email.domain.name:c53b584233e04fbedf3d6b9e4849f40384510f979f04480c0873338591dd81d1:civic|urn:email.domain.tld:1d2bb89850051c86841e093831594830fbc2047606735e54c4cca84725a0237e:com|urn:email.username:0861781a154724a10627a1736f2f90f18e023b17714f5d18c5772a8916f921f3:lucas|",
+              "value": "urn:email.domain.name:c53b584233e04fbedf3d6b9e4849f40384510f979f04480c0873338591dd81d1:civic|urn:email.domain.tld:1d2bb89850051c86841e093831594830fbc2047606735e54c4cca84725a0237e:com|urn:email.username:0861781a154724a10627a1736f2f90f18e023b17714f5d18c5772a8916f921f3:testUsername|",
               "claimPath": "contact.email",
               "targetHash": "96b2603f12c0b45a94ba3b0674594d9b19373d718ae25ad2d4f3066a5f971022",
               "node": [
