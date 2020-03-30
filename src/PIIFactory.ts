@@ -26,7 +26,7 @@ const evidenceProofsToDSRDocumentNames = (evidenceProofs = []) => R.pipe(
 )(evidenceProofs);
 
 /** returns the evidences document names from the provider DSR */
-const dsrRequestedDocuments = providerDSR => Object.keys(R.pathOr([], ['payload', 'channels', 'evidences'], providerDSR));
+const dsrRequestedDocuments = dsrRequest => Object.keys(R.pathOr([], ['payload', 'channels', 'evidences'], dsrRequest));
 /**
  * Traverse the provided presentation credentials and creates a map of document proofs for each
  * credential identifier
@@ -53,11 +53,11 @@ const evidenceProofsFromCredentials = (presentations, requestedDocuments = []) =
 /**
  * Return the list of evidence documents that the DSR response promises
  * @param {Object} dsrResponse
- * @param {Object} providerDSR
+ * @param {Object} dsrRequest
  */
-const expectedEvidenceProofs = (dsrResponse, providerDSR) => {
+const expectedEvidenceProofs = (dsrResponse, dsrRequest) => {
   const presentations = dsrResponse.verifiableData.map(R.prop('credential'));
-  return evidenceProofsFromCredentials(presentations, dsrRequestedDocuments(providerDSR));
+  return evidenceProofsFromCredentials(presentations, dsrRequestedDocuments(dsrRequest));
 };
 
 
@@ -75,15 +75,21 @@ const addEvidenceUrl = (urlGeneratorFn) => (evidenceChannelConfiguration, eviden
     url,
   };
 };
-
+/**
+ * A class for extracting PII from a DSR Response based on a specific dsrRequest implementation, with a given mapping and formatters,
+ * specific to that DSR
+ */
 export class PIIFactory {
-  provider: string;
-  providerDSR: object;
+  dsrRequest: object;
   mapping: ClaimCriteriaMap;
-  formatters: any;
-  constructor(provider, providerDSR, mapping, formatters) {
-    this.providerDSR = providerDSR;
-    this.provider = provider;
+  formatters: object;
+  /**
+   * @param {Object} dsrRequest 
+   * @param {ClaimCriteriaMap} mapping
+   * @param {Object} formatters 
+   */
+  constructor(dsrRequest: object, mapping: ClaimCriteriaMap, formatters: object) {
+    this.dsrRequest = dsrRequest;
     this.mapping = mapping;
     this.formatters = formatters;
   };
@@ -98,7 +104,7 @@ export class PIIFactory {
    */
   expectedDocumentsGivenEvidenceProofs(evidenceProofs) {
     const promisedDocuments = evidenceProofsToDSRDocumentNames(evidenceProofs);
-    return R.intersection(dsrRequestedDocuments(this.providerDSR), promisedDocuments);
+    return R.intersection(dsrRequestedDocuments(this.dsrRequest), promisedDocuments);
   };
 
   /**
@@ -108,7 +114,7 @@ export class PIIFactory {
    */
   async extractPII(dsrResponse) {
     const presentations = dsrResponse.verifiableData.map(R.prop('credential'));
-    const evidenceProofs = expectedEvidenceProofs(dsrResponse, this.providerDSR);
+    const evidenceProofs = expectedEvidenceProofs(dsrResponse, this.dsrRequest);
     const artifacts = {
       presentations,
       evidences: [],
@@ -140,22 +146,22 @@ export class PIIFactory {
    */
   generateDSR(eventsURL, idvDid, dsrResolver, urlGeneratorFn) {
 
-    if (!this.providerDSR) { throw new Error(`Provider ${this.provider} is unknown or does not require a DSR`); }
+    if (!this.dsrRequest) { throw new Error('DSR not provided'); }
 
     const uuid = uuidv4.default();
-    const requestedItems = R.pathOr([], ['payload', 'credentialItems'], this.providerDSR);
+    const requestedItems = R.pathOr([], ['payload', 'credentialItems'], this.dsrRequest);
     // iterate over the requested items array, set the values on the path constraints.meta.issue.is.$eq for the idv value
     const updatedRequestedItems = R.map(R.assocPath((['constraints', 'meta', 'issuer', 'is', '$eq']), idvDid))(requestedItems);
 
     // add a fresh S3 upload url to each evidence channel, tailored for this user
-    const evidenceChannelTemplate = R.pathOr([], ['payload', 'channels', 'evidences'], this.providerDSR);
+    const evidenceChannelTemplate = R.pathOr([], ['payload', 'channels', 'evidences'], this.dsrRequest);
     const evidences = R.mapObjIndexed(addEvidenceUrl(urlGeneratorFn), evidenceChannelTemplate);
 
     const channelsConfig = {
       eventsURL,
       evidences,
     };
-    const appConfig = R.pathOr([], ['payload', 'requesterInfo', 'app'], this.providerDSR);
+    const appConfig = R.pathOr([], ['payload', 'requesterInfo', 'app'], this.dsrRequest);
 
     return ScopeRequest.buildSignedRequestBody(new ScopeRequest.ScopeRequest(uuid, updatedRequestedItems, channelsConfig, appConfig, dsrResolver));
   };

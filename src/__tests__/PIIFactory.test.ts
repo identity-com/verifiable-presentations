@@ -3,11 +3,10 @@ import { PIIFactory } from '../PIIFactory';
 import * as dsrResponse from './fixtures/piiFactory/userPIIFromDsrResponseUsCountry.json';
 import * as dsrResponseWithTwoDocuments from './fixtures/piiFactory/userPIIFromDsrResponseUsCountryFrontAndBack.json';
 import * as brokenDsrResponse from './fixtures/piiFactory/brokenDsrResponse.json';
-import * as providerDSR from './fixtures/piiFactory/dsrTemplate.json';
+import * as dsrRequest from './fixtures/piiFactory/dsrTemplate.json';
 
 const { verifySignedRequestBody } = ScopeRequest;
 
-const provider = 'celsius';
 const mapping = {
   first_name: { identifier: 'claim-cvc:Name.givenNames-v1' },
   last_name: { identifier: 'claim-cvc:Name.familyNames-v1' },
@@ -22,7 +21,7 @@ const formatters = {
 let piiFactory;
 describe.only('PIIFactory', () => {
   beforeEach(() => {
-    piiFactory = new PIIFactory(provider, providerDSR, mapping, formatters);
+    piiFactory = new PIIFactory(dsrRequest, mapping, formatters);
   });
 
   describe('extractPII', () => {
