@@ -8,8 +8,7 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "suppressExcessPropertyErrors": true,
-    "strictNullChecks": false,
-    "noImplicitAny": false
+    "strictNullChecks": false
   },
   "include": ["src"],
   "exclude": ["node_modules", "**/__tests__/*"]

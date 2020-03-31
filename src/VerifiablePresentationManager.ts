@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import _ from 'lodash';
+import * as R from 'ramda';
 import {
     ClaimIdentifier,
     CredentialIdentifier,
@@ -8,6 +8,36 @@ import {
 } from './Credential';
 import { PresentationVerifier, VerifyFunction } from './PresentationVerifier';
 
+/**
+ * @param {Object} fields: a JSON properties fields object
+ * @param {Object} paths: already calculated paths to be appended to
+ * @param {String} pathPrepend: existing path for nested key in question
+ * @returns {Array}: an array of path objects of type
+ *  {
+ *    {String} path
+ *    {String}: type
+ *    {String}: description
+ *  }
+ */
+const NESTED_PATH_DELIMITER = '.';
+const getFlattenedPaths = (objToMatch: { [prop: string]: any }, paths: any[], pathPrepend: string = '') => {
+    let localPaths: any[] = paths;
+    R.keys(objToMatch).forEach((key: string) => {
+        const field = objToMatch[key];
+        const currentPath = `${pathPrepend}${(pathPrepend ? NESTED_PATH_DELIMITER : '')}${key}`;
+        // check if the type is an Object, if it is we must recurse, otherwise we don't
+        if (!['object', 'array'].includes(typeof field)) {
+            localPaths.push(currentPath);
+        } else {
+            // remove any duplicate paths
+            localPaths = Array.from(new Set(getFlattenedPaths(field, localPaths, currentPath)));
+        }
+    });
+    return localPaths;
+};
+const matchAllObjectKeys = (flattenedPaths: string[], objToMatch: { [prop: string]: any }) => (objToCheck: { [prop: string]: any }) => {
+    return R.all(R.equals(true), flattenedPaths.map(R.split('.')).map(path => R.path(path, objToMatch) === R.path(path, objToCheck)));
+}
 /**
  * Used to setup VerifiablePresentationManager global behavior
  */
@@ -75,14 +105,14 @@ export interface SearchClaimCriteria {
  * A mapping from key (an identifier) to a search claim criteria
  */
 export interface ClaimCriteriaMap {
-    [key: string] : SearchClaimCriteria;
+    [key: string]: SearchClaimCriteria;
 }
 
 /**
  * A mapping from key (an identifier) to claim value (an object)
  */
 export interface ClaimValueMap {
-    [key: string] : any;
+    [key: string]: any;
 }
 
 /**
@@ -166,13 +196,13 @@ export class VerifiablePresentationManager {
     presentations: PresentationReference[];
     claims: AvailableClaim[];
     status: VerifiablePresentationManagerStatus;
-    verifier : PresentationVerifier;
+    verifier: PresentationVerifier;
 
     /**
      * @param options - Defines the global behavior and security of VerifiablePresentationManager
      * @param verifyAnchor - An async function that is able to verify the presentation anchor in a public Blockchain
      */
-    constructor(options: VPMOptions, verifyAnchor? : VerifyFunction) {
+    constructor(options: VPMOptions, verifyAnchor?: VerifyFunction) {
         this.options = {
             skipAddVerify: false,
             skipGetVerify: false,
@@ -236,7 +266,7 @@ export class VerifiablePresentationManager {
      *
      */
     async listPresentations(): Promise<PresentationReference[]> {
-        let verifiedPresentationRefs : PresentationReference[] = [];
+        let verifiedPresentationRefs: PresentationReference[] = [];
         if (!this.options.skipGetVerify) {
             verifiedPresentationRefs = await this.getVerifiedPresentationRefs();
         }
@@ -251,12 +281,12 @@ export class VerifiablePresentationManager {
      *
      */
     async listClaims(): Promise<AvailableClaim[]> {
-        let claimsFromVerifiedPresentations : AvailableClaim[] = [];
+        let claimsFromVerifiedPresentations: AvailableClaim[] = [];
         if (!this.options.skipGetVerify) {
             const verifiedPresentationRefs = await this.getVerifiedPresentationRefs();
-             claimsFromVerifiedPresentations = _.filter(
-                this.claims,
-                (claim : AvailableClaim) => verifiedPresentationRefs.includes(claim.credentialRef)
+            claimsFromVerifiedPresentations = R.filter(
+                (claim: AvailableClaim) => verifiedPresentationRefs.includes(claim.credentialRef),
+                this.claims
             );
         }
         return (this.options.allowGetUnverified) ? this.claims : claimsFromVerifiedPresentations;
@@ -274,7 +304,7 @@ export class VerifiablePresentationManager {
         if (!this.options.skipGetVerify) {
             verified = await this.verifyPresentation(presentationRef);
         }
-        const claims = _.filter(this.claims, { credentialRef: presentationRef });
+        const claims = R.filter(R.propEq('credentialRef', presentationRef), this.claims);
         return (this.options.allowGetUnverified || verified) ? claims : [];
     };
 
@@ -284,11 +314,11 @@ export class VerifiablePresentationManager {
      * the search never includes known invalid claims
      */
     async findClaims(criteria: SearchClaimCriteria): Promise<AvailableClaim[] | null> {
-        const claims = _.filter(this.claims, criteria);
-
-        const verifiedPresentations : PresentationReference[] = [];
+        const flattenedPaths = getFlattenedPaths(criteria, []);
+        const claims = R.filter(matchAllObjectKeys(flattenedPaths, criteria), this.claims);
+        const verifiedPresentations: PresentationReference[] = [];
         if (!this.options.skipGetVerify) {
-            const presentationRefs = claims.map((claim : AvailableClaim) => claim.credentialRef);
+            const presentationRefs = claims.map((claim: AvailableClaim) => claim.credentialRef);
             for (const presentationRef of presentationRefs) {
                 const verified = await this.verifyPresentation(presentationRef);
                 if (verified) {
@@ -299,7 +329,7 @@ export class VerifiablePresentationManager {
 
         return (this.options.allowGetUnverified)
             ? claims
-            : _.filter(claims, (claim : AvailableClaim) => verifiedPresentations.includes(claim.credentialRef));
+            : R.filter((claim: AvailableClaim) => verifiedPresentations.includes(claim.credentialRef), claims);
     }
 
     /**
@@ -308,8 +338,8 @@ export class VerifiablePresentationManager {
      * if `allowGetUnverified` is true, then the search also includes claims not verified yet.
      * if no claim matches a claim criteria, the value for the relative key will be null.
      */
-    async mapClaimValues(claimCriteriaMap: ClaimCriteriaMap, flatten? : boolean): Promise<ClaimValueMap> {
-        const claimMappedValues : ClaimValueMap = {};
+    async mapClaimValues(claimCriteriaMap: ClaimCriteriaMap, flatten?: boolean): Promise<ClaimValueMap> {
+        const claimMappedValues: ClaimValueMap = {};
         for (const key of Object.keys(claimCriteriaMap)) {
             const criteria = claimCriteriaMap[key];
             const claims = await this.findClaims(criteria);
@@ -317,7 +347,7 @@ export class VerifiablePresentationManager {
         }
 
         if (flatten) {
-            return _.keys(claimMappedValues).map(key => (
+            return R.keys(claimMappedValues).map((key: string) => (
                 { name: key, value: claimMappedValues[key] }
             ));
         }
@@ -338,21 +368,21 @@ export class VerifiablePresentationManager {
 
         let verified = false;
         if (!this.options.skipGetVerify) {
-           verified = await this.verifyPresentation(availableClaim.credentialRef);
+            verified = await this.verifyPresentation(availableClaim.credentialRef);
         };
         if (!verified && !this.options.allowGetUnverified) {
-            return null; 
+            return null;
         }
 
-        return _.get(presentation.claim, availableClaim.claimPath);
+        return R.path(availableClaim.claimPath.split('.'), presentation.claim);
     }
 
     /**
      * List managed evidences
      * if `allowGetUnverified` is true it return unverified values.
      */
-    async listEvidences() : Promise<Evidence[]> {
-        let verifiedEvidences : Evidence[] = [];
+    async listEvidences(): Promise<Evidence[]> {
+        let verifiedEvidences: Evidence[] = [];
         if (!this.options.skipGetVerify) {
             const verifiedPresentations = await this.verifyPresentations(true);
             verifiedEvidences = this.verifyEvidences(verifiedPresentations);
@@ -390,10 +420,10 @@ export class VerifiablePresentationManager {
     wasGrantedForDSR(presentationRef: PresentationReference, originalRequestDSR: DSRJSON) {
         // TODO verify that the DSR is valid and was not tampered
         const dsr = JSON.parse(originalRequestDSR);
-        const requesterId = _.get(dsr, 'payload.requesterInfo.requesterId');
-        const requestId = _.get(dsr, 'payload.id');
+        const requesterId = R.path('payload.requesterInfo.requesterId'.split('.'), dsr);
+        const requestId = R.path('payload.id'.split('.'), dsr);
 
-        if (_.isEmpty(requesterId) || _.isEmpty(requestId)) {
+        if (R.isEmpty(requesterId) || R.isEmpty(requestId)) {
             return false;
         }
 
@@ -415,21 +445,21 @@ export class VerifiablePresentationManager {
     /**
      * Remove the invalid artifacts and return a status of the resultant artifacts 
      */
-    async purgeInvalidArtifacts() : Promise<VerifiablePresentationManagerStatus> {
+    async purgeInvalidArtifacts(): Promise<VerifiablePresentationManagerStatus> {
         const verifiedPresentations = await this.verifyPresentations(true);
-        const verifiedIds = _.map(verifiedPresentations, (presentation : Credential) => presentation.id);
+        const verifiedIds = R.map((presentation: Credential) => presentation.id, verifiedPresentations);
         const verifiedEvidences = this.verifyEvidences(verifiedPresentations, true);
         this.artifacts = {
             presentations: verifiedPresentations,
-            evidences: verifiedEvidences 
+            evidences: verifiedEvidences
         }
-        _.remove(
-            this.presentations,
-            (presentationRef : PresentationReference) => !verifiedIds.includes(presentationRef.uid)
+        this.presentations = R.reject(
+            (presentationRef: PresentationReference) => !verifiedIds.includes(presentationRef.uid),
+            this.presentations
         );
-        _.remove(
-            this.claims,
-            (claim : AvailableClaim) => !verifiedIds.includes(claim.credentialRef.uid)
+        this.claims = R.reject(
+            (claim: AvailableClaim) => !verifiedIds.includes(claim.credentialRef.uid),
+            this.claims
         );
         this.status.totalPresentations = this.artifacts.presentations.length;
         this.status.totalEvidences = this.artifacts.evidences.length;
@@ -440,27 +470,27 @@ export class VerifiablePresentationManager {
      * Private mthods
      */
 
-    private getPresentation(presentationRef : PresentationReference) : Credential {
-        return _.find(this.artifacts.presentations, (presentation : Credential) => (
+    private getPresentation(presentationRef: PresentationReference): Credential {
+        return R.find((presentation: Credential) => (
             presentation.id === presentationRef.uid
-                && presentation.identifier === presentationRef.identifier
-        ));
+            && presentation.identifier === presentationRef.identifier
+        ), this.artifacts.presentations);
     }
 
-    private getClaimPresentation(availableClaim : AvailableClaim) : Credential | undefined {
-        return _.find(this.artifacts.presentations, (presentation : Credential) => (
+    private getClaimPresentation(availableClaim: AvailableClaim): Credential | undefined {
+        return R.find((presentation: Credential) => (
             presentation.id === availableClaim.credentialRef.uid
-        ));
+        ), this.artifacts.presentations);
     }
 
-    private findEvidencePresentation(evidence : Evidence) : Credential | undefined {
-        return _.find(this.artifacts.presentations, (presentation : Credential) => {
+    private findEvidencePresentation(evidence: Evidence): Credential | undefined {
+        return R.find((presentation: Credential) => {
             const presentationClaims = JSON.stringify(presentation.claim);
             return presentationClaims.includes(evidence.sha256);
-        });
+        }, this.artifacts.presentations);
     }
 
-    private aggregateCredentialArtifacts(artifacts : CredentialArtifacts) {
+    private aggregateCredentialArtifacts(artifacts: CredentialArtifacts) {
         if (this.artifacts.presentations && artifacts.presentations) {
             this.artifacts.presentations = this.artifacts.presentations.concat(artifacts.presentations);
         }
@@ -469,7 +499,7 @@ export class VerifiablePresentationManager {
         }
     }
 
-    private getPresentationReference(credential: Credential) : PresentationReference {
+    private getPresentationReference(credential: Credential): PresentationReference {
         return {
             identifier: credential.identifier,
             uid: credential.id
@@ -484,7 +514,7 @@ export class VerifiablePresentationManager {
         }));
     }
 
-    private async verifyPresentation(presentationRef : PresentationReference) : Promise<boolean> {
+    private async verifyPresentation(presentationRef: PresentationReference): Promise<boolean> {
         const credential = this.getPresentation(presentationRef);
         const verified = await this.verifier.cryptographicallySecureVerify(credential);
 
@@ -495,8 +525,8 @@ export class VerifiablePresentationManager {
         return verified;
     }
 
-    private async verifyPresentations(notThrow = this.options.notThrow) : Promise<Credential[]> {
-        const verifiedPresentations : Credential[] = [];
+    private async verifyPresentations(notThrow = this.options.notThrow): Promise<Credential[]> {
+        const verifiedPresentations: Credential[] = [];
         for (const presentation of this.artifacts.presentations) {
             const verified = await this.verifier.cryptographicallySecureVerify(presentation);
             if (verified) {
@@ -504,39 +534,39 @@ export class VerifiablePresentationManager {
             }
         }
         if (!notThrow) {
-            const unverifiedPresentations = _.difference(this.artifacts.presentations, verifiedPresentations);
-            if (!_.isEmpty(unverifiedPresentations)) {
-                const unverifiedIds = _.map(unverifiedPresentations, (presentation : Credential) => presentation.id);
-                throw new Error(`Unverified Presentations: ${_.join(unverifiedIds)}`);
+            const unverifiedPresentations = R.difference(this.artifacts.presentations, verifiedPresentations);
+            if (!R.isEmpty(unverifiedPresentations)) {
+                const unverifiedIds = R.map((presentation: Credential) => presentation.id, unverifiedPresentations);
+                throw new Error(`Unverified Presentations: ${R.join(unverifiedIds)}`);
             }
         }
         return verifiedPresentations;
     }
 
-    private verifyEvidence(evidence : Evidence, verifiedPresentations : Credential[]) : boolean {
+    private verifyEvidence(evidence: Evidence, verifiedPresentations: Credential[]): boolean {
         // check if there is a valid presentation referencing the evidence
         const presentation = this.findEvidencePresentation(evidence);
-        if (!presentation || !_.find(verifiedPresentations, { id: presentation.id })) {
+        if (!presentation || !R.find(R.propEq('id', presentation.id), verifiedPresentations)) {
             return false;
         }
 
         // check if the base64 data hash matches the sha256 value
         const dataPrefix = /^data:.*;base64,/;
-        const base64Data = _.replace(evidence.base64Encoded, dataPrefix, ''); // remove prefix
+        const base64Data = R.replace(dataPrefix, '', evidence.base64Encoded); // remove prefix
         const decodedData = Buffer.from(base64Data, 'base64');
         const calculatedSha256 = crypto.createHash('sha256').update(decodedData).digest('hex');
         return (calculatedSha256 === evidence.sha256);
     }
 
-    private verifyEvidences(verifiedPresentations : Credential[], notThrow = this.options.notThrow) : Evidence[] {
-        const verifiedEvidences = _.filter(this.artifacts.evidences, (evidence : Evidence) => (
+    private verifyEvidences(verifiedPresentations: Credential[], notThrow = this.options.notThrow): Evidence[] {
+        const verifiedEvidences = R.filter((evidence: Evidence) => (
             this.verifyEvidence(evidence, verifiedPresentations)
-        ));
+        ), this.artifacts.evidences);
         if (!notThrow) {
-            const unverifiedEvidences = _.difference(this.artifacts.evidences, verifiedEvidences);
-            if (!_.isEmpty(unverifiedEvidences)) {
-                const unverifiedIds = _.map(unverifiedEvidences, (evidence : Evidence) => evidence.content);
-                throw new Error(`Unverified Evidences: ${_.join(unverifiedIds)}`);
+            const unverifiedEvidences = R.difference(this.artifacts.evidences, verifiedEvidences);
+            if (!R.isEmpty(unverifiedEvidences)) {
+                const unverifiedIds = R.map((evidence: Evidence) => evidence.content, unverifiedEvidences);
+                throw new Error(`Unverified Evidences: ${R.join(unverifiedIds)}`);
             }
         }
         return verifiedEvidences;
@@ -544,10 +574,10 @@ export class VerifiablePresentationManager {
 
     private async getVerifiedPresentationRefs(): Promise<PresentationReference[]> {
         const verifiedPresentations = await this.verifyPresentations();
-        const verifiedIds = _.map(verifiedPresentations, (presentation : Credential) => presentation.id);
-        return _.filter(
-            this.presentations,
-            (presentation : PresentationReference) => verifiedIds.includes(presentation.uid)
+        const verifiedIds = R.map((presentation: Credential) => presentation.id, verifiedPresentations);
+        return R.filter(
+            (presentation: PresentationReference) => verifiedIds.includes(presentation.uid),
+            this.presentations
         );
     }
 }

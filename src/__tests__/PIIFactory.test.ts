@@ -1,5 +1,5 @@
 import { ScopeRequest } from '@identity.com/dsr';
-import { PIIFactory } from '../PIIFactory';
+import { PIIFactory, DSRResponse, Formatters } from '../PIIFactory';
 import * as dsrResponse from './fixtures/piiFactory/userPIIFromDsrResponseUsCountry.json';
 import * as dsrResponseWithTwoDocuments from './fixtures/piiFactory/userPIIFromDsrResponseUsCountryFrontAndBack.json';
 import * as brokenDsrResponse from './fixtures/piiFactory/brokenDsrResponse.json';
@@ -13,20 +13,30 @@ const mapping = {
   date_of_birth: { identifier: 'claim-cvc:Document.dateOfBirth-v1' },
   street: { identifier: 'claim-cvc:Identity.address-v1' },
 };
-const formatters = {
-  street: { format: claimValue => `${claimValue.street} ${claimValue.unit}` },
-  date_of_birth: { format: claimValue => `${claimValue.year}-${claimValue.month}-${claimValue.day}` },
+
+interface StreetClaimFormatter {
+  street: string,
+  unit: string
+}
+interface DOBClaimFormatter {
+  year: string,
+  month: string,
+  day: string
+}
+const formatters: Formatters = {
+  street: { format: (claimValue: StreetClaimFormatter) => `${claimValue.street} ${claimValue.unit}` },
+  date_of_birth: { format: (claimValue: DOBClaimFormatter) => `${claimValue.year}-${claimValue.month}-${claimValue.day}` },
 };
 
-let piiFactory;
-describe.only('PIIFactory', () => {
+let piiFactory: PIIFactory;
+describe('PIIFactory', () => {
   beforeEach(() => {
     piiFactory = new PIIFactory(dsrRequest, mapping, formatters);
   });
 
   describe('extractPII', () => {
     it('should extract PII and evidenceProofs from a valid DSR Response', async () => {
-      const extractedPII = await piiFactory.extractPII(dsrResponse);
+      const extractedPII = await piiFactory.extractPII(dsrResponse as DSRResponse);
 
       expect(extractedPII).toEqual({
         formattedClaims: {
@@ -48,13 +58,13 @@ describe.only('PIIFactory', () => {
     });
 
     it('should throw an exception if the dsr response is invalid', async () => {
-      const shouldFail = piiFactory.extractPII(brokenDsrResponse);
+      const shouldFail = piiFactory.extractPII(brokenDsrResponse as DSRResponse);
 
       return expect(shouldFail).rejects.toThrow('The dsr response on the requirements is invalid');
     });
 
     it('should extract evidenceProofs for multiple documents if provided in the DSR response', async () => {
-      const extractedPII = await piiFactory.extractPII(dsrResponseWithTwoDocuments);
+      const extractedPII = await piiFactory.extractPII(dsrResponseWithTwoDocuments as DSRResponse);
       expect(extractedPII).toEqual({
         formattedClaims: {
           first_name: 'Civic',
@@ -92,7 +102,7 @@ describe.only('PIIFactory', () => {
         xprv: 'a4947aa34ce507e995a60a455582d97f3fd1163eba3dd990ea1541a8fa049828',
       },
     };
-    const urlGeneratorFn = evidenceName => `https://<test cloud provider>/<unique Id>/${evidenceName}.json`;
+    const urlGeneratorFn = (evidenceName: string) => `https://<test cloud provider>/<unique Id>/${evidenceName}.json`;
 
     it('should return a generated DSR', async () => {
       const dsr = await piiFactory.generateDSR(eventsURL, idvDid, dsrResolver, urlGeneratorFn);

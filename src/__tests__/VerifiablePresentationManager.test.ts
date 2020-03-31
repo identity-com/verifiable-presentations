@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import * as R from 'ramda';
 import { Credential } from '../Credential';
 import {
     VerifiablePresentationManager,
@@ -226,7 +226,7 @@ describe('VerifiablePresentationManager', () => {
         await presentationManager.addCredentialArtifacts(artifacts);
 
         const presentations = await presentationManager.listPresentations();
-        const emailPresentation = _.find(presentations, { identifier: emailCredential.identifier });
+        const emailPresentation = R.find(R.propEq('identifier', emailCredential.identifier), presentations);
 
         const claims = await presentationManager.listPresentationClaims(emailPresentation as PresentationReference);
         expect(claims).toHaveLength(
@@ -313,34 +313,51 @@ describe('VerifiablePresentationManager', () => {
         done();
     });
 
-    it('should return the the available claims that matches the search', async (done) => {
-        const presentationManager = new VerifiablePresentationManager({});
-        await presentationManager.addCredentialArtifacts(artifacts);
+    describe('with a single field to match', () => {
+        it('should return the the available claims that matches the search', async (done) => {
+            const presentationManager = new VerifiablePresentationManager({});
+            await presentationManager.addCredentialArtifacts(artifacts);
 
-        const searchByIdentifierOnly = {
-            identifier: 'cvc:Meta:issuanceDate'
-        };
-        let claims = await presentationManager.findClaims(searchByIdentifierOnly as SearchClaimCriteria);
-        expect(claims).toHaveLength(2);
+            const searchByIdentifierOnly = {
+                identifier: 'cvc:Meta:issuanceDate'
+            };
+            const claims = await presentationManager.findClaims(searchByIdentifierOnly as SearchClaimCriteria);
+            expect(claims).toHaveLength(2);
+            done();
+        });
 
-        const searchByIdentifierAndClaimPath = {
-            identifier: 'claim-cvc:Email.domain-v1',
-            claimPath: 'contact.email.domain'
-        };
-        claims = await presentationManager.findClaims(searchByIdentifierAndClaimPath as SearchClaimCriteria);
-        expect(claims).toHaveLength(1);
+    });
+    describe('with a 2 fields to match', () => {
+        it('should return the the available claims that matches the search', async (done) => {
+            const presentationManager = new VerifiablePresentationManager({});
+            await presentationManager.addCredentialArtifacts(artifacts);
 
-        const searchByAll = {
-            identifier: 'claim-cvc:Email.domain-v1',
-            claimPath: 'contact.email.domain',
-            credentialRef: {
-                identifier: emailCredential.identifier,
-                uid: emailCredential.id
-            },
-        };
-        claims = await presentationManager.findClaims(searchByAll as SearchClaimCriteria);
-        expect(claims).toHaveLength(1);
-        done();
+            const searchByIdentifierAndClaimPath = {
+                identifier: 'claim-cvc:Email.domain-v1',
+                claimPath: 'contact.email.domain'
+            };
+            const claims = await presentationManager.findClaims(searchByIdentifierAndClaimPath as SearchClaimCriteria);
+            expect(claims).toHaveLength(1);
+            done();
+        });
+
+    });
+    describe('with nested claims to match', () => {
+        it('should return the the available claims that matches the search', async (done) => {
+            const presentationManager = new VerifiablePresentationManager({});
+            await presentationManager.addCredentialArtifacts(artifacts);
+            const searchByAll = {
+                identifier: 'claim-cvc:Email.domain-v1',
+                claimPath: 'contact.email.domain',
+                credentialRef: {
+                    identifier: emailCredential.identifier,
+                    uid: emailCredential.id
+                },
+            };
+            const claims = await presentationManager.findClaims(searchByAll as SearchClaimCriteria);
+            expect(claims).toHaveLength(1);
+            done();
+        });
     });
 
     it('should return an empty array when there is no matches in claim search', async (done) => {
@@ -574,8 +591,8 @@ describe('VerifiablePresentationManager', () => {
         }
         const presentationManager = new VerifiablePresentationManager(options);
 
-        const invalidEvidence = _.cloneDeep(idDocumentEvidence);
-        invalidEvidence.base64Encoded = _.replace(invalidEvidence.base64Encoded, /=$/, 'extra-str=');
+        const invalidEvidence = R.clone(idDocumentEvidence);
+        invalidEvidence.base64Encoded = R.replace(/=$/, 'extra-str=', invalidEvidence.base64Encoded);
 
         const artifacts : CredentialArtifacts = {
             presentations: [ idDocumentCredential as Credential ],

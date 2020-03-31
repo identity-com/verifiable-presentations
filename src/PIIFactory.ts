@@ -1,7 +1,9 @@
 import * as R from 'ramda';
 import * as uuidv4 from 'uuid/v4';
-import { VerifiablePresentationManager, ClaimCriteriaMap } from './VerifiablePresentationManager';
+import { VerifiablePresentationManager, ClaimCriteriaMap, CredentialArtifacts, Evidence } from './VerifiablePresentationManager';
 import DsrResolver from '@identity.com/dsr';
+import { Interface } from 'readline';
+import { Credential } from './Credential';
 
 const { ScopeRequest } = DsrResolver;
 /**
@@ -19,14 +21,18 @@ const { ScopeRequest } = DsrResolver;
  * For each entry in the list of evidence proofs, extract the actual document names
  * @return {Array<String>}
  */
-const evidenceProofsToDSRDocumentNames = (evidenceProofs = []) => R.pipe(
+const evidenceProofsToDSRDocumentNames = (evidenceProofs: any = []) => R.pipe(
   R.pluck('proofs'),
   R.map(Object.keys),
   R.flatten,
 )(evidenceProofs);
 
+interface RequestedDocument {
+  name?: string,
+  proofs?: object
+}
 /** returns the evidences document names from the provider DSR */
-const dsrRequestedDocuments = dsrRequest => Object.keys(R.pathOr([], ['payload', 'channels', 'evidences'], dsrRequest));
+const dsrRequestedDocuments = (dsrRequest: object) => Object.keys(R.pathOr([], ['payload', 'channels', 'evidences'], dsrRequest));
 /**
  * Traverse the provided presentation credentials and creates a map of document proofs for each
  * credential identifier
@@ -39,9 +45,9 @@ const dsrRequestedDocuments = dsrRequest => Object.keys(R.pathOr([], ['payload',
  * *       }
  * *     }
  */
-const evidenceProofsFromCredentials = (presentations, requestedDocuments = []) => presentations
+const evidenceProofsFromCredentials = (presentations: Credential[], requestedDocuments: any = []) => presentations
   .map(
-    (credential) => {
+    (credential: Credential) => {
       const evidenceClaims = R.pathOr([], ['claim', 'document', 'evidences'], credential);
       const filteredEvidenceClaims = R.pick(requestedDocuments, evidenceClaims);
       return { name: credential.identifier, proofs: R.mergeAll(filteredEvidenceClaims) };
@@ -55,8 +61,8 @@ const evidenceProofsFromCredentials = (presentations, requestedDocuments = []) =
  * @param {Object} dsrResponse
  * @param {Object} dsrRequest
  */
-const expectedEvidenceProofs = (dsrResponse, dsrRequest) => {
-  const presentations = dsrResponse.verifiableData.map(R.prop('credential'));
+const expectedEvidenceProofs = (dsrResponse: DSRResponse, dsrRequest: object) => {
+  const presentations: Credential[] = dsrResponse.verifiableData.map(R.prop('credential'));
   return evidenceProofsFromCredentials(presentations, dsrRequestedDocuments(dsrRequest));
 };
 
@@ -68,13 +74,33 @@ const expectedEvidenceProofs = (dsrResponse, dsrRequest) => {
  * @param {Function} urlGeneratorFn: A function to generate a unique URL based on the evidence name provided
  * @return {function(*, *): {url: *}}
  */
-const addEvidenceUrl = (urlGeneratorFn) => (evidenceChannelConfiguration, evidenceName) => {
+const addEvidenceUrl = (urlGeneratorFn: (evidenceName: string) => string) => (evidenceChannelConfiguration: object, evidenceName: string) => {
   const url = urlGeneratorFn(evidenceName);
   return {
     ...evidenceChannelConfiguration,
     url,
   };
 };
+
+export interface CredentialItemRequest {
+  requestIndex?: number,
+  identifier?: string,
+  constraints?: any,
+}
+export interface VerifiableDataItem {
+  credentialItemRequest?: CredentialItemRequest,
+  credential?: Credential,
+  requestStatus?: any[] | null,
+  userId?: string | null
+}
+export interface DSRResponse {
+  verifiableData?: VerifiableDataItem[],
+  requestStatus?: any[] | null,
+  userId?: string | null
+}
+export interface Formatters {
+  [key: string]: any;
+}
 /**
  * A class for extracting PII from a DSR Response based on a specific dsrRequest implementation, with a given mapping and formatters,
  * specific to that DSR
@@ -82,11 +108,11 @@ const addEvidenceUrl = (urlGeneratorFn) => (evidenceChannelConfiguration, eviden
 export class PIIFactory {
   dsrRequest: object;
   mapping: ClaimCriteriaMap;
-  formatters: object;
+  formatters: Formatters;
   /**
    * @param {Object} dsrRequest 
    * @param {ClaimCriteriaMap} mapping
-   * @param {Object} formatters 
+   * @param {Formatters} formatters
    */
   constructor(dsrRequest: object, mapping: ClaimCriteriaMap, formatters: object) {
     this.dsrRequest = dsrRequest;
@@ -102,7 +128,7 @@ export class PIIFactory {
    * @param evidenceProofs
    * @return {string[]}
    */
-  expectedDocumentsGivenEvidenceProofs(evidenceProofs) {
+  expectedDocumentsGivenEvidenceProofs(evidenceProofs?: any[]) {
     const promisedDocuments = evidenceProofsToDSRDocumentNames(evidenceProofs);
     return R.intersection(dsrRequestedDocuments(this.dsrRequest), promisedDocuments);
   };
@@ -112,10 +138,10 @@ export class PIIFactory {
    * @param dsrResponse
    * @return {Promise<{evidenceProofs: *, formattedClaims: *}>}
    */
-  async extractPII(dsrResponse) {
-    const presentations = dsrResponse.verifiableData.map(R.prop('credential'));
+  async extractPII(dsrResponse: DSRResponse) {
+    const presentations: Credential[] = dsrResponse.verifiableData.map(R.prop('credential'));
     const evidenceProofs = expectedEvidenceProofs(dsrResponse, this.dsrRequest);
-    const artifacts = {
+    const artifacts: CredentialArtifacts = {
       presentations,
       evidences: [],
     };
@@ -129,7 +155,7 @@ export class PIIFactory {
       // using the credential to provider mapping, get the credentials values
       const mappedClaimValues = await verifiablePresentation.mapClaimValues(this.mapping);
 
-      const formatIfFormatterExists = (value, key) => (value && this.formatters[key] ? this.formatters[key].format(value) : value);
+      const formatIfFormatterExists = (value: any, key: string) => (value && this.formatters[key] ? this.formatters[key].format(value) : value);
       const formattedClaims = R.mapObjIndexed(formatIfFormatterExists, mappedClaimValues);
 
       return { formattedClaims, evidenceProofs };
@@ -144,7 +170,7 @@ export class PIIFactory {
    * @param {Object} dsrResolver
    * @param {Function} urlGeneratorFn
    */
-  generateDSR(eventsURL, idvDid, dsrResolver, urlGeneratorFn) {
+  generateDSR(eventsURL: string, idvDid: string, dsrResolver: object, urlGeneratorFn: (evidenceName: string) => string) {
 
     if (!this.dsrRequest) { throw new Error('DSR not provided'); }
 

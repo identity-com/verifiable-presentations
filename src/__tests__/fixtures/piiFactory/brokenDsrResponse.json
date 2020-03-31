@@ -40,6 +40,7 @@
             }
           }
         },
+        "proof": null,
         "granted": "3045022100c065e1e404e05a508b0d9b16d0eeb6a7c1a70c6beecd4b02971963c116b5775302205d6b1e29e9c1b4eb31ad8d346ac224c1f29ffa81f61e263f4d00038137be2b2b",
         "deletedAt": -1
       },
