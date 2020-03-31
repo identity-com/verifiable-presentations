@@ -48,7 +48,7 @@ const claimValue = await presentationManager.getClaimValue(claims[0]);
 
 ## PIIFactory
 
-A class to allow easy extractiion of PII from a DSR Response based on a specific dsrRequest implementation, with a given mapping and formatters specific to that DSR. It also allows generating a new Scope Request based on unique URL generation.
+A class to allow easy extraction of PII from a DSR Response based on a specific dsrRequest implementation, with a given mapping and formatters specific to that DSR. It also allows generating a new Scope Request based on unique URL generation.
 
 ```
 const mapping = {
