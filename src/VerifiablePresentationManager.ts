@@ -33,6 +33,13 @@ const getFlattenedPaths = (objToMatch: { [prop: string]: any }, paths: any[], pa
     }, objToMatch);
     return Array.from(new Set(localPaths));
 };
+/**
+ * takes an array of paths delimited with a '.' and checks that all the paths of the objToMatch and the objToCheck are equalk
+ * @param {string[]} flattenedPaths paths in an object e.g. ['identifier', 'credential.id'...]
+ * @param { [prop: string]: any } objToMatch: object whose paths must all match objToCheck
+ * @param { [prop: string]: any } objToCheck: object whose paths must all match objToMatch
+ * @returns {Boolean}: whether all the paths match or not
+ */
 const matchAllObjectKeys = (flattenedPaths: string[], objToMatch: { [prop: string]: any }) => (objToCheck: { [prop: string]: any }) => {
     return R.all(R.equals(true), flattenedPaths.map(R.split('.')).map(path => R.path(path, objToMatch) === R.path(path, objToCheck)));
 }
