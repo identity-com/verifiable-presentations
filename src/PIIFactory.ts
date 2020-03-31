@@ -1,4 +1,4 @@
-import * as R from 'ramda';
+import R from 'ramda';
 import * as uuidv4 from 'uuid/v4';
 import { VerifiablePresentationManager, ClaimCriteriaMap, CredentialArtifacts, Evidence } from './VerifiablePresentationManager';
 import DsrResolver from '@identity.com/dsr';

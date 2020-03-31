@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import * as R from 'ramda';
+import R from 'ramda';
 import {
     ClaimIdentifier,
     CredentialIdentifier,

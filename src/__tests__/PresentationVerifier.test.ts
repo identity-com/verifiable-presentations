@@ -1,5 +1,5 @@
 import { Credential } from '../Credential';
-import * as R from 'ramda';
+import R from 'ramda';
 import { PresentationVerifier, VerifyFunction } from '../PresentationVerifier';
 import emailCredential from './fixtures/emailCredential.json';
 import idDocumentCredential from './fixtures/idDocumentCredential.json';
