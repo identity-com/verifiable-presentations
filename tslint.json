@@ -4,7 +4,6 @@
     "object-literal-sort-keys": false,
     "interface-name": false,
     "member-access": [true, "no-public"],
-    "ordered-imports": false,
-    "resolveJsonModule": true
+    "ordered-imports": false
   }
 }
