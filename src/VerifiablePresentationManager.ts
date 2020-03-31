@@ -22,18 +22,16 @@ import { PresentationVerifier, VerifyFunction } from './PresentationVerifier';
 const NESTED_PATH_DELIMITER = '.';
 const getFlattenedPaths = (objToMatch: { [prop: string]: any }, paths: any[], pathPrepend: string = '') => {
     let localPaths: any[] = paths;
-    R.keys(objToMatch).forEach((key: string) => {
-        const field = objToMatch[key];
+    R.forEachObjIndexed((value: any, key: string) => {
         const currentPath = `${pathPrepend}${(pathPrepend ? NESTED_PATH_DELIMITER : '')}${key}`;
-        // check if the type is an Object, if it is we must recurse, otherwise we don't
-        if (!['object', 'array'].includes(typeof field)) {
-            localPaths.push(currentPath);
+        // recurse objects and arrays, otherwise just push to output array
+        if (['object', 'array'].includes(typeof value)) {
+            localPaths = getFlattenedPaths(value, localPaths, currentPath);
         } else {
-            // remove any duplicate paths
-            localPaths = Array.from(new Set(getFlattenedPaths(field, localPaths, currentPath)));
+            localPaths.push(currentPath);
         }
-    });
-    return localPaths;
+    }, objToMatch);
+    return Array.from(new Set(localPaths));
 };
 const matchAllObjectKeys = (flattenedPaths: string[], objToMatch: { [prop: string]: any }) => (objToCheck: { [prop: string]: any }) => {
     return R.all(R.equals(true), flattenedPaths.map(R.split('.')).map(path => R.path(path, objToMatch) === R.path(path, objToCheck)));
