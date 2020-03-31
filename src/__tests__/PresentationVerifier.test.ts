@@ -53,38 +53,38 @@ describe('PresentationVerifier', () => {
     });
 
     describe('Cryptographically secure verify', () => {
-        it('should return true if the credential is valid and the verify functions are not provided', async (done) => {
+        it('should return true if the credential is valid and the verify functions are not provided', async () => {
             const verifier = new PresentationVerifier();
             const verified = await verifier.cryptographicallySecureVerify(emailCredential as Credential);
             expect(verified).toBeTruthy();
-            done();
+            
         });
 
-        it('should return true if all validation passes', async (done) => {
+        it('should return true if all validation passes', async () => {
             const myVerifyAnchor : VerifyFunction = (proof) => true;
             const myVerifySignature : VerifyFunction = (proof) => true;
             const verifier = new PresentationVerifier(myVerifyAnchor, myVerifySignature);
             const verified = await verifier.cryptographicallySecureVerify(emailCredential as Credential);
             expect(verified).toBeTruthy();
-            done();
+            
         });
 
-        it('should return false if anchor validation fails', async (done) => {
+        it('should return false if anchor validation fails', async () => {
             const myVerifyAnchor : VerifyFunction = (proof) => false;
             const myVerifySignature : VerifyFunction = (proof) => true;
             const verifier = new PresentationVerifier(myVerifyAnchor, myVerifySignature);
             const verified = await verifier.cryptographicallySecureVerify(emailCredential as Credential);
             expect(verified).toBeFalsy();
-            done();
+            
         });
 
-        it('should return false if signature validation fails', async (done) => {
+        it('should return false if signature validation fails', async () => {
             const myVerifyAnchor : VerifyFunction = (proof) => true;
             const myVerifySignature : VerifyFunction = (proof) => false;
             const verifier = new PresentationVerifier(myVerifyAnchor, myVerifySignature);
             const verified = await verifier.cryptographicallySecureVerify(emailCredential as Credential);
             expect(verified).toBeFalsy();
-            done();
+            
         });
     });
 

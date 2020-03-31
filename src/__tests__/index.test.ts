@@ -13,7 +13,7 @@ import idDocumentCredential from './fixtures/idDocumentCredential.json';
 import idDocumentEvidence from './fixtures/idDocumentSelfieEvidence.json';
 
 describe('Index', () => {
-    it('should perform a validation on every operation with a secure redundant presentation manager', async (done) => {
+    it('should perform a validation on every operation with a secure redundant presentation manager', async () => {
         const artifacts = {
             presentations: [
                 phoneNumberCredential,
@@ -65,10 +65,10 @@ describe('Index', () => {
         const claimValue = await secureRedundantManager.getClaimValue(claims[0]);
         expect(claimValue).toBeDefined();
 
-        done();
+        
     });
 
-    it('should perform a validation on every READ operation with a secure fast ingest manager', async (done) => {
+    it('should perform a validation on every READ operation with a secure fast ingest manager', async () => {
         const artifacts = {
             presentations: [
                 phoneNumberCredential,
@@ -124,10 +124,10 @@ describe('Index', () => {
         const claimValue = await secureFastIngestManager.getClaimValue(claims[0]);
         expect(claimValue).toBeDefined();
 
-        done();
+        
     });
 
-    it('should perform a validation on every ADD operation with a secure fast read manager', async (done) => {
+    it('should perform a validation on every ADD operation with a secure fast read manager', async () => {
         const artifacts = {
             presentations: [
                 phoneNumberCredential,
@@ -180,10 +180,10 @@ describe('Index', () => {
         const claimValue = await secureFastReadManager.getClaimValue(claims[0]);
         expect(claimValue).toBeDefined();
 
-        done();
+        
     });
 
-    it('should skip validation for all ADD or GET operations with an insecure manager', async (done) => {
+    it('should skip validation for all ADD or GET operations with an insecure manager', async () => {
         const artifacts = {
             presentations: [
                 phoneNumberCredential,
@@ -240,6 +240,6 @@ describe('Index', () => {
         const claimValue = await insecureManager.getClaimValue(claims[0]);
         expect(claimValue).toBeDefined();
 
-        done();
+        
     });
 });
