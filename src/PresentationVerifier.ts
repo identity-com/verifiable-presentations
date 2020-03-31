@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import { VC } from '@identity.com/credential-commons/src';
 import { Credential, CredentialProof } from './Credential';
 

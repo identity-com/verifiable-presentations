@@ -43,6 +43,7 @@
   "devDependencies": {
     "@types/jest": "^24.9.1",
     "@types/node": "^12.12.31",
+    "@types/uuid": "^7.0.2",
     "jest": "^24.9.0",
     "prettier": "^1.19.1",
     "ts-jest": "^24.3.0",
@@ -53,7 +54,9 @@
   },
   "dependencies": {
     "@identity.com/credential-commons": "^1.0.32",
-    "@types/lodash": "^4.14.149",
-    "crypto": "^1.0.1"
+    "@identity.com/dsr": "^1.0.14",
+    "@types/ramda": "github:types/npm-ramda#dist",
+    "crypto": "^1.0.1",
+    "ramda": "^0.25.0"
   }
 }

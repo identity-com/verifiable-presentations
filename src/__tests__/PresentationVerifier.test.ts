@@ -1,5 +1,5 @@
-import _ from 'lodash';
 import { Credential } from '../Credential';
+import R from 'ramda';
 import { PresentationVerifier, VerifyFunction } from '../PresentationVerifier';
 import emailCredential from './fixtures/emailCredential.json';
 import idDocumentCredential from './fixtures/idDocumentCredential.json';
@@ -28,7 +28,7 @@ describe('PresentationVerifier', () => {
         });
 
         it('should return false if the credential claim does not match the leaves', () => {
-            const invalidEmailCredential = _.cloneDeep(emailCredential);
+            const invalidEmailCredential = R.clone(emailCredential);
             invalidEmailCredential.claim.contact.email.username = 'invalid';
 
             const verified = verifier.nonCryptographicallySecureVerify(invalidEmailCredential as Credential);
@@ -36,7 +36,7 @@ describe('PresentationVerifier', () => {
         });
 
         it('should return false if a leave target hash does not match', () => {
-            const invalidEmailCredential = _.cloneDeep(emailCredential);
+            const invalidEmailCredential = R.clone(emailCredential);
             invalidEmailCredential.proof.leaves[0].targetHash += 'a';
 
             const verified = verifier.nonCryptographicallySecureVerify(invalidEmailCredential as Credential);
@@ -44,7 +44,7 @@ describe('PresentationVerifier', () => {
         });
 
         it('should return false if a leave has an invalid value', () => {
-            const invalidEmailCredential = _.cloneDeep(emailCredential);
+            const invalidEmailCredential = R.clone(emailCredential);
             invalidEmailCredential.proof.leaves[0].value += 'a';
 
             const verified = verifier.nonCryptographicallySecureVerify(invalidEmailCredential as Credential);
@@ -53,38 +53,38 @@ describe('PresentationVerifier', () => {
     });
 
     describe('Cryptographically secure verify', () => {
-        it('should return true if the credential is valid and the verify functions are not provided', async (done) => {
+        it('should return true if the credential is valid and the verify functions are not provided', async () => {
             const verifier = new PresentationVerifier();
             const verified = await verifier.cryptographicallySecureVerify(emailCredential as Credential);
             expect(verified).toBeTruthy();
-            done();
+            
         });
 
-        it('should return true if all validation passes', async (done) => {
+        it('should return true if all validation passes', async () => {
             const myVerifyAnchor : VerifyFunction = (proof) => true;
             const myVerifySignature : VerifyFunction = (proof) => true;
             const verifier = new PresentationVerifier(myVerifyAnchor, myVerifySignature);
             const verified = await verifier.cryptographicallySecureVerify(emailCredential as Credential);
             expect(verified).toBeTruthy();
-            done();
+            
         });
 
-        it('should return false if anchor validation fails', async (done) => {
+        it('should return false if anchor validation fails', async () => {
             const myVerifyAnchor : VerifyFunction = (proof) => false;
             const myVerifySignature : VerifyFunction = (proof) => true;
             const verifier = new PresentationVerifier(myVerifyAnchor, myVerifySignature);
             const verified = await verifier.cryptographicallySecureVerify(emailCredential as Credential);
             expect(verified).toBeFalsy();
-            done();
+            
         });
 
-        it('should return false if signature validation fails', async (done) => {
+        it('should return false if signature validation fails', async () => {
             const myVerifyAnchor : VerifyFunction = (proof) => true;
             const myVerifySignature : VerifyFunction = (proof) => false;
             const verifier = new PresentationVerifier(myVerifyAnchor, myVerifySignature);
             const verified = await verifier.cryptographicallySecureVerify(emailCredential as Credential);
             expect(verified).toBeFalsy();
-            done();
+            
         });
     });
 
