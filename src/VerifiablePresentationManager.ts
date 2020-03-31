@@ -39,7 +39,7 @@ const getFlattenedPaths = (objToMatch: { [prop: string]: any }, pathPrepend: str
     return Array.from(new Set(R.flatten(R.values(localPathsObject)))) as string[]; // use a set to remove duplicates
 };
 /**
- * takes an array of paths delimited with a '.' and checks that all the paths of the objToMatch and the objToCheck are equalk
+ * takes an array of paths delimited with a '.' and checks that all the paths of the objToMatch and the objToCheck are equal
  * @param {string[]} flattenedPaths paths in an object e.g. ['identifier', 'credential.id'...]
  * @param { [prop: string]: any } objToMatch: object whose paths must all match objToCheck
  * @param { [prop: string]: any } objToCheck: object whose paths must all match objToMatch
