@@ -20,6 +20,13 @@ import { PresentationVerifier, VerifyFunction } from './PresentationVerifier';
  *  }
  */
 const NESTED_PATH_DELIMITER = '.';
+/**
+ * for the given object, recursively return an array of all the paths inside the object, including nested paths
+ * @param { [prop: string]: any } objToMatch:
+ * @param {any[]} paths
+ * @param {string} pathPrepend
+ * @returns {string[]} an array of paths
+ */
 const getFlattenedPaths = (objToMatch: { [prop: string]: any }, paths: any[], pathPrepend: string = '') => {
     let localPaths: any[] = paths;
     R.forEachObjIndexed((value: any, key: string) => {
@@ -31,7 +38,7 @@ const getFlattenedPaths = (objToMatch: { [prop: string]: any }, paths: any[], pa
             localPaths.push(currentPath);
         }
     }, objToMatch);
-    return Array.from(new Set(localPaths));
+    return Array.from(new Set(localPaths)); // use a set to remove duplicates
 };
 /**
  * takes an array of paths delimited with a '.' and checks that all the paths of the objToMatch and the objToCheck are equalk
@@ -41,7 +48,7 @@ const getFlattenedPaths = (objToMatch: { [prop: string]: any }, paths: any[], pa
  * @returns {Boolean}: whether all the paths match or not
  */
 const matchAllObjectKeys = (flattenedPaths: string[], objToMatch: { [prop: string]: any }) => (objToCheck: { [prop: string]: any }) => {
-    return R.all(R.equals(true), flattenedPaths.map(R.split('.')).map(path => R.path(path, objToMatch) === R.path(path, objToCheck)));
+    return R.all(R.equals(true), flattenedPaths.map(R.split(NESTED_PATH_DELIMITER)).map(path => R.path(path, objToMatch) === R.path(path, objToCheck)));
 }
 /**
  * Used to setup VerifiablePresentationManager global behavior
