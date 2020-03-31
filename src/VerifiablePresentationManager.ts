@@ -23,22 +23,20 @@ const NESTED_PATH_DELIMITER = '.';
 /**
  * for the given object, recursively return an array of all the paths inside the object, including nested paths
  * @param { [prop: string]: any } objToMatch:
- * @param {any[]} paths
- * @param {string} pathPrepend
- * @returns {string[]} an array of paths
+ * @param {string} pathPrepend: a string that grows with recursion, i.e. 'credential', 'credential.email'
+ * @returns {string[]} an array of paths i.e. ['credential', 'credential.email']
  */
-const getFlattenedPaths = (objToMatch: { [prop: string]: any }, paths: any[], pathPrepend: string = '') => {
-    let localPaths: any[] = paths;
-    R.forEachObjIndexed((value: any, key: string) => {
+const getFlattenedPaths = (objToMatch: { [prop: string]: any }, pathPrepend: string = '') => {
+    const localPathsObject = R.mapObjIndexed((value: any, key: string) => {
         const currentPath = `${pathPrepend}${(pathPrepend ? NESTED_PATH_DELIMITER : '')}${key}`;
-        // recurse objects and arrays, otherwise just push to output array
+        // recurse objects and arrays, otherwise just return the paths
         if (['object', 'array'].includes(typeof value)) {
-            localPaths = getFlattenedPaths(value, localPaths, currentPath);
+            return getFlattenedPaths(value, currentPath);
         } else {
-            localPaths.push(currentPath);
+            return [currentPath]
         }
     }, objToMatch);
-    return Array.from(new Set(localPaths)); // use a set to remove duplicates
+    return Array.from(new Set(R.flatten(R.values(localPathsObject)))) as string[]; // use a set to remove duplicates
 };
 /**
  * takes an array of paths delimited with a '.' and checks that all the paths of the objToMatch and the objToCheck are equalk
@@ -326,7 +324,7 @@ export class VerifiablePresentationManager {
      * the search never includes known invalid claims
      */
     async findClaims(criteria: SearchClaimCriteria): Promise<AvailableClaim[] | null> {
-        const flattenedPaths = getFlattenedPaths(criteria, []);
+        const flattenedPaths: string[] = getFlattenedPaths(criteria);
         const claims = R.filter(matchAllObjectKeys(flattenedPaths, criteria), this.claims);
         const verifiedPresentations: PresentationReference[] = [];
         if (!this.options.skipGetVerify) {
