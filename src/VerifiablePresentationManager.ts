@@ -1,4 +1,4 @@
-import crypto from 'crypto';
+import * as sjcl from 'sjcl';
 import R from 'ramda';
 import {
     ClaimIdentifier,
@@ -453,7 +453,7 @@ export class VerifiablePresentationManager {
     }
 
     /**
-     * Remove the invalid artifacts and return a status of the resultant artifacts 
+     * Remove the invalid artifacts and return a status of the resultant artifacts
      */
     async purgeInvalidArtifacts(): Promise<VerifiablePresentationManagerStatus> {
         const verifiedPresentations = await this.verifyPresentations(true);
@@ -563,9 +563,15 @@ export class VerifiablePresentationManager {
         // check if the base64 data hash matches the sha256 value
         const dataPrefix = /^data:.*;base64,/;
         const base64Data = R.replace(dataPrefix, '', evidence.base64Encoded); // remove prefix
-        const decodedData = Buffer.from(base64Data, 'base64');
-        const calculatedSha256 = crypto.createHash('sha256').update(decodedData).digest('hex');
-        return (calculatedSha256 === evidence.sha256);
+        try {
+            const sha256BitArray = sjcl.hash.sha256.hash(sjcl.codec.base64.toBits(base64Data));
+            const calculatedSha256 = sjcl.codec.hex.fromBits(sha256BitArray);
+            return (calculatedSha256 === evidence.sha256);
+        } catch (e) {
+            // default to false on any errors
+            // e.g. base64 encoding exception
+        }
+        return false;
     }
 
     private verifyEvidences(verifiedPresentations: Credential[], notThrow = this.options.notThrow): Evidence[] {

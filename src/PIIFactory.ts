@@ -1,5 +1,5 @@
 import R from 'ramda';
-import * as uuidv4 from 'uuid/v4';
+import { v4 as uuidv4 } from 'uuid';
 import { VerifiablePresentationManager, ClaimCriteriaMap, CredentialArtifacts, Evidence } from './VerifiablePresentationManager';
 import DsrResolver from '@identity.com/dsr';
 import { Interface } from 'readline';
@@ -110,7 +110,7 @@ export class PIIFactory {
   mapping: ClaimCriteriaMap;
   formatters: Formatters;
   /**
-   * @param {Object} dsrRequest 
+   * @param {Object} dsrRequest
    * @param {ClaimCriteriaMap} mapping
    * @param {Formatters} formatters
    */
@@ -174,7 +174,7 @@ export class PIIFactory {
 
     if (!this.dsrRequest) { throw new Error('DSR not provided'); }
 
-    const uuid = uuidv4.default();
+    const uuid = uuidv4();
     const requestedItems = R.pathOr([], ['payload', 'credentialItems'], this.dsrRequest);
     // iterate over the requested items array, set the values on the path constraints.meta.issue.is.$eq for the idv value
     const updatedRequestedItems = R.map(R.assocPath((['constraints', 'meta', 'issuer', 'is', '$eq']), idvDid))(requestedItems);

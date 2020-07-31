@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>VerifiablePresentationManager | verifiable-presentations</title>
+	<title>VerifiablePresentationManager | @identity.com/verifiable-presentations - v0.0.6</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">verifiable-presentations</a>
+					<a href="../index.html" class="title">@identity.com/verifiable-presentations - v0.0.6</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -116,6 +116,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_verifiablepresentationmanager_.verifiablepresentationmanager.html#findclaims" class="tsd-kind-icon">find<wbr>Claims</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_verifiablepresentationmanager_.verifiablepresentationmanager.html#findevidencepresentation" class="tsd-kind-icon">find<wbr>Evidence<wbr>Presentation</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_verifiablepresentationmanager_.verifiablepresentationmanager.html#getavailableclaims" class="tsd-kind-icon">get<wbr>Available<wbr>Claims</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_verifiablepresentationmanager_.verifiablepresentationmanager.html#getclaimpresentation" class="tsd-kind-icon">get<wbr>Claim<wbr>Presentation</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_verifiablepresentationmanager_.verifiablepresentationmanager.html#getclaimvalue" class="tsd-kind-icon">get<wbr>Claim<wbr>Value</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_verifiablepresentationmanager_.verifiablepresentationmanager.html#getpresentation" class="tsd-kind-icon">get<wbr>Presentation</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_verifiablepresentationmanager_.verifiablepresentationmanager.html#getpresentationreference" class="tsd-kind-icon">get<wbr>Presentation<wbr>Reference</a></li>
@@ -125,6 +126,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_verifiablepresentationmanager_.verifiablepresentationmanager.html#listevidences" class="tsd-kind-icon">list<wbr>Evidences</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_verifiablepresentationmanager_.verifiablepresentationmanager.html#listpresentationclaims" class="tsd-kind-icon">list<wbr>Presentation<wbr>Claims</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_verifiablepresentationmanager_.verifiablepresentationmanager.html#listpresentations" class="tsd-kind-icon">list<wbr>Presentations</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_verifiablepresentationmanager_.verifiablepresentationmanager.html#mapclaimvalues" class="tsd-kind-icon">map<wbr>Claim<wbr>Values</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_verifiablepresentationmanager_.verifiablepresentationmanager.html#purgeinvalidartifacts" class="tsd-kind-icon">purge<wbr>Invalid<wbr>Artifacts</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_verifiablepresentationmanager_.verifiablepresentationmanager.html#verifyallartifacts" class="tsd-kind-icon">verify<wbr>All<wbr>Artifacts</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_verifiablepresentationmanager_.verifiablepresentationmanager.html#verifyevidence" class="tsd-kind-icon">verify<wbr>Evidence</a></li>
@@ -149,7 +151,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f1f7481/src/VerifiablePresentationManager.ts#L154">VerifiablePresentationManager.ts:154</a></li>
+									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/e2581e8/src/VerifiablePresentationManager.ts#L209">VerifiablePresentationManager.ts:209</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -186,7 +188,7 @@
 					<div class="tsd-signature tsd-kind-icon">artifacts<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_verifiablepresentationmanager_.credentialartifacts.html" class="tsd-signature-type">CredentialArtifacts</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f1f7481/src/VerifiablePresentationManager.ts#L150">VerifiablePresentationManager.ts:150</a></li>
+							<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/e2581e8/src/VerifiablePresentationManager.ts#L205">VerifiablePresentationManager.ts:205</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -196,7 +198,7 @@
 					<div class="tsd-signature tsd-kind-icon">claims<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_verifiablepresentationmanager_.availableclaim.html" class="tsd-signature-type">AvailableClaim</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f1f7481/src/VerifiablePresentationManager.ts#L152">VerifiablePresentationManager.ts:152</a></li>
+							<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/e2581e8/src/VerifiablePresentationManager.ts#L207">VerifiablePresentationManager.ts:207</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -206,7 +208,7 @@
 					<div class="tsd-signature tsd-kind-icon">options<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_verifiablepresentationmanager_.vpmoptions.html" class="tsd-signature-type">VPMOptions</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f1f7481/src/VerifiablePresentationManager.ts#L149">VerifiablePresentationManager.ts:149</a></li>
+							<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/e2581e8/src/VerifiablePresentationManager.ts#L204">VerifiablePresentationManager.ts:204</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -216,7 +218,7 @@
 					<div class="tsd-signature tsd-kind-icon">presentations<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_verifiablepresentationmanager_.presentationreference.html" class="tsd-signature-type">PresentationReference</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f1f7481/src/VerifiablePresentationManager.ts#L151">VerifiablePresentationManager.ts:151</a></li>
+							<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/e2581e8/src/VerifiablePresentationManager.ts#L206">VerifiablePresentationManager.ts:206</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -226,7 +228,7 @@
 					<div class="tsd-signature tsd-kind-icon">status<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_verifiablepresentationmanager_.verifiablepresentationmanagerstatus.html" class="tsd-signature-type">VerifiablePresentationManagerStatus</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f1f7481/src/VerifiablePresentationManager.ts#L153">VerifiablePresentationManager.ts:153</a></li>
+							<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/e2581e8/src/VerifiablePresentationManager.ts#L208">VerifiablePresentationManager.ts:208</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -236,7 +238,7 @@
 					<div class="tsd-signature tsd-kind-icon">verifier<span class="tsd-signature-symbol">:</span> <a href="_presentationverifier_.presentationverifier.html" class="tsd-signature-type">PresentationVerifier</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f1f7481/src/VerifiablePresentationManager.ts#L154">VerifiablePresentationManager.ts:154</a></li>
+							<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/e2581e8/src/VerifiablePresentationManager.ts#L209">VerifiablePresentationManager.ts:209</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -253,7 +255,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f1f7481/src/VerifiablePresentationManager.ts#L194">VerifiablePresentationManager.ts:194</a></li>
+									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/e2581e8/src/VerifiablePresentationManager.ts#L249">VerifiablePresentationManager.ts:249</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -285,7 +287,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f1f7481/src/VerifiablePresentationManager.ts#L412">VerifiablePresentationManager.ts:412</a></li>
+									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/e2581e8/src/VerifiablePresentationManager.ts#L503">VerifiablePresentationManager.ts:503</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -308,12 +310,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f1f7481/src/VerifiablePresentationManager.ts#L271">VerifiablePresentationManager.ts:271</a></li>
+									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/e2581e8/src/VerifiablePresentationManager.ts#L326">VerifiablePresentationManager.ts:326</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>search for a valid claim tha matches the criterias.
+									<p>Search for a valid claim that matches the criterias.
 										if <code>allowGetUnverified</code> is true the search also include claim not verified yet.
 									the search never includes known invalid claims</p>
 								</div>
@@ -338,7 +340,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f1f7481/src/VerifiablePresentationManager.ts#L405">VerifiablePresentationManager.ts:405</a></li>
+									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/e2581e8/src/VerifiablePresentationManager.ts#L496">VerifiablePresentationManager.ts:496</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -364,7 +366,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f1f7481/src/VerifiablePresentationManager.ts#L428">VerifiablePresentationManager.ts:428</a></li>
+									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/e2581e8/src/VerifiablePresentationManager.ts#L519">VerifiablePresentationManager.ts:519</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -380,6 +382,32 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="getclaimpresentation" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> get<wbr>Claim<wbr>Presentation</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Claim<wbr>Presentation<span class="tsd-signature-symbol">(</span>availableClaim<span class="tsd-signature-symbol">: </span><a href="../interfaces/_verifiablepresentationmanager_.availableclaim.html" class="tsd-signature-type">AvailableClaim</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_credential_.credential.html" class="tsd-signature-type">Credential</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/e2581e8/src/VerifiablePresentationManager.ts#L490">VerifiablePresentationManager.ts:490</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>availableClaim: <a href="../interfaces/_verifiablepresentationmanager_.availableclaim.html" class="tsd-signature-type">AvailableClaim</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_credential_.credential.html" class="tsd-signature-type">Credential</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<span class="tsd-signature-type">undefined</span>
+							</h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="getclaimvalue" class="tsd-anchor"></a>
 					<h3>get<wbr>Claim<wbr>Value</h3>
@@ -390,7 +418,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f1f7481/src/VerifiablePresentationManager.ts#L295">VerifiablePresentationManager.ts:295</a></li>
+									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/e2581e8/src/VerifiablePresentationManager.ts#L373">VerifiablePresentationManager.ts:373</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -414,25 +442,22 @@
 					<a name="getpresentation" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> get<wbr>Presentation</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Presentation<span class="tsd-signature-symbol">(</span>availableClaim<span class="tsd-signature-symbol">: </span><a href="../interfaces/_verifiablepresentationmanager_.availableclaim.html" class="tsd-signature-type">AvailableClaim</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_credential_.credential.html" class="tsd-signature-type">Credential</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Presentation<span class="tsd-signature-symbol">(</span>presentationRef<span class="tsd-signature-symbol">: </span><a href="../interfaces/_verifiablepresentationmanager_.presentationreference.html" class="tsd-signature-type">PresentationReference</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_credential_.credential.html" class="tsd-signature-type">Credential</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f1f7481/src/VerifiablePresentationManager.ts#L399">VerifiablePresentationManager.ts:399</a></li>
+									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/e2581e8/src/VerifiablePresentationManager.ts#L483">VerifiablePresentationManager.ts:483</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>availableClaim: <a href="../interfaces/_verifiablepresentationmanager_.availableclaim.html" class="tsd-signature-type">AvailableClaim</a></h5>
+									<h5>presentationRef: <a href="../interfaces/_verifiablepresentationmanager_.presentationreference.html" class="tsd-signature-type">PresentationReference</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_credential_.credential.html" class="tsd-signature-type">Credential</a>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">undefined</span>
-							</h4>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_credential_.credential.html" class="tsd-signature-type">Credential</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -446,7 +471,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f1f7481/src/VerifiablePresentationManager.ts#L421">VerifiablePresentationManager.ts:421</a></li>
+									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/e2581e8/src/VerifiablePresentationManager.ts#L512">VerifiablePresentationManager.ts:512</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -469,7 +494,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f1f7481/src/VerifiablePresentationManager.ts#L496">VerifiablePresentationManager.ts:496</a></li>
+									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/e2581e8/src/VerifiablePresentationManager.ts#L591">VerifiablePresentationManager.ts:591</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_verifiablepresentationmanager_.presentationreference.html" class="tsd-signature-type">PresentationReference</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -486,7 +511,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f1f7481/src/VerifiablePresentationManager.ts#L365">VerifiablePresentationManager.ts:365</a></li>
+									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/e2581e8/src/VerifiablePresentationManager.ts#L449">VerifiablePresentationManager.ts:449</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -509,7 +534,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f1f7481/src/VerifiablePresentationManager.ts#L238">VerifiablePresentationManager.ts:238</a></li>
+									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/e2581e8/src/VerifiablePresentationManager.ts#L293">VerifiablePresentationManager.ts:293</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -533,7 +558,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f1f7481/src/VerifiablePresentationManager.ts#L316">VerifiablePresentationManager.ts:316</a></li>
+									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/e2581e8/src/VerifiablePresentationManager.ts#L394">VerifiablePresentationManager.ts:394</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -556,7 +581,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f1f7481/src/VerifiablePresentationManager.ts#L257">VerifiablePresentationManager.ts:257</a></li>
+									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/e2581e8/src/VerifiablePresentationManager.ts#L312">VerifiablePresentationManager.ts:312</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -586,7 +611,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f1f7481/src/VerifiablePresentationManager.ts#L223">VerifiablePresentationManager.ts:223</a></li>
+									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/e2581e8/src/VerifiablePresentationManager.ts#L278">VerifiablePresentationManager.ts:278</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -601,6 +626,40 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="mapclaimvalues" class="tsd-anchor"></a>
+					<h3>map<wbr>Claim<wbr>Values</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">map<wbr>Claim<wbr>Values<span class="tsd-signature-symbol">(</span>claimCriteriaMap<span class="tsd-signature-symbol">: </span><a href="../interfaces/_verifiablepresentationmanager_.claimcriteriamap.html" class="tsd-signature-type">ClaimCriteriaMap</a>, flatten<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_verifiablepresentationmanager_.claimvaluemap.html" class="tsd-signature-type">ClaimValueMap</a><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/e2581e8/src/VerifiablePresentationManager.ts#L351">VerifiablePresentationManager.ts:351</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get a mapping from key to a claim search criteria and resolve the claim search criterias,
+										returning a mapping from the same keys to the relative claim value.
+										if <code>allowGetUnverified</code> is true, then the search also includes claims not verified yet.
+									if no claim matches a claim criteria, the value for the relative key will be null.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>claimCriteriaMap: <a href="../interfaces/_verifiablepresentationmanager_.claimcriteriamap.html" class="tsd-signature-type">ClaimCriteriaMap</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> flatten: <span class="tsd-signature-type">boolean</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_verifiablepresentationmanager_.claimvaluemap.html" class="tsd-signature-type">ClaimValueMap</a><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="purgeinvalidartifacts" class="tsd-anchor"></a>
 					<h3>purge<wbr>Invalid<wbr>Artifacts</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -610,7 +669,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f1f7481/src/VerifiablePresentationManager.ts#L374">VerifiablePresentationManager.ts:374</a></li>
+									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/e2581e8/src/VerifiablePresentationManager.ts#L458">VerifiablePresentationManager.ts:458</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -632,7 +691,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f1f7481/src/VerifiablePresentationManager.ts#L331">VerifiablePresentationManager.ts:331</a></li>
+									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/e2581e8/src/VerifiablePresentationManager.ts#L409">VerifiablePresentationManager.ts:409</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -656,7 +715,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f1f7481/src/VerifiablePresentationManager.ts#L467">VerifiablePresentationManager.ts:467</a></li>
+									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/e2581e8/src/VerifiablePresentationManager.ts#L556">VerifiablePresentationManager.ts:556</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -682,7 +741,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f1f7481/src/VerifiablePresentationManager.ts#L482">VerifiablePresentationManager.ts:482</a></li>
+									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/e2581e8/src/VerifiablePresentationManager.ts#L577">VerifiablePresentationManager.ts:577</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -708,7 +767,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f1f7481/src/VerifiablePresentationManager.ts#L436">VerifiablePresentationManager.ts:436</a></li>
+									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/e2581e8/src/VerifiablePresentationManager.ts#L527">VerifiablePresentationManager.ts:527</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -731,7 +790,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f1f7481/src/VerifiablePresentationManager.ts#L449">VerifiablePresentationManager.ts:449</a></li>
+									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/e2581e8/src/VerifiablePresentationManager.ts#L538">VerifiablePresentationManager.ts:538</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -748,21 +807,20 @@
 					<a name="wasgrantedfordsr" class="tsd-anchor"></a>
 					<h3>was<wbr>Granted<wbr>ForDSR</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">was<wbr>Granted<wbr>ForDSR<span class="tsd-signature-symbol">(</span>presentationRef<span class="tsd-signature-symbol">: </span><a href="../interfaces/_verifiablepresentationmanager_.presentationreference.html" class="tsd-signature-type">PresentationReference</a>, originalRequestDSR<span class="tsd-signature-symbol">: </span><a href="../modules/_verifiablepresentationmanager_.html#dsrjson" class="tsd-signature-type">DSRJSON</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">was<wbr>Granted<wbr>ForDSR<span class="tsd-signature-symbol">(</span>presentationRef<span class="tsd-signature-symbol">: </span><a href="../interfaces/_verifiablepresentationmanager_.presentationreference.html" class="tsd-signature-type">PresentationReference</a>, originalRequestDSR<span class="tsd-signature-symbol">: </span><a href="../modules/_verifiablepresentationmanager_.html#dsrjson" class="tsd-signature-type">DSRJSON</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f1f7481/src/VerifiablePresentationManager.ts#L354">VerifiablePresentationManager.ts:354</a></li>
+									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/e2581e8/src/VerifiablePresentationManager.ts#L430">VerifiablePresentationManager.ts:430</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Verify if an presentation was GRANTED for a specif DSR</p>
+									<p>Verify if a presentation was GRANTED for a specific DSR</p>
 								</div>
-								<p>This will first verify that the DSR is valid and not tampered,
-								them will verify if the presentation was shared with user consent and signatures</p>
+								<p>Verify if the presentation was shared with user consent and signatures</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -779,7 +837,7 @@
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -795,46 +853,70 @@
 						<span>Internals</span>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_credential_.html">"<wbr>Credential"</a>
+						<a href="../modules/_credential_.html">&quot;<wbr>Credential&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_presentationverifier_.html">"<wbr>Presentation<wbr>Verifier"</a>
+						<a href="../modules/_piifactory_.html">&quot;PIIFactory&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_presentationverifier_.html">&quot;<wbr>Presentation<wbr>Verifier&quot;</a>
 					</li>
 					<li class="current tsd-kind-external-module">
-						<a href="../modules/_verifiablepresentationmanager_.html">"<wbr>Verifiable<wbr>Presentation<wbr>Manager"</a>
+						<a href="../modules/_verifiablepresentationmanager_.html">&quot;<wbr>Verifiable<wbr>Presentation<wbr>Manager&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/___tests___presentationverifier_test_.html">"__tests__/<wbr>Presentation<wbr>Verifier.test"</a>
+						<a href="../modules/_verifiablepresentationmanagerfactory_.html">&quot;<wbr>Verifiable<wbr>Presentation<wbr>Manager<wbr>Factory&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/___tests___verifiablepresentationmanager_test_.html">"__tests__/<wbr>Verifiable<wbr>Presentation<wbr>Manager.test"</a>
+						<a href="../modules/___tests___piifactory_test_.html">&quot;__tests__/PIIFactory.test&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/___tests___index_test_.html">"__tests__/index.test"</a>
+						<a href="../modules/___tests___presentationverifier_test_.html">&quot;__tests__/<wbr>Presentation<wbr>Verifier.test&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_index_.html">"index"</a>
+						<a href="../modules/___tests___verifiablepresentationmanager_test_.html">&quot;__tests__/<wbr>Verifiable<wbr>Presentation<wbr>Manager.test&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/___tests___index_test_.html">&quot;__tests__/index.test&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_index_.html">&quot;index&quot;</a>
 					</li>
 					<li class="label tsd-is-external">
 						<span>Externals</span>
 					</li>
 					<li class=" tsd-kind-external-module tsd-is-external">
-						<a href="../modules/___tests___fixtures_emailcredential_.html">"__tests__/fixtures/email<wbr>Credential"</a>
+						<a href="../modules/___tests___fixtures_emailcredential_.html">&quot;__tests__/fixtures/email<wbr>Credential&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module tsd-is-external">
-						<a href="../modules/___tests___fixtures_iddocumentcredential_.html">"__tests__/fixtures/id<wbr>Document<wbr>Credential"</a>
+						<a href="../modules/___tests___fixtures_iddocumentcredential_.html">&quot;__tests__/fixtures/id<wbr>Document<wbr>Credential&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module tsd-is-external">
-						<a href="../modules/___tests___fixtures_iddocumentpartialcredential_.html">"__tests__/fixtures/id<wbr>Document<wbr>Partial<wbr>Credential"</a>
+						<a href="../modules/___tests___fixtures_iddocumentdsr_.html">&quot;__tests__/fixtures/id<wbr>DocumentDSR&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module tsd-is-external">
-						<a href="../modules/___tests___fixtures_iddocumentselfieevidence_.html">"__tests__/fixtures/id<wbr>Document<wbr>Selfie<wbr>Evidence"</a>
+						<a href="../modules/___tests___fixtures_iddocumentpartialcredential_.html">&quot;__tests__/fixtures/id<wbr>Document<wbr>Partial<wbr>Credential&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module tsd-is-external">
-						<a href="../modules/___tests___fixtures_invalidemailcredential_.html">"__tests__/fixtures/invalid<wbr>Email<wbr>Credential"</a>
+						<a href="../modules/___tests___fixtures_iddocumentselfieevidence_.html">&quot;__tests__/fixtures/id<wbr>Document<wbr>Selfie<wbr>Evidence&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module tsd-is-external">
-						<a href="../modules/___tests___fixtures_phonenumbercredential_.html">"__tests__/fixtures/phone<wbr>Number<wbr>Credential"</a>
+						<a href="../modules/___tests___fixtures_invalidemailcredential_.html">&quot;__tests__/fixtures/invalid<wbr>Email<wbr>Credential&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="../modules/___tests___fixtures_phonenumbercredential_.html">&quot;__tests__/fixtures/phone<wbr>Number<wbr>Credential&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="../modules/___tests___fixtures_piifactory_brokendsrresponse_.html">&quot;__tests__/fixtures/pii<wbr>Factory/broken<wbr>Dsr<wbr>Response&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="../modules/___tests___fixtures_piifactory_dsrtemplate_.html">&quot;__tests__/fixtures/pii<wbr>Factory/dsr<wbr>Template&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="../modules/___tests___fixtures_piifactory_userpiifromdsrresponseuscountry_.html">&quot;__tests__/fixtures/pii<wbr>Factory/userPIIFrom<wbr>Dsr<wbr>Response<wbr>UsCountry&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="../modules/___tests___fixtures_piifactory_userpiifromdsrresponseuscountryfrontandback_.html">&quot;__tests__/fixtures/pii<wbr>Factory/userPIIFrom<wbr>Dsr<wbr>Response<wbr>UsCountry<wbr>Front<wbr>And<wbr>Back&quot;</a>
 					</li>
 				</ul>
 			</nav>
@@ -881,6 +963,9 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
 								<a href="_verifiablepresentationmanager_.verifiablepresentationmanager.html#getavailableclaims" class="tsd-kind-icon">get<wbr>Available<wbr>Claims</a>
 							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_verifiablepresentationmanager_.verifiablepresentationmanager.html#getclaimpresentation" class="tsd-kind-icon">get<wbr>Claim<wbr>Presentation</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_verifiablepresentationmanager_.verifiablepresentationmanager.html#getclaimvalue" class="tsd-kind-icon">get<wbr>Claim<wbr>Value</a>
 							</li>
@@ -907,6 +992,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_verifiablepresentationmanager_.verifiablepresentationmanager.html#listpresentations" class="tsd-kind-icon">list<wbr>Presentations</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_verifiablepresentationmanager_.verifiablepresentationmanager.html#mapclaimvalues" class="tsd-kind-icon">map<wbr>Claim<wbr>Values</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_verifiablepresentationmanager_.verifiablepresentationmanager.html#purgeinvalidartifacts" class="tsd-kind-icon">purge<wbr>Invalid<wbr>Artifacts</a>
@@ -937,6 +1025,12 @@
 						<a href="../interfaces/_verifiablepresentationmanager_.availableclaim.html" class="tsd-kind-icon">Available<wbr>Claim</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="../interfaces/_verifiablepresentationmanager_.claimcriteriamap.html" class="tsd-kind-icon">Claim<wbr>Criteria<wbr>Map</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="../interfaces/_verifiablepresentationmanager_.claimvaluemap.html" class="tsd-kind-icon">Claim<wbr>Value<wbr>Map</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
 						<a href="../interfaces/_verifiablepresentationmanager_.credentialartifacts.html" class="tsd-kind-icon">Credential<wbr>Artifacts</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
@@ -956,6 +1050,15 @@
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
 						<a href="../modules/_verifiablepresentationmanager_.html#dsrjson" class="tsd-kind-icon">DSRJSON</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/_verifiablepresentationmanager_.html#nested_path_delimiter" class="tsd-kind-icon">NESTED_<wbr>PATH_<wbr>DELIMITER</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/_verifiablepresentationmanager_.html#getflattenedpaths" class="tsd-kind-icon">get<wbr>Flattened<wbr>Paths</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/_verifiablepresentationmanager_.html#matchallobjectkeys" class="tsd-kind-icon">match<wbr>All<wbr>Object<wbr>Keys</a>
 					</li>
 				</ul>
 			</nav>

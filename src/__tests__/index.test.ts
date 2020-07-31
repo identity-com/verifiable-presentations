@@ -1,8 +1,5 @@
 import {
-    secureRedundantManager,
-    secureFastIngestManager,
-    secureFastReadManager,
-    insecureManager
+  VerifiablePresentationManagerFactory
 } from '../index';
 import {
     CredentialArtifacts
@@ -23,8 +20,9 @@ describe('Index', () => {
                 idDocumentEvidence
             ]
         } as CredentialArtifacts;
-        
+
         // should validate presentations when adding
+        const secureRedundantManager = VerifiablePresentationManagerFactory.createSecureRedundantManager();
         const status = await secureRedundantManager.addCredentialArtifacts(artifacts);
         expect(status.totalPresentations).toEqual(2);
         expect(status.totalEvidences).toEqual(1);
@@ -65,7 +63,7 @@ describe('Index', () => {
         const claimValue = await secureRedundantManager.getClaimValue(claims[0]);
         expect(claimValue).toBeDefined();
 
-        
+
     });
 
     it('should perform a validation on every READ operation with a secure fast ingest manager', async () => {
@@ -78,8 +76,9 @@ describe('Index', () => {
                 idDocumentEvidence
             ]
         } as CredentialArtifacts;
-        
+
         // should NOT validate presentations when adding
+        const secureFastIngestManager = VerifiablePresentationManagerFactory.createSecureFastIngestManager();
         const status = await secureFastIngestManager.addCredentialArtifacts(artifacts);
         expect(status.totalPresentations).toEqual(2);
         expect(status.totalEvidences).toEqual(1);
@@ -124,7 +123,7 @@ describe('Index', () => {
         const claimValue = await secureFastIngestManager.getClaimValue(claims[0]);
         expect(claimValue).toBeDefined();
 
-        
+
     });
 
     it('should perform a validation on every ADD operation with a secure fast read manager', async () => {
@@ -137,8 +136,9 @@ describe('Index', () => {
                 idDocumentEvidence
             ]
         } as CredentialArtifacts;
-        
+
         // should validate presentations when adding
+        const secureFastReadManager = VerifiablePresentationManagerFactory.createSecureFastReadManager();
         const status = await secureFastReadManager.addCredentialArtifacts(artifacts);
         expect(status.totalPresentations).toEqual(2);
         expect(status.totalEvidences).toEqual(1);
@@ -180,7 +180,7 @@ describe('Index', () => {
         const claimValue = await secureFastReadManager.getClaimValue(claims[0]);
         expect(claimValue).toBeDefined();
 
-        
+
     });
 
     it('should skip validation for all ADD or GET operations with an insecure manager', async () => {
@@ -193,8 +193,9 @@ describe('Index', () => {
                 idDocumentEvidence
             ]
         } as CredentialArtifacts;
-        
+
         // should NOT validate presentations when adding
+        const insecureManager = VerifiablePresentationManagerFactory.createInsecureManager();
         const status = await insecureManager.addCredentialArtifacts(artifacts);
         expect(status.totalPresentations).toEqual(2);
         expect(status.totalEvidences).toEqual(1);
@@ -240,6 +241,6 @@ describe('Index', () => {
         const claimValue = await insecureManager.getClaimValue(claims[0]);
         expect(claimValue).toBeDefined();
 
-        
+
     });
 });

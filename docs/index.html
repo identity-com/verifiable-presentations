@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>verifiable-presentations</title>
+	<title>@identity.com/verifiable-presentations - v0.0.6</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="index.html" class="title">verifiable-presentations</a>
+					<a href="index.html" class="title">@identity.com/verifiable-presentations - v0.0.6</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -56,7 +56,7 @@
 					<a href="globals.html">Globals</a>
 				</li>
 			</ul>
-			<h1> verifiable-presentations</h1>
+			<h1> @identity.com/verifiable-presentations - v0.0.6</h1>
 		</div>
 	</div>
 </header>
@@ -69,43 +69,81 @@
 				</a>
 				<p>Utility Library to securely handle verifiable presentations.</p>
 				<p><a href="https://circleci.com/gh/identity-com/verifiable-presentations"><img src="https://circleci.com/gh/identity-com/verifiable-presentations.svg?style=svg" alt="CircleCI"></a></p>
-				<p>Verifiable-presentations provides methods to run operations over a collection of verifiable credentials and evidences, such as query for credential identifiers, search for claims, feth claim value, and non-cryptographically and cryptographically secure verify the data against the proofs.</p>
+				<p>Verifiable-presentations provides methods to run operations over a collection of verifiable credentials and evidences, such as query for credential identifiers, search for claims, fetch claim values, and non-cryptographically and cryptographically secure verify the data against the proofs.</p>
 				<p><a href="https://identity-com.github.io/verifiable-presentations/">Documentation</a></p>
 				<p>Usage example:</p>
-				<pre><code><span class="hljs-keyword">import</span> { secureRedundantManager } <span class="hljs-keyword">from</span> <span class="hljs-string">'../index'</span>;
+				<pre><code>import { VerifiablePresentationManagerFactory } from '@identity.com/verifiable-presentations';
 
-<span class="hljs-keyword">const</span> artifacts = {
-    <span class="hljs-attr">presentations</span>: [
-        emailCredentialJson,
-        phoneNumberCredentialJson,
-        idDocumentCredentialJson
-    ],
-    <span class="hljs-attr">evidences</span>: [
-        idDocumentEvidence
-    ]
+const secureRedundantManager = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">VerifiablePresentationManagerFactory</span>.</span></span>create<span class="hljs-constructor">SecureRedundantManager()</span>;
+
+const artifacts = {
+    presentations: <span class="hljs-literal">[
+        <span class="hljs-identifier">emailCredentialJson</span>,
+        <span class="hljs-identifier">phoneNumberCredentialJson</span>,
+        <span class="hljs-identifier">idDocumentCredentialJson</span>
+    ]</span>,
+    evidences: <span class="hljs-literal">[
+        <span class="hljs-identifier">idDocumentEvidence</span>
+    ]</span>
 } <span class="hljs-keyword">as</span> CredentialArtifacts;
 
-<span class="hljs-keyword">let</span> status = <span class="hljs-keyword">await</span> secureRedundantManager.addCredentialArtifacts(artifacts);
+<span class="hljs-keyword">let</span> status = await secureRedundantManager.add<span class="hljs-constructor">CredentialArtifacts(<span class="hljs-params">artifacts</span>)</span>;
 
-status = <span class="hljs-keyword">await</span> presentationManager.verifyAllArtifacts();
+status = await presentationManager.verify<span class="hljs-constructor">AllArtifacts()</span>;
 
-status = <span class="hljs-keyword">await</span> presentationManager.purgeInvalidArtifacts();
+status = await presentationManager.purge<span class="hljs-constructor">InvalidArtifacts()</span>;
 
-<span class="hljs-keyword">const</span> presentations = <span class="hljs-keyword">await</span> secureRedundantManager.listPresentations();
+const presentations = await secureRedundantManager.<span class="hljs-built_in">list</span><span class="hljs-constructor">Presentations()</span>;
 
-<span class="hljs-keyword">const</span> evidences = <span class="hljs-keyword">await</span> secureRedundantManager.listEvidences();
+const evidences = await secureRedundantManager.<span class="hljs-built_in">list</span><span class="hljs-constructor">Evidences()</span>;
 
-<span class="hljs-keyword">let</span> claims = <span class="hljs-keyword">await</span> presentationManager.listClaims();
+<span class="hljs-keyword">let</span> claims = await presentationManager.<span class="hljs-built_in">list</span><span class="hljs-constructor">Claims()</span>;
 
-claims = <span class="hljs-keyword">await</span> presentationManager.listPresentationClaims(presentations[<span class="hljs-number">0</span>]);
+claims = await presentationManager.<span class="hljs-built_in">list</span><span class="hljs-constructor">PresentationClaims(<span class="hljs-params">presentations</span>[0])</span>;
 
-<span class="hljs-keyword">const</span> criteria = {
-    <span class="hljs-attr">claimPath</span>: <span class="hljs-string">'contact.phoneNumber.countryCode'</span>
+const criteria = {
+    claimPath: 'contact.phoneNumber.countryCode'
 
 }
-claims = <span class="hljs-keyword">await</span> presentationManager.findClaims(criteria);
+claims = await presentationManager.find<span class="hljs-constructor">Claims(<span class="hljs-params">criteria</span>)</span>;
 
-<span class="hljs-keyword">const</span> claimValue = <span class="hljs-keyword">await</span> presentationManager.getClaimValue(claims[<span class="hljs-number">0</span>]);</code></pre><p>For more detailed working examples, please, refer to the tests in <a href="src/__tests__/index.test.ts"><code>index.test.ts</code></a>.</p>
+const claimValue = await presentationManager.get<span class="hljs-constructor">ClaimValue(<span class="hljs-params">claims</span>[0])</span>;</code></pre>
+				<a href="#piifactory" id="piifactory" style="color: inherit; text-decoration: none;">
+					<h2>PIIFactory</h2>
+				</a>
+				<p>A class to allow easy extraction of PII from a DSR Response based on a specific dsrRequest implementation, with a given mapping and formatters specific to that DSR. It also allows generating a new Scope Request based on unique URL generation.</p>
+				<pre><code><span class="hljs-keyword">const</span> mapping = {
+  <span class="hljs-attr">first_name</span>: { <span class="hljs-attr">identifier</span>: <span class="hljs-string">'claim-cvc:Name.givenNames-v1'</span> },
+  <span class="hljs-attr">last_name</span>: { <span class="hljs-attr">identifier</span>: <span class="hljs-string">'claim-cvc:Name.familyNames-v1'</span> },
+  <span class="hljs-attr">date_of_birth</span>: { <span class="hljs-attr">identifier</span>: <span class="hljs-string">'claim-cvc:Document.dateOfBirth-v1'</span> },
+  <span class="hljs-attr">street</span>: { <span class="hljs-attr">identifier</span>: <span class="hljs-string">'claim-cvc:Identity.address-v1'</span> },
+};
+<span class="hljs-keyword">const</span> formatters = {
+  <span class="hljs-attr">street</span>: { <span class="hljs-attr">format</span>: <span class="hljs-function"><span class="hljs-params">claimValue</span> =&gt;</span> <span class="hljs-string">`<span class="hljs-subst">${claimValue.street}</span> <span class="hljs-subst">${claimValue.unit}</span>`</span> },
+  <span class="hljs-attr">date_of_birth</span>: { <span class="hljs-attr">format</span>: <span class="hljs-function"><span class="hljs-params">claimValue</span> =&gt;</span> <span class="hljs-string">`<span class="hljs-subst">${claimValue.year}</span>-<span class="hljs-subst">${claimValue.month}</span>-<span class="hljs-subst">${claimValue.day}</span>`</span> },
+};
+
+<span class="hljs-keyword">const</span> piiFactory = <span class="hljs-keyword">new</span> PIIFactory(dsrRequest, mapping, formatters);
+
+<span class="hljs-keyword">const</span> eventsURL = <span class="hljs-string">'https://testEvents'</span>;
+<span class="hljs-keyword">const</span> idvDid = <span class="hljs-string">'did:ethr:0x1a88a35421a4a0d3e13fe4e8ebcf18e9a249dc5a'</span>;
+<span class="hljs-keyword">const</span> dsrResolver = {
+    <span class="hljs-attr">id</span>: <span class="hljs-string">'123'</span>,
+    <span class="hljs-comment">// key pair generated purely for this test</span>
+    <span class="hljs-attr">signingKeys</span>: {
+    <span class="hljs-attr">xpub</span>: <span class="hljs-string">'0414a08b13afa8d33c499ec828065775915ddf0301634d35e26c6cec4ad0f0f2b72c79e90357d47c7ba65a3c03bb22ac7e273c5d01494448a155df8a28da33b48d'</span>,
+    <span class="hljs-attr">xprv</span>: <span class="hljs-string">'a4947aa34ce507e995a60a455582d97f3fd1163eba3dd990ea1541a8fa049828'</span>,
+    },
+};
+<span class="hljs-keyword">const</span> urlGeneratorFn = <span class="hljs-function"><span class="hljs-params">evidenceName</span> =&gt;</span> <span class="hljs-string">`https://&lt;test cloud provider&gt;/&lt;unique Id&gt;/<span class="hljs-subst">${evidenceName}</span>.json`</span>;
+
+
+<span class="hljs-comment">// generate a DSR</span>
+<span class="hljs-keyword">const</span> dsr = <span class="hljs-keyword">await</span> piiFactory.generateDSR(eventsURL, idvDid, dsrResolver, urlGeneratorFn);
+
+<span class="hljs-comment">// extract PII from a DSR response</span>
+<span class="hljs-keyword">const</span> extractedPII = <span class="hljs-keyword">await</span> piiFactory.extractPII(dsrResponse);
+</code></pre><p>For more detailed working examples, please, refer to the tests in <a href="src/__tests__/index.test.ts"><code>index.test.ts</code></a>.</p>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -118,46 +156,70 @@ claims = <span class="hljs-keyword">await</span> presentationManager.findClaims(
 						<span>Internals</span>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_credential_.html">"<wbr>Credential"</a>
+						<a href="modules/_credential_.html">&quot;<wbr>Credential&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_presentationverifier_.html">"<wbr>Presentation<wbr>Verifier"</a>
+						<a href="modules/_piifactory_.html">&quot;PIIFactory&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_verifiablepresentationmanager_.html">"<wbr>Verifiable<wbr>Presentation<wbr>Manager"</a>
+						<a href="modules/_presentationverifier_.html">&quot;<wbr>Presentation<wbr>Verifier&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/___tests___presentationverifier_test_.html">"__tests__/<wbr>Presentation<wbr>Verifier.test"</a>
+						<a href="modules/_verifiablepresentationmanager_.html">&quot;<wbr>Verifiable<wbr>Presentation<wbr>Manager&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/___tests___verifiablepresentationmanager_test_.html">"__tests__/<wbr>Verifiable<wbr>Presentation<wbr>Manager.test"</a>
+						<a href="modules/_verifiablepresentationmanagerfactory_.html">&quot;<wbr>Verifiable<wbr>Presentation<wbr>Manager<wbr>Factory&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/___tests___index_test_.html">"__tests__/index.test"</a>
+						<a href="modules/___tests___piifactory_test_.html">&quot;__tests__/PIIFactory.test&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_index_.html">"index"</a>
+						<a href="modules/___tests___presentationverifier_test_.html">&quot;__tests__/<wbr>Presentation<wbr>Verifier.test&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/___tests___verifiablepresentationmanager_test_.html">&quot;__tests__/<wbr>Verifiable<wbr>Presentation<wbr>Manager.test&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/___tests___index_test_.html">&quot;__tests__/index.test&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_index_.html">&quot;index&quot;</a>
 					</li>
 					<li class="label tsd-is-external">
 						<span>Externals</span>
 					</li>
 					<li class=" tsd-kind-external-module tsd-is-external">
-						<a href="modules/___tests___fixtures_emailcredential_.html">"__tests__/fixtures/email<wbr>Credential"</a>
+						<a href="modules/___tests___fixtures_emailcredential_.html">&quot;__tests__/fixtures/email<wbr>Credential&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module tsd-is-external">
-						<a href="modules/___tests___fixtures_iddocumentcredential_.html">"__tests__/fixtures/id<wbr>Document<wbr>Credential"</a>
+						<a href="modules/___tests___fixtures_iddocumentcredential_.html">&quot;__tests__/fixtures/id<wbr>Document<wbr>Credential&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module tsd-is-external">
-						<a href="modules/___tests___fixtures_iddocumentpartialcredential_.html">"__tests__/fixtures/id<wbr>Document<wbr>Partial<wbr>Credential"</a>
+						<a href="modules/___tests___fixtures_iddocumentdsr_.html">&quot;__tests__/fixtures/id<wbr>DocumentDSR&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module tsd-is-external">
-						<a href="modules/___tests___fixtures_iddocumentselfieevidence_.html">"__tests__/fixtures/id<wbr>Document<wbr>Selfie<wbr>Evidence"</a>
+						<a href="modules/___tests___fixtures_iddocumentpartialcredential_.html">&quot;__tests__/fixtures/id<wbr>Document<wbr>Partial<wbr>Credential&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module tsd-is-external">
-						<a href="modules/___tests___fixtures_invalidemailcredential_.html">"__tests__/fixtures/invalid<wbr>Email<wbr>Credential"</a>
+						<a href="modules/___tests___fixtures_iddocumentselfieevidence_.html">&quot;__tests__/fixtures/id<wbr>Document<wbr>Selfie<wbr>Evidence&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module tsd-is-external">
-						<a href="modules/___tests___fixtures_phonenumbercredential_.html">"__tests__/fixtures/phone<wbr>Number<wbr>Credential"</a>
+						<a href="modules/___tests___fixtures_invalidemailcredential_.html">&quot;__tests__/fixtures/invalid<wbr>Email<wbr>Credential&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/___tests___fixtures_phonenumbercredential_.html">&quot;__tests__/fixtures/phone<wbr>Number<wbr>Credential&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/___tests___fixtures_piifactory_brokendsrresponse_.html">&quot;__tests__/fixtures/pii<wbr>Factory/broken<wbr>Dsr<wbr>Response&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/___tests___fixtures_piifactory_dsrtemplate_.html">&quot;__tests__/fixtures/pii<wbr>Factory/dsr<wbr>Template&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/___tests___fixtures_piifactory_userpiifromdsrresponseuscountry_.html">&quot;__tests__/fixtures/pii<wbr>Factory/userPIIFrom<wbr>Dsr<wbr>Response<wbr>UsCountry&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/___tests___fixtures_piifactory_userpiifromdsrresponseuscountryfrontandback_.html">&quot;__tests__/fixtures/pii<wbr>Factory/userPIIFrom<wbr>Dsr<wbr>Response<wbr>UsCountry<wbr>Front<wbr>And<wbr>Back&quot;</a>
 					</li>
 				</ul>
 			</nav>
