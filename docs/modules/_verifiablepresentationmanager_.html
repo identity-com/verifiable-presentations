@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>&quot;VerifiablePresentationManager&quot; | verifiable-presentations</title>
+	<title>&quot;VerifiablePresentationManager&quot; | @identity.com/verifiable-presentations - v0.0.6</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">verifiable-presentations</a>
+					<a href="../index.html" class="title">@identity.com/verifiable-presentations - v0.0.6</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -80,6 +80,8 @@
 							<h3>Interfaces</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-interface tsd-parent-kind-external-module"><a href="../interfaces/_verifiablepresentationmanager_.availableclaim.html" class="tsd-kind-icon">Available<wbr>Claim</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-external-module"><a href="../interfaces/_verifiablepresentationmanager_.claimcriteriamap.html" class="tsd-kind-icon">Claim<wbr>Criteria<wbr>Map</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-external-module"><a href="../interfaces/_verifiablepresentationmanager_.claimvaluemap.html" class="tsd-kind-icon">Claim<wbr>Value<wbr>Map</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-external-module"><a href="../interfaces/_verifiablepresentationmanager_.credentialartifacts.html" class="tsd-kind-icon">Credential<wbr>Artifacts</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-external-module"><a href="../interfaces/_verifiablepresentationmanager_.evidence.html" class="tsd-kind-icon">Evidence</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-external-module"><a href="../interfaces/_verifiablepresentationmanager_.presentationreference.html" class="tsd-kind-icon">Presentation<wbr>Reference</a></li>
@@ -94,6 +96,19 @@
 								<li class="tsd-kind-type-alias tsd-parent-kind-external-module"><a href="_verifiablepresentationmanager_.html#dsrjson" class="tsd-kind-icon">DSRJSON</a></li>
 							</ul>
 						</section>
+						<section class="tsd-index-section tsd-is-not-exported">
+							<h3>Variables</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_verifiablepresentationmanager_.html#nested_path_delimiter" class="tsd-kind-icon">NESTED_<wbr>PATH_<wbr>DELIMITER</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section tsd-is-not-exported">
+							<h3>Functions</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_verifiablepresentationmanager_.html#getflattenedpaths" class="tsd-kind-icon">get<wbr>Flattened<wbr>Paths</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported"><a href="_verifiablepresentationmanager_.html#matchallobjectkeys" class="tsd-kind-icon">match<wbr>All<wbr>Object<wbr>Keys</a></li>
+							</ul>
+						</section>
 					</div>
 				</section>
 			</section>
@@ -105,7 +120,7 @@
 					<div class="tsd-signature tsd-kind-icon">DSRJSON<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/f1f7481/src/VerifiablePresentationManager.ts#L138">VerifiablePresentationManager.ts:138</a></li>
+							<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/e2581e8/src/VerifiablePresentationManager.ts#L193">VerifiablePresentationManager.ts:193</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -113,6 +128,122 @@
 							<p>JSON contain a DSR</p>
 						</div>
 					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
+				<h2>Variables</h2>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+					<a name="nested_path_delimiter" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> NESTED_<wbr>PATH_<wbr>DELIMITER</h3>
+					<div class="tsd-signature tsd-kind-icon">NESTED_<wbr>PATH_<wbr>DELIMITER<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"."</span><span class="tsd-signature-symbol"> =&nbsp;&quot;.&quot;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/e2581e8/src/VerifiablePresentationManager.ts#L22">VerifiablePresentationManager.ts:22</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<dl class="tsd-comment-tags">
+							<dt>param</dt>
+							<dd><p>a JSON properties fields object</p>
+							</dd>
+							<dt>param</dt>
+							<dd><p>already calculated paths to be appended to</p>
+							</dd>
+							<dt>param</dt>
+							<dd><p>existing path for nested key in question</p>
+							</dd>
+							<dt>returns</dt>
+							<dd><p>: an array of path objects of type
+									{
+									{String} path
+									{String}: type
+									{String}: description
+								}</p>
+							</dd>
+						</dl>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
+				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+					<a name="getflattenedpaths" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> get<wbr>Flattened<wbr>Paths</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Flattened<wbr>Paths<span class="tsd-signature-symbol">(</span>objToMatch<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span>, pathPrepend<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/e2581e8/src/VerifiablePresentationManager.ts#L29">VerifiablePresentationManager.ts:29</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>for the given object, recursively return an array of all the paths inside the object, including nested paths</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>objToMatch: <span class="tsd-signature-type">object</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-index-signature">
+											<h5><span class="tsd-signature-symbol">[</span>prop: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><span class="tsd-signature-type">any</span></h5>
+										</li>
+									</ul>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> pathPrepend: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;&quot;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h4>
+							<p>an array of paths i.e. [&#39;credential&#39;, &#39;credential.email&#39;]</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+					<a name="matchallobjectkeys" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> match<wbr>All<wbr>Object<wbr>Keys</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">match<wbr>All<wbr>Object<wbr>Keys<span class="tsd-signature-symbol">(</span>flattenedPaths<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span>, objToMatch<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">(Anonymous function)</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/identity-com/verifiable-presentations/blob/e2581e8/src/VerifiablePresentationManager.ts#L48">VerifiablePresentationManager.ts:48</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>takes an array of paths delimited with a &#39;.&#39; and checks that all the paths of the objToMatch and the objToCheck are equal</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>flattenedPaths: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>paths in an object e.g. [&#39;identifier&#39;, &#39;credential.id&#39;...]</p>
+										</div>
+									</div>
+								</li>
+								<li>
+									<h5>objToMatch: <span class="tsd-signature-type">object</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-index-signature">
+											<h5><span class="tsd-signature-symbol">[</span>prop: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><span class="tsd-signature-type">any</span></h5>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">(Anonymous function)</span></h4>
+							<p>: whether all the paths match or not</p>
+						</li>
+					</ul>
 				</section>
 			</section>
 		</div>
@@ -126,46 +257,70 @@
 						<span>Internals</span>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_credential_.html">"<wbr>Credential"</a>
+						<a href="_credential_.html">&quot;<wbr>Credential&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_presentationverifier_.html">"<wbr>Presentation<wbr>Verifier"</a>
+						<a href="_piifactory_.html">&quot;PIIFactory&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="_presentationverifier_.html">&quot;<wbr>Presentation<wbr>Verifier&quot;</a>
 					</li>
 					<li class="current tsd-kind-external-module">
-						<a href="_verifiablepresentationmanager_.html">"<wbr>Verifiable<wbr>Presentation<wbr>Manager"</a>
+						<a href="_verifiablepresentationmanager_.html">&quot;<wbr>Verifiable<wbr>Presentation<wbr>Manager&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="___tests___presentationverifier_test_.html">"__tests__/<wbr>Presentation<wbr>Verifier.test"</a>
+						<a href="_verifiablepresentationmanagerfactory_.html">&quot;<wbr>Verifiable<wbr>Presentation<wbr>Manager<wbr>Factory&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="___tests___verifiablepresentationmanager_test_.html">"__tests__/<wbr>Verifiable<wbr>Presentation<wbr>Manager.test"</a>
+						<a href="___tests___piifactory_test_.html">&quot;__tests__/PIIFactory.test&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="___tests___index_test_.html">"__tests__/index.test"</a>
+						<a href="___tests___presentationverifier_test_.html">&quot;__tests__/<wbr>Presentation<wbr>Verifier.test&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_index_.html">"index"</a>
+						<a href="___tests___verifiablepresentationmanager_test_.html">&quot;__tests__/<wbr>Verifiable<wbr>Presentation<wbr>Manager.test&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="___tests___index_test_.html">&quot;__tests__/index.test&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="_index_.html">&quot;index&quot;</a>
 					</li>
 					<li class="label tsd-is-external">
 						<span>Externals</span>
 					</li>
 					<li class=" tsd-kind-external-module tsd-is-external">
-						<a href="___tests___fixtures_emailcredential_.html">"__tests__/fixtures/email<wbr>Credential"</a>
+						<a href="___tests___fixtures_emailcredential_.html">&quot;__tests__/fixtures/email<wbr>Credential&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module tsd-is-external">
-						<a href="___tests___fixtures_iddocumentcredential_.html">"__tests__/fixtures/id<wbr>Document<wbr>Credential"</a>
+						<a href="___tests___fixtures_iddocumentcredential_.html">&quot;__tests__/fixtures/id<wbr>Document<wbr>Credential&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module tsd-is-external">
-						<a href="___tests___fixtures_iddocumentpartialcredential_.html">"__tests__/fixtures/id<wbr>Document<wbr>Partial<wbr>Credential"</a>
+						<a href="___tests___fixtures_iddocumentdsr_.html">&quot;__tests__/fixtures/id<wbr>DocumentDSR&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module tsd-is-external">
-						<a href="___tests___fixtures_iddocumentselfieevidence_.html">"__tests__/fixtures/id<wbr>Document<wbr>Selfie<wbr>Evidence"</a>
+						<a href="___tests___fixtures_iddocumentpartialcredential_.html">&quot;__tests__/fixtures/id<wbr>Document<wbr>Partial<wbr>Credential&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module tsd-is-external">
-						<a href="___tests___fixtures_invalidemailcredential_.html">"__tests__/fixtures/invalid<wbr>Email<wbr>Credential"</a>
+						<a href="___tests___fixtures_iddocumentselfieevidence_.html">&quot;__tests__/fixtures/id<wbr>Document<wbr>Selfie<wbr>Evidence&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module tsd-is-external">
-						<a href="___tests___fixtures_phonenumbercredential_.html">"__tests__/fixtures/phone<wbr>Number<wbr>Credential"</a>
+						<a href="___tests___fixtures_invalidemailcredential_.html">&quot;__tests__/fixtures/invalid<wbr>Email<wbr>Credential&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="___tests___fixtures_phonenumbercredential_.html">&quot;__tests__/fixtures/phone<wbr>Number<wbr>Credential&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="___tests___fixtures_piifactory_brokendsrresponse_.html">&quot;__tests__/fixtures/pii<wbr>Factory/broken<wbr>Dsr<wbr>Response&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="___tests___fixtures_piifactory_dsrtemplate_.html">&quot;__tests__/fixtures/pii<wbr>Factory/dsr<wbr>Template&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="___tests___fixtures_piifactory_userpiifromdsrresponseuscountry_.html">&quot;__tests__/fixtures/pii<wbr>Factory/userPIIFrom<wbr>Dsr<wbr>Response<wbr>UsCountry&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="___tests___fixtures_piifactory_userpiifromdsrresponseuscountryfrontandback_.html">&quot;__tests__/fixtures/pii<wbr>Factory/userPIIFrom<wbr>Dsr<wbr>Response<wbr>UsCountry<wbr>Front<wbr>And<wbr>Back&quot;</a>
 					</li>
 				</ul>
 			</nav>
@@ -176,6 +331,12 @@
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
 						<a href="../interfaces/_verifiablepresentationmanager_.availableclaim.html" class="tsd-kind-icon">Available<wbr>Claim</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="../interfaces/_verifiablepresentationmanager_.claimcriteriamap.html" class="tsd-kind-icon">Claim<wbr>Criteria<wbr>Map</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="../interfaces/_verifiablepresentationmanager_.claimvaluemap.html" class="tsd-kind-icon">Claim<wbr>Value<wbr>Map</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
 						<a href="../interfaces/_verifiablepresentationmanager_.credentialartifacts.html" class="tsd-kind-icon">Credential<wbr>Artifacts</a>
@@ -197,6 +358,15 @@
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
 						<a href="_verifiablepresentationmanager_.html#dsrjson" class="tsd-kind-icon">DSRJSON</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_verifiablepresentationmanager_.html#nested_path_delimiter" class="tsd-kind-icon">NESTED_<wbr>PATH_<wbr>DELIMITER</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_verifiablepresentationmanager_.html#getflattenedpaths" class="tsd-kind-icon">get<wbr>Flattened<wbr>Paths</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_verifiablepresentationmanager_.html#matchallobjectkeys" class="tsd-kind-icon">match<wbr>All<wbr>Object<wbr>Keys</a>
 					</li>
 				</ul>
 			</nav>
