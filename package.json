@@ -57,7 +57,6 @@
     "@identity.com/credential-commons": "^1.0.32",
     "@identity.com/dsr": "^1.0.14",
     "@types/ramda": "github:types/npm-ramda#dist",
-    "crypto": "^1.0.1",
     "ramda": "^0.25.0",
     "sjcl": "civicteam/sjcl.git#v1.0.8-ecc",
     "uuid": "^8.3.0"
