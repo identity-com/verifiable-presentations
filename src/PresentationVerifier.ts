@@ -1,4 +1,4 @@
-import { VC } from '@identity.com/credential-commons/src';
+import { VC } from '@identity.com/credential-commons';
 import { Credential, CredentialProof } from './Credential';
 
 export type VerifyFunction = (credentialProof : CredentialProof) => boolean;
