@@ -58,7 +58,7 @@
     "@identity.com/dsr": "^1.0.14",
     "@types/ramda": "github:types/npm-ramda#dist",
     "ramda": "^0.25.0",
-    "sjcl": "civicteam/sjcl.git#v1.0.8-ecc",
+    "sjcl": "^1.0.8",
     "uuid": "^8.3.0"
   }
 }
