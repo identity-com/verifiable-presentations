@@ -1,4 +1,5 @@
 import crypto from 'crypto';
+import * as sjcl from 'sjcl';
 import R from 'ramda';
 import {
     ClaimIdentifier,
@@ -453,7 +454,7 @@ export class VerifiablePresentationManager {
     }
 
     /**
-     * Remove the invalid artifacts and return a status of the resultant artifacts 
+     * Remove the invalid artifacts and return a status of the resultant artifacts
      */
     async purgeInvalidArtifacts(): Promise<VerifiablePresentationManagerStatus> {
         const verifiedPresentations = await this.verifyPresentations(true);
@@ -564,7 +565,12 @@ export class VerifiablePresentationManager {
         const dataPrefix = /^data:.*;base64,/;
         const base64Data = R.replace(dataPrefix, '', evidence.base64Encoded); // remove prefix
         const decodedData = Buffer.from(base64Data, 'base64');
+        // Calculate with something that is supported on the browser.
         const calculatedSha256 = crypto.createHash('sha256').update(decodedData).digest('hex');
+        // console.log('Current Hash: ' + calculatedSha256Old)
+        // const sha256BitArray = sjcl.hash.sha256.hash(decodedData);
+        // const calculatedSha256 = sjcl.codec.hex.fromBits(sha256BitArray);
+        // console.log('New Hash: ' + calculatedSha256Old)
         return (calculatedSha256 === evidence.sha256);
     }
 

@@ -43,6 +43,7 @@
   "devDependencies": {
     "@types/jest": "^24.9.1",
     "@types/node": "^12.12.31",
+    "@types/sjcl": "^1.0.29",
     "@types/uuid": "^8.0.0",
     "jest": "^24.9.0",
     "prettier": "^1.19.1",
@@ -58,6 +59,7 @@
     "@types/ramda": "github:types/npm-ramda#dist",
     "crypto": "^1.0.1",
     "ramda": "^0.25.0",
+    "sjcl": "civicteam/sjcl.git#v1.0.8-ecc",
     "uuid": "^8.3.0"
   }
 }
