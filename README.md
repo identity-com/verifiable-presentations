@@ -10,7 +10,9 @@ Verifiable-presentations provides methods to run operations over a collection of
 Usage example:
 
 ```
-import { secureRedundantManager } from '@identity.com/verifiable-presentations';
+import { VerifiablePresentationManagerFactory } from '@identity.com/verifiable-presentations';
+
+const secureRedundantManager = VerifiablePresentationManagerFactory.createSecureRedundantManager();
 
 const artifacts = {
     presentations: [
