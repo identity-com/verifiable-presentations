@@ -170,7 +170,7 @@ export class PIIFactory {
    * @param {Object} dsrResolver
    * @param {Function} urlGeneratorFn
    */
-  generateDSR(eventsURL: string, idvDid: string, dsrResolver: object, urlGeneratorFn: (evidenceName: string) => string) {
+  async generateDSR(eventsURL: string, idvDid: string, dsrResolver: object, urlGeneratorFn: (evidenceName: string) => string) {
 
     if (!this.dsrRequest) { throw new Error('DSR not provided'); }
 
@@ -189,6 +189,7 @@ export class PIIFactory {
     };
     const appConfig = R.pathOr([], ['payload', 'requesterInfo', 'app'], this.dsrRequest);
 
-    return ScopeRequest.buildSignedRequestBody(new ScopeRequest.ScopeRequest(uuid, updatedRequestedItems, channelsConfig, appConfig, dsrResolver));
+    const scopeRequest = await ScopeRequest.ScopeRequest.create(uuid, updatedRequestedItems, channelsConfig, appConfig, dsrResolver);
+    return ScopeRequest.buildSignedRequestBody(scopeRequest);
   };
 }
