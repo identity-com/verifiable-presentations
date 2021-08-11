@@ -9,6 +9,10 @@ import invalidEmailCredential from './fixtures/invalidEmailCredential.json';
 import idDocumentCredential from './fixtures/idDocumentCredential.json';
 import idDocumentEvidence from './fixtures/idDocumentSelfieEvidence.json';
 
+import { schemaLoader, CVCSchemaLoader } from '@identity.com/credential-commons';
+
+schemaLoader.addLoader(new CVCSchemaLoader());
+
 describe('Index', () => {
     it('should perform a validation on every operation with a secure redundant presentation manager', async () => {
         const artifacts = {
@@ -36,10 +40,10 @@ describe('Index', () => {
         } as CredentialArtifacts;
 
         // should throw an exception if there is any invalid credential on add
-        expect(secureRedundantManager.addCredentialArtifacts(invalidArtifacts)).rejects.toThrow();
+        await expect(secureRedundantManager.addCredentialArtifacts(invalidArtifacts)).rejects.toThrow();
 
         // should throw an exception if there is any invalid credential on read
-        expect(secureRedundantManager.listPresentations()).rejects.toThrow();
+        await expect(secureRedundantManager.listPresentations()).rejects.toThrow();
 
         const statusAfterPurge = await secureRedundantManager.purgeInvalidArtifacts();
         expect(statusAfterPurge).toEqual(status);
@@ -99,7 +103,7 @@ describe('Index', () => {
         expect(statusAfterInvalid.verifiedEvidences).toEqual(0);
 
         // should throw an exception if there is any invalid credential on read
-        expect(secureFastIngestManager.listPresentations()).rejects.toThrow();
+        await expect(secureFastIngestManager.listPresentations()).rejects.toThrow();
 
         const statusAfterPurge = await secureFastIngestManager.purgeInvalidArtifacts();
         expect(statusAfterPurge).toEqual(status);
@@ -152,7 +156,7 @@ describe('Index', () => {
         } as CredentialArtifacts;
 
         // should throw an exception if there is any invalid credential on add
-        expect(secureFastReadManager.addCredentialArtifacts(invalidArtifacts)).rejects.toThrow();
+        await expect(secureFastReadManager.addCredentialArtifacts(invalidArtifacts)).rejects.toThrow();
 
         // should not validate credentials when reading
         const presentationsWithInvalid = await secureFastReadManager.listPresentations();
