@@ -55,8 +55,8 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
-    "@identity.com/credential-commons": "^1.0.32",
-    "@identity.com/dsr": "^1.0.14",
+    "@identity.com/credential-commons": "2.0.0-beta.5",
+    "@identity.com/dsr": "2.0.0-beta.0",
     "ramda": "^0.25.0",
     "sjcl": "^1.0.8",
     "uuid": "^8.3.0"
