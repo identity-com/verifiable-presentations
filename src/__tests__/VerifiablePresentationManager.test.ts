@@ -17,6 +17,7 @@ import idDocumentPartialCredential from './fixtures/idDocumentPartialCredential.
 import idDocumentDSR from './fixtures/idDocumentDSR.json';
 
 import { schemaLoader, CVCSchemaLoader } from '@identity.com/credential-commons';
+
 schemaLoader.addLoader(new CVCSchemaLoader());
 
 describe('VerifiablePresentationManager', () => {
