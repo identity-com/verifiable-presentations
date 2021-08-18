@@ -3,7 +3,7 @@ version: 2
 defaults: &defaults
   working_directory: ~/repo
   docker:
-    - image: circleci/node:12.19.0
+    - image: circleci/node:14.17.5
 
 
 workflows:
@@ -58,7 +58,7 @@ jobs:
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}-{{checksum "package-lock.json"}}
-      - run: sudo apt-get update
+      - run: sudo apt update
       - run: sudo npm install -g npm
       - run: npm ci
       - save_cache:
@@ -86,7 +86,7 @@ jobs:
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}-{{checksum "package-lock.json"}}
-      - run: sudo apt-get update
+      - run: sudo apt update
       - run: sudo npm install -g npm
       - run: |
           sh ./.circleci/install_hub.sh
