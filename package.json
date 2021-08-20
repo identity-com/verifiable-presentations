@@ -1,6 +1,6 @@
 {
   "name": "@identity.com/verifiable-presentations",
-  "version": "0.1.0",
+  "version": "1.0.0-beta.0",
   "description": "Utility Library to securely handle verifiable presentations",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -43,7 +43,6 @@
   "devDependencies": {
     "@types/jest": "^24.9.1",
     "@types/node": "^12.12.31",
-    "@types/ramda": "github:types/npm-ramda#dist",
     "@types/sjcl": "^1.0.29",
     "@types/uuid": "^8.0.0",
     "jest": "^24.9.0",
@@ -52,12 +51,12 @@
     "tslint": "^5.20.1",
     "tslint-config-prettier": "^1.18.0",
     "typedoc": "^0.15.8",
-    "typescript": "^3.8.3"
+    "typescript": "^4.3.5"
   },
   "dependencies": {
-    "@identity.com/credential-commons": "^1.0.32",
-    "@identity.com/dsr": "^1.0.14",
-    "ramda": "^0.25.0",
+    "@identity.com/credential-commons": "2.0.0-beta.5",
+    "@identity.com/dsr": "2.0.0-beta.0",
+    "ramda": "^0.27.1",
     "sjcl": "^1.0.8",
     "uuid": "^8.3.0"
   }

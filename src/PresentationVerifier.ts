@@ -1,4 +1,4 @@
-import { VC } from '@identity.com/credential-commons';
+import { VC, schemaLoader } from '@identity.com/credential-commons';
 import { Credential, CredentialProof } from './Credential';
 
 export type VerifyFunction = (credentialProof : CredentialProof) => boolean;
@@ -21,7 +21,7 @@ export class PresentationVerifier {
      * @param credential - A credential object with expirationDate, claim and proof
      * @return true if verified, false otherwise.
      */
-    nonCryptographicallySecureVerify(credential : Credential) {
+    async nonCryptographicallySecureVerify(credential : Credential) {
         return VC.nonCryptographicallySecureVerify(credential);
     }
 

@@ -4,7 +4,8 @@ import * as dsrResponse from './fixtures/piiFactory/userPIIFromDsrResponseUsCoun
 import * as dsrResponseWithTwoDocuments from './fixtures/piiFactory/userPIIFromDsrResponseUsCountryFrontAndBack.json';
 import * as brokenDsrResponse from './fixtures/piiFactory/brokenDsrResponse.json';
 import * as dsrRequest from './fixtures/piiFactory/dsrTemplate.json';
-
+import { schemaLoader, CVCSchemaLoader } from '@identity.com/credential-commons';
+schemaLoader.addLoader(new CVCSchemaLoader());
 const { verifySignedRequestBody } = ScopeRequest;
 
 const mapping = {
@@ -110,7 +111,7 @@ describe('PIIFactory', () => {
 
       expect(verificationResult).toBeTruthy();
     });
-    
+
   });
   const evidenceProofs = [
     {

@@ -16,6 +16,9 @@ import idDocumentEvidence from './fixtures/idDocumentSelfieEvidence.json';
 import idDocumentPartialCredential from './fixtures/idDocumentPartialCredential.json';
 import idDocumentDSR from './fixtures/idDocumentDSR.json';
 
+import { schemaLoader, CVCSchemaLoader } from '@identity.com/credential-commons';
+
+schemaLoader.addLoader(new CVCSchemaLoader());
 
 describe('VerifiablePresentationManager', () => {
     const artifacts = {
@@ -47,7 +50,7 @@ describe('VerifiablePresentationManager', () => {
         expect(status.verifiedPresentations).toEqual(1);
         expect(status.totalEvidences).toEqual(1);
         expect(status.verifiedEvidences).toEqual(1);
-        
+
     });
 
     it('should add and verify a partial credential, with a subset of claims', async () => {
@@ -64,7 +67,7 @@ describe('VerifiablePresentationManager', () => {
 
         const claims = await presentationManager.listClaims();
         expect(claims).toHaveLength(14);
-        
+
     });
 
     it('should skip validation on add presentions if skipAddVerify is true', async () => {
@@ -77,7 +80,7 @@ describe('VerifiablePresentationManager', () => {
         expect(status).toBeDefined();
         expect(status.totalPresentations).toEqual(2);
         expect(status.verifiedPresentations).toEqual(0);
-        
+
     });
 
     it('should get the list of presentations', async () => {
@@ -94,7 +97,7 @@ describe('VerifiablePresentationManager', () => {
         expect(presentations[0].uid).toEqual(phoneNumberCredential.id);
         expect(presentations[1].identifier).toEqual('credential-cvc:Email-v1');
         expect(presentations[1].uid).toEqual(emailCredential.id);
-        
+
     });
 
     it('should get the list of presentations including the unverified if allowGetUnverified is true', async () => {
@@ -111,7 +114,7 @@ describe('VerifiablePresentationManager', () => {
 
         const presentations = await presentationManager.listPresentations();
         expect(presentations).toHaveLength(1);
-        
+
     });
 
     it('should get the list of presentations excluding the unverified if allowGetUnverified is false', async () => {
@@ -128,7 +131,7 @@ describe('VerifiablePresentationManager', () => {
 
         const presentations = await presentationManager.listPresentations();
         expect(presentations).toHaveLength(0);
-        
+
     });
 
     it('should get the list of evidences', async () => {
@@ -137,7 +140,7 @@ describe('VerifiablePresentationManager', () => {
 
         const evidences = await presentationManager.listEvidences();
         expect(evidences).toEqual([idDocumentEvidence]);
-        
+
     });
 
     it('should get only the list of evidences including unverified if allowGetUnverified is true', async () => {
@@ -159,7 +162,7 @@ describe('VerifiablePresentationManager', () => {
 
         const evidences = await presentationManager.listEvidences();
         expect(evidences).toEqual([idDocumentEvidence]);
-        
+
     });
 
     it('should get a list of evidences filtering by invalid if allowGetUnverified is false (default)', async () => {
@@ -180,7 +183,7 @@ describe('VerifiablePresentationManager', () => {
 
         const evidences = await presentationManager.listEvidences();
         expect(evidences).toHaveLength(0);
-        
+
     });
 
     it('should get the list of all claims', async () => {
@@ -198,7 +201,7 @@ describe('VerifiablePresentationManager', () => {
         expect(claims[0].credentialRef.identifier).toEqual('credential-cvc:PhoneNumber-v1');
         expect(claims[0].identifier).toEqual('claim-cvc:Contact.phoneNumber-v1');
         expect(claims[0].claimPath).toEqual('contact.phoneNumber');
-        
+
     });
 
     it('should get the list of claims from verified presentations only if allowGetUnverified is false', async () => {
@@ -218,7 +221,7 @@ describe('VerifiablePresentationManager', () => {
 
         const claims = await presentationManager.listClaims();
         expect(claims).toHaveLength(phoneNumberCredential.proof.leaves.length);
-        
+
     });
 
     it('should get the list of the claims of a presentation', async () => {
@@ -233,7 +236,7 @@ describe('VerifiablePresentationManager', () => {
             emailCredential.proof.leaves.length
         );
         expect(claims[0].credentialRef.identifier).toEqual(emailCredential.identifier);
-        
+
     });
 
     it('should get an empty list if the presentation is not verified and allowGetUnverified is false', async () => {
@@ -256,7 +259,7 @@ describe('VerifiablePresentationManager', () => {
         };
         const claims = await presentationManager.listPresentationClaims(emailPresentation as PresentationReference);
         expect(claims).toHaveLength(0);
-        
+
     });
 
     it('should get a claim value', async () => {
@@ -270,7 +273,7 @@ describe('VerifiablePresentationManager', () => {
         expect(JSON.stringify(phoneNumberCredential.claim)).toEqual(
             expect.stringContaining(JSON.stringify(claimValue))
         );
-        
+
     });
 
     it('should get unverified values if allowGetUnverified is true', async () => {
@@ -291,7 +294,7 @@ describe('VerifiablePresentationManager', () => {
         const claimValue = await presentationManager.getClaimValue(claims[0]);
 
         expect(claimValue).toBeDefined();
-        
+
     });
 
     it('should get null if requesting a value of a not found claim', async () => {
@@ -310,7 +313,7 @@ describe('VerifiablePresentationManager', () => {
         const claimValue = await presentationManager.getClaimValue(notFoundClaim as AvailableClaim);
 
         expect(claimValue).toBeNull();
-        
+
     });
 
     describe('with a single field to match', () => {
@@ -337,7 +340,7 @@ describe('VerifiablePresentationManager', () => {
             };
             const claims = await presentationManager.findClaims(searchByIdentifierAndClaimPath as SearchClaimCriteria);
             expect(claims).toHaveLength(1);
-            
+
         });
 
     });
@@ -355,7 +358,7 @@ describe('VerifiablePresentationManager', () => {
             };
             const claims = await presentationManager.findClaims(searchByAll as SearchClaimCriteria);
             expect(claims).toHaveLength(1);
-            
+
         });
     });
 
@@ -374,7 +377,7 @@ describe('VerifiablePresentationManager', () => {
 
         const claims = await presentationManager.findClaims(criteria as SearchClaimCriteria);
         expect(claims).toHaveLength(0);
-        
+
     });
 
     it('should only return the searched claims of invalid credential if allowGetUnverified is false', async () => {
@@ -398,7 +401,7 @@ describe('VerifiablePresentationManager', () => {
 
         const claims = await presentationManager.findClaims(criteria as SearchClaimCriteria);
         expect(claims).toHaveLength(1); // only the claim from phone number
-        
+
     });
 
     it('should resolve the key to claim search map by returning a map from key to claim value', async () => {
@@ -433,7 +436,7 @@ describe('VerifiablePresentationManager', () => {
             docNumber: '9999999999',
             name: 'Civic'
         });
-        
+
     });
 
     it('should return a flat object with claim values if mapClaimValues is called with flatten true', async () => {
@@ -477,7 +480,7 @@ describe('VerifiablePresentationManager', () => {
                 value: 'Civic'
             }
         ]);
-        
+
     });
 
     it('should resolve the key to null if the criteria in the claim map is not matched', async () => {
@@ -494,7 +497,7 @@ describe('VerifiablePresentationManager', () => {
         expect(mappedClaimValues).toEqual({
             docNumber: null,
         });
-        
+
     });
 
     it('should resolve the key to the first value if the criteria in the claim map matches multiple claims', async () => {
@@ -518,7 +521,7 @@ describe('VerifiablePresentationManager', () => {
         expect(mappedClaimValues).toEqual({
             contact: '69276577'
         });
-        
+
     });
 
     it('should verify all artifacts and return the total of verified items', async () => {
@@ -529,7 +532,7 @@ describe('VerifiablePresentationManager', () => {
         expect(status.verifiedPresentations).toBe(1);
         expect(status.totalEvidences).toBe(1);
         expect(status.verifiedEvidences).toBe(1);
-        
+
     });
 
     it('should throw exception when adding an invalid credential if notThrow is false (default)', async () => {
@@ -538,17 +541,17 @@ describe('VerifiablePresentationManager', () => {
         };
         const presentationManager = new VerifiablePresentationManager({});
         expect(presentationManager.addCredentialArtifacts(artifacts)).rejects.toThrow();
-        
+
     });
 
     it('should throw exception when adding an unverified evidence if notThrow is false (default)', async () => {
         const artifacts : CredentialArtifacts = {
             presentations: [],
-            evidences: [ idDocumentEvidence as Evidence ] 
+            evidences: [ idDocumentEvidence as Evidence ]
         };
         const presentationManager = new VerifiablePresentationManager({});
         expect(presentationManager.addCredentialArtifacts(artifacts)).rejects.toThrow();
-        
+
     });
 
     it('should not verify an invalid credential and return a status when notThrow is true', async () => {
@@ -564,7 +567,7 @@ describe('VerifiablePresentationManager', () => {
 
         expect(status.totalPresentations).toBe(1);
         expect(status.verifiedPresentations).toBe(0);
-        
+
     });
 
     it('should consider an evidence invalid when there is not a valid credential referencing it', async () => {
@@ -574,14 +577,14 @@ describe('VerifiablePresentationManager', () => {
         const presentationManager = new VerifiablePresentationManager(options);
         const artifacts : CredentialArtifacts = {
             presentations: [],
-            evidences: [ idDocumentEvidence as Evidence ] 
+            evidences: [ idDocumentEvidence as Evidence ]
         };
         await presentationManager.addCredentialArtifacts(artifacts);
 
         const status = await presentationManager.verifyAllArtifacts();
         expect(status.totalEvidences).toBe(1);
         expect(status.verifiedEvidences).toBe(0);
-        
+
     });
 
     it('should consider an evidence invalid if the base64Encoded hash does not match the sha256 value', async () => {
@@ -602,7 +605,7 @@ describe('VerifiablePresentationManager', () => {
         const status = await presentationManager.verifyAllArtifacts();
         expect(status.totalEvidences).toBe(1);
         expect(status.verifiedEvidences).toBe(0);
-        
+
     });
 
     it('should return true if all artifacts is verified', async () => {
@@ -611,7 +614,7 @@ describe('VerifiablePresentationManager', () => {
 
         const isAllVerified = await presentationManager.isAllArtifactsVerified();
         expect(isAllVerified).toBeTruthy();
-        
+
     });
 
     it('should return false if not all artifacts is verified', async () => {
@@ -627,7 +630,7 @@ describe('VerifiablePresentationManager', () => {
 
         const isAllVerified = await presentationManager.isAllArtifactsVerified();
         expect(isAllVerified).toBeFalsy();
-        
+
     });
 
     it('should purge the invalid artifacts', async () => {
@@ -659,7 +662,7 @@ describe('VerifiablePresentationManager', () => {
 
         const claims = await presentationManager.listClaims();
         expect(claims).toHaveLength(phoneNumberCredential.proof.leaves.length);
-        
+
     });
 
     it('should verifiy if a presentation was granted for a specific dsr', async () => {
@@ -672,7 +675,7 @@ describe('VerifiablePresentationManager', () => {
 
         const wasGranted = presentationManager.wasGrantedForDSR(presentations[0], JSON.stringify(idDocumentDSR));
         expect(wasGranted).toBeTruthy();
-        
+
     });
 
     it('should fail grant verification if a credential is tested with a dsr not used to request it', async () => {
@@ -687,7 +690,7 @@ describe('VerifiablePresentationManager', () => {
 
         const wasGranted = presentationManager.wasGrantedForDSR(phoneCredential, JSON.stringify(idDocumentDSR));
         expect(wasGranted).toBeFalsy();
-        
+
     });
 
     it('should fail grant verification if a credential is tested with an invalid dsr string', async () => {
@@ -701,6 +704,6 @@ describe('VerifiablePresentationManager', () => {
         const invalidDsr = '{}';
         const wasGranted = presentationManager.wasGrantedForDSR(presentations[0], invalidDsr);
         expect(wasGranted).toBeFalsy();
-        
+
     });
 });
