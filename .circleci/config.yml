@@ -58,7 +58,7 @@ jobs:
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}-{{checksum "package-lock.json"}}
-      - run: sudo apt update
+      - run: sudo apt-get update
       - run: sudo npm install -g npm
       - run: npm ci
       - save_cache:
@@ -86,7 +86,7 @@ jobs:
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}-{{checksum "package-lock.json"}}
-      - run: sudo apt update
+      - run: sudo apt-get update
       - run: sudo npm install -g npm
       - run: |
           sh ./.circleci/install_hub.sh
