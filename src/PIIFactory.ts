@@ -48,7 +48,7 @@ const dsrRequestedDocuments = (dsrRequest: object) => Object.keys(R.pathOr([], [
 const evidenceProofsFromCredentials = (presentations: Credential[], requestedDocuments: any = []) => presentations
   .map(
     (credential: Credential) => {
-      const evidenceClaims = R.pathOr([], ['claim', 'document', 'evidences'], credential);
+      const evidenceClaims = R.pathOr([], ['credentialSubject', 'document', 'evidences'], credential);
       const filteredEvidenceClaims = R.pick(requestedDocuments, evidenceClaims);
       return { name: credential.identifier, proofs: R.mergeAll(filteredEvidenceClaims) };
     }

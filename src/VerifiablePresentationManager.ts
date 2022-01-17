@@ -372,7 +372,7 @@ export class VerifiablePresentationManager {
      */
     async getClaimValue(availableClaim: AvailableClaim): Promise<any | null> {
         const presentation = this.getClaimPresentation(availableClaim);
-        if (!presentation || !presentation.claim) {
+        if (!presentation || !presentation.credentialSubject) {
             return null;
         }
 
@@ -384,7 +384,7 @@ export class VerifiablePresentationManager {
             return null;
         }
 
-        return R.path(availableClaim.claimPath.split('.'), presentation.claim);
+        return R.path(availableClaim.claimPath.split('.'), presentation.credentialSubject);
     }
 
     /**
@@ -495,7 +495,7 @@ export class VerifiablePresentationManager {
 
     private findEvidencePresentation(evidence: Evidence): Credential | undefined {
         return R.find((presentation: Credential) => {
-            const presentationClaims = JSON.stringify(presentation.claim);
+            const presentationClaims = JSON.stringify(presentation.credentialSubject);
             return presentationClaims.includes(evidence.sha256);
         }, this.artifacts.presentations);
     }
