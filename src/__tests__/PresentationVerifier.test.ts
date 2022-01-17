@@ -32,7 +32,7 @@ describe('PresentationVerifier', () => {
 
         it('should return false if the credential claim does not match the leaves', async () => {
             const invalidEmailCredential = R.clone(emailCredential);
-            invalidEmailCredential.claim.contact.email.username = 'invalid';
+            invalidEmailCredential.credentialSubject.contact.email.username = 'invalid';
 
             const verified = await verifier.nonCryptographicallySecureVerify(invalidEmailCredential as Credential);
             expect(verified).toBeFalsy();
@@ -98,6 +98,7 @@ describe('PresentationVerifier', () => {
 
             const verifier = new PresentationVerifier();
             const verified = verifier.verifyGrant(idDocumentCredential, requesterId, requestId);
+
             expect(verified).toBeTruthy();
         });
 

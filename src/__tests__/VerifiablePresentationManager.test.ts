@@ -93,9 +93,9 @@ describe('VerifiablePresentationManager', () => {
 
         presentations = await presentationManager.listPresentations();
         expect(presentations).toHaveLength(2);
-        expect(presentations[0].identifier).toEqual('credential-cvc:PhoneNumber-v1');
+        expect(presentations[0].identifier).toEqual('credential-cvc:PhoneNumber-v3');
         expect(presentations[0].uid).toEqual(phoneNumberCredential.id);
-        expect(presentations[1].identifier).toEqual('credential-cvc:Email-v1');
+        expect(presentations[1].identifier).toEqual('credential-cvc:Email-v3');
         expect(presentations[1].uid).toEqual(emailCredential.id);
 
     });
@@ -198,7 +198,7 @@ describe('VerifiablePresentationManager', () => {
         expect(claims).toHaveLength(
             phoneNumberCredential.proof.leaves.length + emailCredential.proof.leaves.length
         );
-        expect(claims[0].credentialRef.identifier).toEqual('credential-cvc:PhoneNumber-v1');
+        expect(claims[0].credentialRef.identifier).toEqual('credential-cvc:PhoneNumber-v3');
         expect(claims[0].identifier).toEqual('claim-cvc:Contact.phoneNumber-v1');
         expect(claims[0].claimPath).toEqual('contact.phoneNumber');
 
@@ -270,7 +270,7 @@ describe('VerifiablePresentationManager', () => {
         const claimValue = await presentationManager.getClaimValue(claims[0]);
 
         expect(claimValue).toBeDefined();
-        expect(JSON.stringify(phoneNumberCredential.claim)).toEqual(
+        expect(JSON.stringify(phoneNumberCredential.credentialSubject)).toEqual(
             expect.stringContaining(JSON.stringify(claimValue))
         );
 

@@ -47,7 +47,7 @@ describe('PIIFactory', () => {
           street: '1 Market St Suite 402',
         },
         evidenceProofs: [{
-          name: 'credential-cvc:IdDocument-v2',
+          name: 'credential-cvc:IdDocument-v3',
           proofs: {
             idDocumentFront: {
               algorithm: 'sha256',
@@ -75,7 +75,7 @@ describe('PIIFactory', () => {
         },
         evidenceProofs: [
           {
-            name: 'credential-cvc:IdDocument-v2',
+            name: 'credential-cvc:IdDocument-v3',
             proofs: {
               idDocumentFront: {
                 algorithm: 'sha256',
