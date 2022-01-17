@@ -3,10 +3,10 @@
     {
       "credentialItemRequest": {
         "requestIndex": 0,
-        "identifier": "credential-cvc:Email-v1",
+        "identifier": "credential-cvc:Email-v3",
         "constraints": {
           "meta": {
-            "credential": "credential-cvc:Email-v1",
+            "credential": "credential-cvc:Email-v3",
             "issuer": {
               "is": {
                 "$eq": "did:ethr:0x1a88a35421a4a0d3e13fe4e8ebcf18e9a249dc5a"
@@ -16,18 +16,19 @@
         }
       },
       "credential": {
-        "_id": "5d7fe0ff2dc363004e3fc8fc",
+        "@context": [
+          "https://www.w3.org/2018/credentials/v1",
+          "https://www.identity.com/credentials/v3"
+        ],
         "id": "16cf46c4-6c9d-4618-8de7-55a4367c7e6c",
+        "identifier": "credential-cvc:Email-v3",
         "issuer": "did:ethr:0x1a88a35421a4a0d3e13fe4e8ebcf18e9a249dc5a",
         "issuanceDate": "2019-09-16T19:22:39.987Z",
-        "identifier": "credential-cvc:Email-v1",
-        "expirationDate": null,
-        "version": "1",
         "type": [
-          "Credential",
-          "credential-cvc:Email-v1"
+          "VerifiableCredential",
+          "IdentityCredential"
         ],
-        "claim": {
+        "credentialSubject": {
           "contact": {
             "email": {
               "domain": {
@@ -184,19 +185,18 @@
                 }
               ]
             }
-          ]
-        },
-        "granted": null,
-        "deletedAt": -1
+          ],
+          "granted": null
+        }
       }
     },
     {
       "credentialItemRequest": {
         "requestIndex": 1,
-        "identifier": "credential-cvc:PhoneNumber-v1",
+        "identifier": "credential-cvc:PhoneNumber-v3",
         "constraints": {
           "meta": {
-            "credential": "credential-cvc:PhoneNumber-v1",
+            "credential": "credential-cvc:PhoneNumber-v3",
             "issuer": {
               "is": {
                 "$eq": "did:ethr:0x1a88a35421a4a0d3e13fe4e8ebcf18e9a249dc5a"
@@ -206,18 +206,19 @@
         }
       },
       "credential": {
-        "_id": "5d7fe15d474a30004f93e0c0",
+        "@context": [
+          "https://www.w3.org/2018/credentials/v1",
+          "https://www.identity.com/credentials/v3"
+        ],
         "id": "30754bf1-c028-4267-aef0-12b78f4a1128",
+        "identifier": "credential-cvc:PhoneNumber-v3",
         "issuer": "did:ethr:0x1a88a35421a4a0d3e13fe4e8ebcf18e9a249dc5a",
         "issuanceDate": "2019-09-16T19:24:13.590Z",
-        "identifier": "credential-cvc:PhoneNumber-v1",
-        "expirationDate": null,
-        "version": "1",
         "type": [
-          "Credential",
-          "credential-cvc:PhoneNumber-v1"
+          "VerifiableCredential",
+          "IdentityCredential"
         ],
-        "claim": {
+        "credentialSubject": {
           "contact": {
             "phoneNumber": {
               "country": "BR",
@@ -442,19 +443,18 @@
                 }
               ]
             }
-          ]
-        },
-        "granted": null,
-        "deletedAt": -1
+          ],
+          "granted": null
+        }
       }
     },
     {
       "credentialItemRequest": {
         "requestIndex": 2,
-        "identifier": "credential-cvc:IdDocument-v2",
+        "identifier": "credential-cvc:IdDocument-v3",
         "constraints": {
           "meta": {
-            "credential": "credential-cvc:IdDocument-v2",
+            "credential": "credential-cvc:IdDocument-v3",
             "issuer": {
               "is": {
                 "$eq": "did:ethr:0x1a88a35421a4a0d3e13fe4e8ebcf18e9a249dc5a"
@@ -464,18 +464,19 @@
         }
       },
       "credential": {
-        "_id": "5d9217734b0fcc004f2534b6",
+        "@context": [
+          "https://www.w3.org/2018/credentials/v1",
+          "https://www.identity.com/credentials/v3"
+        ],
         "id": "0f4596c5-f8fe-4d8e-a327-04d55a2780a4",
+        "identifier": "credential-cvc:IdDocument-v3",
         "issuer": "did:ethr:0x1a88a35421a4a0d3e13fe4e8ebcf18e9a249dc5a",
         "issuanceDate": "2019-09-30T14:55:47.257Z",
-        "identifier": "credential-cvc:IdDocument-v2",
-        "expirationDate": null,
-        "version": "1",
         "type": [
-          "Credential",
-          "credential-cvc:IdDocument-v2"
+          "VerifiableCredential",
+          "IdentityCredential"
         ],
-        "claim": {
+        "credentialSubject": {
           "document": {
             "evidences": {
               "idDocumentFront": {
@@ -859,22 +860,18 @@
                 }
               ]
             }
-          ]
-        },
-        "granted": "3045022100844dce9c5d719755cd4721598f060e49b2977ac244cd5b6dac604ef4c3beea1302206164f0f985d9a916290c5aa33b2167a24ae6aac3ec39409ad23113680b895da6",
-        "user_id": "03bf176a6a4e4841ec348a8007e655e2e746806576048fc1fe4ff2e8bc6351ecc2",
-        "createdAt": "2019-09-30T14:53:47.809Z",
-        "updatedAt": "2019-09-30T14:56:05.927Z",
-        "deletedAt": -1
+          ],
+          "granted": "3045022100844dce9c5d719755cd4721598f060e49b2977ac244cd5b6dac604ef4c3beea1302206164f0f985d9a916290c5aa33b2167a24ae6aac3ec39409ad23113680b895da6"
+        }
       }
     },
     {
       "credentialItemRequest": {
         "requestIndex": 3,
-        "identifier": "credential-cvc:UnverifiedSsn-v1",
+        "identifier": "credential-cvc:UnverifiedSsn-v3",
         "constraints": {
           "meta": {
-            "credential": "credential-cvc:UnverifiedSsn-v1",
+            "credential": "credential-cvc:UnverifiedSsn-v3",
             "issuer": {
               "is": {
                 "$eq": "did:ethr:0x1a88a35421a4a0d3e13fe4e8ebcf18e9a249dc5a"
@@ -884,19 +881,19 @@
         }
       },
       "credential": {
-        "_id": "5db42a6dc3c3860061cf87fb",
+        "@context": [
+          "https://www.w3.org/2018/credentials/v1",
+          "https://www.identity.com/credentials/v3"
+        ],
         "id": "b3a4af17-a881-4bbd-b52e-61f63f84a77e",
+        "identifier": "credential-cvc:UnverifiedSsn-v3",
         "issuer": "did:ethr:0x1a88a35421a4a0d3e13fe4e8ebcf18e9a249dc5a",
         "issuanceDate": "2019-10-26T11:13:49.288Z",
-        "identifier": "credential-cvc:UnverifiedSsn-v1",
-        "expirationDate": null,
-        "version": "1",
         "type": [
-          "Credential",
-          "credential-cvc:UnverifiedSsn-v1"
+          "VerifiableCredential",
+          "IdentityCredential"
         ],
-        "transient": true,
-        "claim": {
+        "credentialSubject": {
           "socialSecurity": {
             "number": {
               "areaNumber": "000",
@@ -1031,19 +1028,18 @@
                 }
               ]
             }
-          ]
-        },
-        "granted": "3045022100b0321713c5dc1b28e29e5b23d6b39679e56c704c54bd1126b8785ba4b0bf279602203cfde4dcc59beed93dd960d733e3a44e869fcbcb88f2a4ff2d719bead1bc89a9",
-        "deletedAt": -1
+          ],
+          "granted": "3045022100b0321713c5dc1b28e29e5b23d6b39679e56c704c54bd1126b8785ba4b0bf279602203cfde4dcc59beed93dd960d733e3a44e869fcbcb88f2a4ff2d719bead1bc89a9"
+        }
       }
     },
     {
       "credentialItemRequest": {
         "requestIndex": 4,
-        "identifier": "credential-cvc:UnverifiedAddress-v1",
+        "identifier": "credential-cvc:UnverifiedAddress-v3",
         "constraints": {
           "meta": {
-            "credential": "credential-cvc:UnverifiedAddress-v1",
+            "credential": "credential-cvc:UnverifiedAddress-v3",
             "issuer": {
               "is": {
                 "$eq": "did:ethr:0x1a88a35421a4a0d3e13fe4e8ebcf18e9a249dc5a"
@@ -1053,19 +1049,19 @@
         }
       },
       "credential": {
-        "_id": "5db36061c3c3860061cf87fa",
+        "@context": [
+          "https://www.w3.org/2018/credentials/v1",
+          "https://www.identity.com/credentials/v3"
+        ],
         "id": "eb883d4d-6517-4c8e-a363-62f3a7212b1c",
+        "identifier": "credential-cvc:UnverifiedAddress-v3",
         "issuer": "did:ethr:0x1a88a35421a4a0d3e13fe4e8ebcf18e9a249dc5a",
         "issuanceDate": "2019-10-25T20:51:45.594Z",
-        "identifier": "credential-cvc:UnverifiedAddress-v1",
-        "expirationDate": null,
-        "version": "1",
         "type": [
-          "Credential",
-          "credential-cvc:UnverifiedAddress-v1"
+          "VerifiableCredential",
+          "IdentityCredential"
         ],
-        "transient": true,
-        "claim": {
+        "credentialSubject": {
           "identity": {
             "address": {
               "city": "San Francisco",
@@ -1318,10 +1314,9 @@
                 }
               ]
             }
-          ]
-        },
-        "granted": "3045022100c065e1e404e05a508b0d9b16d0eeb6a7c1a70c6beecd4b02971963c116b5775302205d6b1e29e9c1b4eb31ad8d346ac224c1f29ffa81f61e263f4d00038137be2b2b",
-        "deletedAt": -1
+          ],
+          "granted": "3045022100c065e1e404e05a508b0d9b16d0eeb6a7c1a70c6beecd4b02971963c116b5775302205d6b1e29e9c1b4eb31ad8d346ac224c1f29ffa81f61e263f4d00038137be2b2b"
+        }
       },
       "requestStatus": [],
       "userId": "6e38a9572647f9ce2040caf901d844de97b32d0fcc4c1c340bd462e3556fb060"

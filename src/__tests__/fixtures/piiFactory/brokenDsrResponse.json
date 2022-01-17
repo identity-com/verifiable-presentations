@@ -16,19 +16,20 @@
         }
       },
       "credential": {
-        "_id": "5db36061c3c3860061cf87fa",
+        "@context": [
+          "https://www.w3.org/2018/credentials/v1",
+          "https://www.identity.com/credentials/v3"
+        ],
         "id": "eb883d4d-6517-4c8e-a363-62f3a7212b1c",
         "issuer": "did:ethr:0x1a88a35421a4a0d3e13fe4e8ebcf18e9a249dc5a",
         "issuanceDate": "2019-10-25T20:51:45.594Z",
-        "identifier": "credential-cvc:UnverifiedAddress-v1",
-        "expirationDate": null,
-        "version": "1",
+        "identifier": "credential-cvc:UnverifiedAddress-v3",
         "type": [
-          "Credential",
-          "credential-cvc:UnverifiedAddress-v1"
+          "VerifiableCredential",
+          "IdentityCredential"
         ],
         "transient": true,
-        "claim": {
+        "credentialSubject": {
           "identity": {
             "address": {
               "city": "San Francisco",
@@ -40,9 +41,9 @@
             }
           }
         },
-        "proof": null,
-        "granted": "3045022100c065e1e404e05a508b0d9b16d0eeb6a7c1a70c6beecd4b02971963c116b5775302205d6b1e29e9c1b4eb31ad8d346ac224c1f29ffa81f61e263f4d00038137be2b2b",
-        "deletedAt": -1
+        "proof": {
+          "granted": "3045022100c065e1e404e05a508b0d9b16d0eeb6a7c1a70c6beecd4b02971963c116b5775302205d6b1e29e9c1b4eb31ad8d346ac224c1f29ffa81f61e263f4d00038137be2b2b"
+        }
       },
       "requestStatus": [],
       "userId": "6e38a9572647f9ce2040caf901d844de97b32d0fcc4c1c340bd462e3556fb060"
