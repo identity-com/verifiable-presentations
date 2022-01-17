@@ -72,7 +72,7 @@ export interface Credential {
     /**
      * The expiration credential date
      */
-    expirationDate: string;
+    expirationDate?: string;
     /**
      * see [[CredentialProof]]
      */
@@ -80,5 +80,5 @@ export interface Credential {
     /**
      * Claim values (dynamic object)
      */
-    claim: any;
+    credentialSubject: any;
 }
