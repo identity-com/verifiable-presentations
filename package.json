@@ -54,7 +54,7 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
-    "@identity.com/credential-commons": "2.0.0-beta.5",
+    "@identity.com/credential-commons": "git+https://github.com/identity-com/credential-commons.git#feature/IDCOM-1428__did_compliant_verification",
     "@identity.com/dsr": "2.0.0-beta.0",
     "ramda": "^0.27.1",
     "sjcl": "^1.0.8",
