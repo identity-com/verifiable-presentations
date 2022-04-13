@@ -427,7 +427,7 @@ export class VerifiablePresentationManager {
      * @param presentationRef the managed presentation to verify
      * @param originalRequestDSR the original Dynamic Scope Request that receive the presentation as result
      */
-    wasGrantedForDSR(presentationRef: PresentationReference, originalRequestDSR: DSRJSON) {
+    async wasGrantedForDSR(presentationRef: PresentationReference, originalRequestDSR: DSRJSON) {
         // TODO verify that the DSR is valid and was not tampered
         const dsr = JSON.parse(originalRequestDSR);
         const requesterId = R.path('payload.requesterInfo.requesterId'.split('.'), dsr);

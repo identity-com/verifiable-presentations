@@ -688,7 +688,7 @@ describe('VerifiablePresentationManager', () => {
 
         const phoneCredential = presentations[0];
 
-        const wasGranted = presentationManager.wasGrantedForDSR(phoneCredential, JSON.stringify(idDocumentDSR));
+        const wasGranted = await presentationManager.wasGrantedForDSR(phoneCredential, JSON.stringify(idDocumentDSR));
         expect(wasGranted).toBeFalsy();
 
     });
@@ -702,7 +702,7 @@ describe('VerifiablePresentationManager', () => {
         const presentations = await presentationManager.listPresentations();
 
         const invalidDsr = '{}';
-        const wasGranted = presentationManager.wasGrantedForDSR(presentations[0], invalidDsr);
+        const wasGranted = await presentationManager.wasGrantedForDSR(presentations[0], invalidDsr);
         expect(wasGranted).toBeFalsy();
 
     });
