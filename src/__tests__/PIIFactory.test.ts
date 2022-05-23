@@ -105,7 +105,7 @@ describe('PIIFactory', () => {
     };
     const urlGeneratorFn = (evidenceName: string) => `https://<test cloud provider>/<unique Id>/${evidenceName}.json`;
 
-    it.skip('should return a generated DSR', async () => {
+    it('should return a generated DSR', async () => {
       const dsr = await piiFactory.generateDSR(eventsURL, idvDid, dsrResolver, urlGeneratorFn);
       const verificationResult = verifySignedRequestBody(dsr);
 
