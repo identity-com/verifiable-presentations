@@ -14,7 +14,7 @@ import { schemaLoader, CVCSchemaLoader } from '@identity.com/credential-commons'
 schemaLoader.addLoader(new CVCSchemaLoader());
 
 describe('Index', () => {
-    it.skip('should perform a validation on every operation with a secure redundant presentation manager', async () => {
+    it('should perform a validation on every operation with a secure redundant presentation manager', async () => {
         const artifacts = {
             presentations: [
                 phoneNumberCredential,
