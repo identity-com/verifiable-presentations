@@ -1,6 +1,6 @@
 {
   "name": "@identity.com/verifiable-presentations",
-  "version": "1.0.0-beta.0",
+  "version": "3.0.0",
   "description": "Utility Library to securely handle verifiable presentations",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -17,7 +17,6 @@
     "docs": "typedoc --out docs src && touch docs/.nojekyll",
     "prepare": "npm run build",
     "prepublish": "npm run build",
-    "prepublishOnly": "npm test && npm run lint",
     "preversion": "npm run lint",
     "version": "npm run format && git add -A src",
     "postversion": "git push && git push --tags",
@@ -54,8 +53,8 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
-    "@identity.com/credential-commons": "2.0.0-beta.5",
-    "@identity.com/dsr": "2.0.0-beta.0",
+    "@identity.com/credential-commons": "^3.0.0",
+    "@identity.com/dsr": "^3.0.0",
     "ramda": "^0.27.1",
     "sjcl": "^1.0.8",
     "uuid": "^8.3.0"

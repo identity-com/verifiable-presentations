@@ -1,4 +1,4 @@
-import { VC, schemaLoader } from '@identity.com/credential-commons';
+import { VCCompat as VC, schemaLoader } from '@identity.com/credential-commons';
 import { Credential, CredentialProof } from './Credential';
 
 export type VerifyFunction = (credentialProof : CredentialProof) => boolean;
@@ -45,7 +45,7 @@ export class PresentationVerifier {
      * @param requesterId - A request Id used to calculate the granted signature
      * @return true if verified, false otherwise.
      */
-    verifyGrant(credential : Credential, requesterId : string, requestId : string) {
+    async verifyGrant(credential : Credential, requesterId : string, requestId : string) {
         return VC.requesterGrantVerify(credential, requesterId, requestId);
     }
 }

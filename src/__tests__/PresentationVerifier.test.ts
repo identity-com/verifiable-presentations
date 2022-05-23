@@ -101,21 +101,21 @@ describe('PresentationVerifier', () => {
             expect(verified).toBeTruthy();
         });
 
-        it('should fail grant verification if the requesterId is not equal to the value in the original DSR', () => {
+        it('should fail grant verification if the requesterId is not equal to the value in the original DSR', async () => {
             const requesterId = idDocumentDSR.payload.requesterInfo.requesterId + 'extra-str';
             const requestId = idDocumentDSR.payload.id;
 
             const verifier = new PresentationVerifier();
-            const verified = verifier.verifyGrant(idDocumentCredential, requesterId, requestId);
+            const verified = await verifier.verifyGrant(idDocumentCredential, requesterId, requestId);
             expect(verified).toBeFalsy();
         });
 
-        it('should fail grant verification if the requestId is not equal to the value in the original DSR', () => {
+        it('should fail grant verification if the requestId is not equal to the value in the original DSR', async() => {
             const requesterId = idDocumentDSR.payload.requesterInfo.requesterId;
             const requestId = idDocumentDSR.payload.id + 'extra-str';
 
             const verifier = new PresentationVerifier();
-            const verified = verifier.verifyGrant(idDocumentCredential, requesterId, requestId);
+            const verified = await verifier.verifyGrant(idDocumentCredential, requesterId, requestId);
             expect(verified).toBeFalsy();
         });
     });
