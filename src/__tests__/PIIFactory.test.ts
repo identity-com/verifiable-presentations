@@ -66,8 +66,8 @@ describe('PIIFactory', () => {
       expect(formattedClaims).toEqual({
         first_name: 'Civic',
         last_name: 'User',
-        date_of_birth: '1900-1-1',
-        street: null,
+        date_of_birth: '1990-1-1',
+        street: null, // street is not a claim in the DSR response
       });
     });
 
