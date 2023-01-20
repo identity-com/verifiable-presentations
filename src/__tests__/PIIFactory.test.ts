@@ -4,6 +4,7 @@ import * as dsrResponse from './fixtures/piiFactory/userPIIFromDsrResponseUsCoun
 import * as dsrResponseWithTwoDocuments from './fixtures/piiFactory/userPIIFromDsrResponseUsCountryFrontAndBack.json';
 import * as brokenDsrResponse from './fixtures/piiFactory/brokenDsrResponse.json';
 import * as dsrRequest from './fixtures/piiFactory/dsrTemplate.json';
+import * as idDocumentV3DSR from './fixtures/piiFactory/idDocumentV3DSR.json';
 import { schemaLoader, CVCSchemaLoader } from '@identity.com/credential-commons';
 schemaLoader.addLoader(new CVCSchemaLoader());
 const { verifySignedRequestBody } = ScopeRequest;
@@ -55,6 +56,18 @@ describe('PIIFactory', () => {
             },
           },
         }],
+      });
+    });
+
+    it('should extract PII and evidenceProofs from a valid V3 DSR Response', async () => {
+      const dsrResponse = idDocumentV3DSR.components.identity.response;
+      const extractedPII = await piiFactory.extractPII(dsrResponse as unknown as DSRResponse);
+      const { formattedClaims } = extractedPII;
+      expect(formattedClaims).toEqual({
+        first_name: 'Civic',
+        last_name: 'User',
+        date_of_birth: '1900-1-1',
+        street: null,
       });
     });
 
