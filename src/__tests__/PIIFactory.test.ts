@@ -62,7 +62,7 @@ describe('PIIFactory', () => {
     it('should extract PII from a valid V3 DSR Response', async () => {
       const dsrResponse = idDocumentV3DSR.components.identity.response;
       const extractedPII = await piiFactory.extractPII(dsrResponse as unknown as DSRResponse);
-      const { formattedClaims, evidenceProofs } = extractedPII;
+      const { formattedClaims } = extractedPII;
       expect(formattedClaims).toEqual({
         first_name: 'Civic',
         last_name: 'User',
