@@ -80,5 +80,9 @@ export interface Credential {
     /**
      * Claim values (dynamic object)
      */
-    claim: any;
+    claim?: any;
+    /**
+     * Claim values (dynamic object)
+     */
+    credentialSubject?: any;
 }
