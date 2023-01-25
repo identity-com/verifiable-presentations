@@ -8,6 +8,8 @@
     "dist/**/*"
   ],
   "scripts": {
+    "audit-ci": "audit-ci --config audit-ci.json",
+    "audit:fix": "audit fix",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "lint": "tslint -p tsconfig.json",
     "lint:fix": "tslint -p tsconfig.json --fix",
@@ -40,13 +42,14 @@
   },
   "homepage": "https://github.com/identity-com/verifiable-presentations#readme",
   "devDependencies": {
-    "@types/jest": "^24.9.1",
-    "@types/node": "^12.12.31",
+    "@types/jest": "^27.0.0",
+    "@types/node": "^17.0.42",
     "@types/sjcl": "^1.0.29",
     "@types/uuid": "^8.0.0",
-    "jest": "^24.9.0",
+    "audit-ci": "^4.1.0",
+    "jest": "^27.0.0",
     "prettier": "^1.19.1",
-    "ts-jest": "^24.3.0",
+    "ts-jest": "^27.0.4",
     "tslint": "^5.20.1",
     "tslint-config-prettier": "^1.18.0",
     "typedoc": "^0.15.8",

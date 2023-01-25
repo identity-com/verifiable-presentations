@@ -2,7 +2,6 @@ import R from 'ramda';
 import { v4 as uuidv4 } from 'uuid';
 import { VerifiablePresentationManager, ClaimCriteriaMap, CredentialArtifacts, Evidence } from './VerifiablePresentationManager';
 import DsrResolver from '@identity.com/dsr';
-import { Interface } from 'readline';
 import { Credential } from './Credential';
 
 const { ScopeRequest } = DsrResolver;
