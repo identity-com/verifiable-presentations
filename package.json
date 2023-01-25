@@ -8,6 +8,8 @@
     "dist/**/*"
   ],
   "scripts": {
+    "audit-ci": "audit-ci --config audit-ci.json",
+    "audit:fix": "audit fix",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "lint": "tslint -p tsconfig.json",
     "lint:fix": "tslint -p tsconfig.json --fix",
@@ -44,6 +46,7 @@
     "@types/node": "^12.12.31",
     "@types/sjcl": "^1.0.29",
     "@types/uuid": "^8.0.0",
+    "audit-ci": "^4.1.0",
     "jest": "^24.9.0",
     "prettier": "^1.19.1",
     "ts-jest": "^24.3.0",
