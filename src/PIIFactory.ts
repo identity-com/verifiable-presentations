@@ -1,8 +1,7 @@
-import R from 'ramda';
+import * as R from 'ramda';
 import { v4 as uuidv4 } from 'uuid';
-import { VerifiablePresentationManager, ClaimCriteriaMap, CredentialArtifacts, Evidence } from './VerifiablePresentationManager';
+import { VerifiablePresentationManager, ClaimCriteriaMap, CredentialArtifacts } from './VerifiablePresentationManager';
 import DsrResolver from '@identity.com/dsr';
-import { Interface } from 'readline';
 import { Credential } from './Credential';
 
 const { ScopeRequest } = DsrResolver;
@@ -27,10 +26,6 @@ const evidenceProofsToDSRDocumentNames = (evidenceProofs: any = []) => R.pipe(
   R.flatten,
 )(evidenceProofs);
 
-interface RequestedDocument {
-  name?: string,
-  proofs?: object
-}
 /** returns the evidences document names from the provider DSR */
 const dsrRequestedDocuments = (dsrRequest: object) => Object.keys(R.pathOr([], ['payload', 'channels', 'evidences'], dsrRequest));
 /**
