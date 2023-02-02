@@ -1,0 +1,7 @@
+{
+    "low": true,
+    "package-manager": "auto",
+    "advisories": [],
+    "allowlist": [1085318, 1086450, 1085550],
+    "whitelist": []
+}

@@ -38,6 +38,7 @@ const getFlattenedPaths = (objToMatch: { [prop: string]: any }, pathPrepend: str
     }, objToMatch);
     return Array.from(new Set(R.flatten(R.values(localPathsObject)))) as string[]; // use a set to remove duplicates
 };
+
 /**
  * takes an array of paths delimited with a '.' and checks that all the paths of the objToMatch and the objToCheck are equal
  * @param {string[]} flattenedPaths paths in an object e.g. ['identifier', 'credential.id'...]
@@ -48,6 +49,16 @@ const getFlattenedPaths = (objToMatch: { [prop: string]: any }, pathPrepend: str
 const matchAllObjectKeys = (flattenedPaths: string[], objToMatch: { [prop: string]: any }) => (objToCheck: { [prop: string]: any }) => {
     return R.all(R.equals(true), flattenedPaths.map(R.split(NESTED_PATH_DELIMITER)).map(path => R.path(path, objToMatch) === R.path(path, objToCheck)));
 }
+
+
+/**
+ * return the credential subject for credentials in the old or new schema (v3).
+ * @param credential
+ * @returns {any} object containing the claim values
+ */
+const getCredentialSubject = (credential: Credential) => credential?.claim || credential?.credentialSubject;
+
+
 /**
  * Used to setup VerifiablePresentationManager global behavior
  */
@@ -236,6 +247,8 @@ export class VerifiablePresentationManager {
         this.verifier = new PresentationVerifier(verifyAnchor);
     }
 
+
+
     /**
      * Adds a set of Verifiable Presentations and Evidences to the manager control
      *
@@ -372,7 +385,9 @@ export class VerifiablePresentationManager {
      */
     async getClaimValue(availableClaim: AvailableClaim): Promise<any | null> {
         const presentation = this.getClaimPresentation(availableClaim);
-        if (!presentation || !presentation.claim) {
+
+        const credentialSubject = getCredentialSubject(presentation);
+        if (!presentation || !credentialSubject) {
             return null;
         }
 
@@ -384,7 +399,7 @@ export class VerifiablePresentationManager {
             return null;
         }
 
-        return R.path(availableClaim.claimPath.split('.'), presentation.claim);
+        return R.path(availableClaim.claimPath.split('.'), credentialSubject);
     }
 
     /**
@@ -495,8 +510,9 @@ export class VerifiablePresentationManager {
 
     private findEvidencePresentation(evidence: Evidence): Credential | undefined {
         return R.find((presentation: Credential) => {
-            const presentationClaims = JSON.stringify(presentation.claim);
-            return presentationClaims.includes(evidence.sha256);
+          const credentialSubject = getCredentialSubject(presentation);
+          const presentationClaims = JSON.stringify(credentialSubject);
+          return presentationClaims.includes(evidence.sha256);
         }, this.artifacts.presentations);
     }
 

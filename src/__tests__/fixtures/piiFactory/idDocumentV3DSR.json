@@ -1,0 +1,477 @@
+{
+  "uuid": "9195ecd4-b3d2-42a0-b116-31391a79a870",
+  "app": {
+   "id": "7SXjaG9TH",
+   "isTest": false,
+   "name": "OCIV Gatekeeper",
+   "partner": {
+    "description": "$name would like to access the following data on your identity",
+    "id": "HkNP6kJsZ",
+    "logo": "https://s3.us-east-2.amazonaws.com/preprod-integration-portal-app-logos/HkNP6kJsZ/1617966565-sol3.png",
+    "marketplaceFilter": 3,
+    "name": "Rick and Morty Inc",
+    "status": 2,
+    "url": "https://passv2-dev.civic.com"
+   },
+   "primaryColor": "A80B00",
+   "secondaryColor": "FFFFFF",
+   "type": "prod"
+  },
+  "components": {
+   "identity": {
+    "request": {
+     "algorithm": "ES256",
+     "payload": {
+      "authentication": true,
+      "channels": {
+       "eventsURL": "https://preprod.civic.com/sip/v3/scopeRequest/9195ecd4-b3d2-42a0-b116-31391a79a870",
+       "evidences": {
+        "idDocumentBack": {
+         "accepts": "application/json",
+         "method": "put",
+         "url": "https://preprod-civic-payload-service-payload-bucket.s3.us-east-2.amazonaws.com/9195ecd4-b3d2-42a0-b116-31391a79a870/idDocumentBack?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIATUH3F2PWNM2SQUQD%2F20230120%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20230120T011515Z&X-Amz-Expires=604800&X-Amz-Signature=ccb246d6534c5e668683da487bd732d5c532eab717f1310a579b6f05c1ca8225&X-Amz-SignedHeaders=host"
+        },
+        "idDocumentFront": {
+         "accepts": "application/json",
+         "method": "put",
+         "url": "https://preprod-civic-payload-service-payload-bucket.s3.us-east-2.amazonaws.com/9195ecd4-b3d2-42a0-b116-31391a79a870/idDocumentFront?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIATUH3F2PWNM2SQUQD%2F20230120%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20230120T011515Z&X-Amz-Expires=604800&X-Amz-Signature=8c728219005e8c237963cee4f1b3cb4753125536828dc7aa81e46648d1cdae19&X-Amz-SignedHeaders=host"
+        },
+        "selfie": {
+         "accepts": "application/json",
+         "method": "put",
+         "url": "https://preprod-civic-payload-service-payload-bucket.s3.us-east-2.amazonaws.com/9195ecd4-b3d2-42a0-b116-31391a79a870/selfie?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIATUH3F2PWNM2SQUQD%2F20230120%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20230120T011515Z&X-Amz-Expires=604800&X-Amz-Signature=cf3050aa319ebc477bb358d41dd7b89fe3314950b7829ba6c5aad4c412444adb&X-Amz-SignedHeaders=host"
+        }
+       }
+      },
+      "credentialItems": [
+       {
+        "constraints": {
+         "claims": [
+          {
+           "is": {
+            "$nin": [
+             "CUB",
+             "IRN",
+             "PRK",
+             "SDN",
+             "SSD",
+             "SYR",
+             "VEN",
+             "UKR",
+             "BLR",
+             "CHN"
+            ]
+           },
+           "path": "document.issueCountry"
+          }
+         ],
+         "meta": {
+          "credential": "credential-cvc:IdDocument-v3",
+          "issuer": {
+           "is": {
+            "$eq": "did:sol:devnet:LucJ727E7fJHTipyHwJCAHytRWcjLLTCtzuYcn4NBQV"
+           }
+          }
+         }
+        },
+        "credential": "credential-cvc:IdDocument-v3",
+        "identifier": "credential-cvc:IdDocument-v3",
+        "matchingBehaviour": "FAIL_ON_MISMATCH"
+       }
+      ],
+      "id": "9195ecd4-b3d2-42a0-b116-31391a79a870",
+      "mode": "ADVANCED",
+      "requesterInfo": {
+       "app": {
+        "description": "$name would like to access the following data on your identity",
+        "id": "7SXjaG9TH",
+        "logo": "https://s3.us-east-2.amazonaws.com/preprod-integration-portal-app-logos/HkNP6kJsZ/1617966565-sol3.png",
+        "name": "OCIV Gatekeeper",
+        "primaryColor": "A80B00",
+        "secondaryColor": "FFFFFF"
+       },
+       "requesterId": "4n7grFDSe"
+      },
+      "timestamp": "2023-01-20T01:15:16.309Z",
+      "version": "1"
+     },
+     "signature": "7c8b61a064305ab7a376e2a1774a92caa1e06009205177dfbdab15adfabc7cb1a6d91b6f8e20ffe81ab470b95c0b7b8301b640bdd720b99416a9fe3449f15fdf",
+     "template": {
+      "reference": "gatekeeperNileNetworkWithIdDocument-v3"
+     },
+     "xpub": "04378df3e480e626541daec66c4bbad532430d28e1ecb6b70a03313fc07fbad5c0d8b26410eac8f0b1a448898cbed9d714fd9cab2a8d1a7885bfbb48bd673da03c"
+    },
+    "response": {
+     "verifiableData": [
+      {
+       "credential": {
+        "@context": [
+         "https://www.w3.org/2018/credentials/v1",
+         "https://www.identity.com/credentials/v3"
+        ],
+        "credentialSubject": {
+         "document": {
+          "dateOfBirth": {
+           "day": 1,
+           "month": 1,
+           "year": 1990
+          },
+          "evidences": {
+           "idDocumentFront": {
+            "algorithm": "sha256",
+            "data": "393b94a003e52939b4d974097cf6a6160a1269295741c575c766a51fc3da50ab"
+           },
+           "selfie": {
+            "algorithm": "sha256",
+            "data": "77d8ad40d95cbd83acde6141b30688b381a1e21e51f32f4d10961b3389b10ab0"
+           }
+          },
+          "issueCountry": "GBR",
+          "name": {
+           "familyNames": "User",
+           "givenNames": "Civic"
+          },
+          "type": "passport"
+         },
+         "id": "did:sol:3a4NrCTzLfkKvyPEFijWPZxzhH6eQxqhKSCiam7jkuzv"
+        },
+        "id": "123141e9-0477-43dc-b533-b46ff8d7ca6e",
+        "identifier": "credential-cvc:IdDocument-v3",
+        "issuanceDate": "2023-01-20T01:18:39.147Z",
+        "issuer": "did:sol:tid652xmv91UHLW3HKnQSYMoNYko6FWd8sUEuYF5LPn",
+        "proof": {
+         "anchor": "TBD (Civic Blockchain Attestation)",
+         "granted": null,
+         "leaves": [
+          {
+           "claimPath": "document.type",
+           "identifier": "claim-cvc:Document.type-v1",
+           "node": [
+            {
+             "right": "68841e468ee9a94bf5f224bba9ba324f5c061f82fc97d4d0ad3ae4dfc408b131"
+            },
+            {
+             "right": "0d4eca547965309acebf31d8ffbb0e99a5bcb716f8404df7efa1765227a22fa4"
+            },
+            {
+             "right": "f5bbbd0cfce60b36e83ff1187d215e1b24d206c8cb842116e8225c23623179f5"
+            },
+            {
+             "right": "882b2f4cc6463b588f76bbd25e0c71baa96a9acde3116736d3c0e970482b8e4f"
+            },
+            {
+             "right": "cd79d2a1e7511530666ddfa47528ccbb05633b17f63a864d729b444c71f70e60"
+            }
+           ],
+           "targetHash": "333fbdf12e2270c557fae5128bf4a61198bcf7b299dd6631118d107ff0606ce7",
+           "value": "urn:type:c01333a2e20b51738962510384e4bc3186e7b7cbf3a91ad49df67461955cd907:passport|"
+          },
+          {
+           "claimPath": "document.name",
+           "identifier": "claim-cvc:Document.name-v1",
+           "node": [
+            {
+             "left": "333fbdf12e2270c557fae5128bf4a61198bcf7b299dd6631118d107ff0606ce7"
+            },
+            {
+             "right": "0d4eca547965309acebf31d8ffbb0e99a5bcb716f8404df7efa1765227a22fa4"
+            },
+            {
+             "right": "f5bbbd0cfce60b36e83ff1187d215e1b24d206c8cb842116e8225c23623179f5"
+            },
+            {
+             "right": "882b2f4cc6463b588f76bbd25e0c71baa96a9acde3116736d3c0e970482b8e4f"
+            },
+            {
+             "right": "cd79d2a1e7511530666ddfa47528ccbb05633b17f63a864d729b444c71f70e60"
+            }
+           ],
+           "targetHash": "68841e468ee9a94bf5f224bba9ba324f5c061f82fc97d4d0ad3ae4dfc408b131",
+           "value": "urn:name.familyNames:10589af321579e6fb3f608f15197e63d4576a384b2552bb3f666ff1c02907294:User|urn:name.givenNames:a4e3f13cc4f81beb48f5125311461f1dd65202262ca6683c78ef971ff59ed619:Civic|"
+          },
+          {
+           "claimPath": "document.name.givenNames",
+           "identifier": "claim-cvc:Name.givenNames-v1",
+           "node": [
+            {
+             "right": "9ed71ef586654dfa78f7fb8be899a79a319b41ac05bfc635272004d6e32b2aa3"
+            },
+            {
+             "left": "eafba2c5d280c187e162fdb02fce5fadadac412ebdfed9a80ef685f7bedb5fd4"
+            },
+            {
+             "right": "f5bbbd0cfce60b36e83ff1187d215e1b24d206c8cb842116e8225c23623179f5"
+            },
+            {
+             "right": "882b2f4cc6463b588f76bbd25e0c71baa96a9acde3116736d3c0e970482b8e4f"
+            },
+            {
+             "right": "cd79d2a1e7511530666ddfa47528ccbb05633b17f63a864d729b444c71f70e60"
+            }
+           ],
+           "targetHash": "0185dd97b7a3478ca135cb34b3f47a47fb5160a36152eda33cbc00844ea59c84",
+           "value": "urn:givenNames:a4e3f13cc4f81beb48f5125311461f1dd65202262ca6683c78ef971ff59ed619:Civic|"
+          },
+          {
+           "claimPath": "document.name.familyNames",
+           "identifier": "claim-cvc:Name.familyNames-v1",
+           "node": [
+            {
+             "left": "0185dd97b7a3478ca135cb34b3f47a47fb5160a36152eda33cbc00844ea59c84"
+            },
+            {
+             "left": "eafba2c5d280c187e162fdb02fce5fadadac412ebdfed9a80ef685f7bedb5fd4"
+            },
+            {
+             "right": "f5bbbd0cfce60b36e83ff1187d215e1b24d206c8cb842116e8225c23623179f5"
+            },
+            {
+             "right": "882b2f4cc6463b588f76bbd25e0c71baa96a9acde3116736d3c0e970482b8e4f"
+            },
+            {
+             "right": "cd79d2a1e7511530666ddfa47528ccbb05633b17f63a864d729b444c71f70e60"
+            }
+           ],
+           "targetHash": "9ed71ef586654dfa78f7fb8be899a79a319b41ac05bfc635272004d6e32b2aa3",
+           "value": "urn:familyNames:10589af321579e6fb3f608f15197e63d4576a384b2552bb3f666ff1c02907294:User|"
+          },
+          {
+           "claimPath": "document.dateOfBirth",
+           "identifier": "claim-cvc:Document.dateOfBirth-v1",
+           "node": [
+            {
+             "right": "85c8aacbe9c0c262be8912afd9381f4718750951038ba69465f223dc6ab4bb07"
+            },
+            {
+             "right": "fab9e648b8e8c4c4ea56f449fddf1cfef61248702c0150f5dad2d803d37b4885"
+            },
+            {
+             "left": "4f82466eb5baadc0c4130eab1c56414198d861403949d52e6de12fdd05ea36ac"
+            },
+            {
+             "right": "882b2f4cc6463b588f76bbd25e0c71baa96a9acde3116736d3c0e970482b8e4f"
+            },
+            {
+             "right": "cd79d2a1e7511530666ddfa47528ccbb05633b17f63a864d729b444c71f70e60"
+            }
+           ],
+           "targetHash": "9438bfbdc7079ed5aa65cc474b190b4c94124a645b0a63e7cd7d741e6f260b97",
+           "value": "urn:dateOfBirth.day:374d1bebab4f2ec2d99cc082a50ed2802382ae54c1ed86c5342fb50d2c4b1e07:1|urn:dateOfBirth.month:78bd26e9a5af993cd136ad874771028a44979cdef4c0686b2f69404c967acd00:1|urn:dateOfBirth.year:233471c6fba7fcfbac4176866b2db1978c39975a3cce927adf45e1a4affb99a1:1990|"
+          },
+          {
+           "claimPath": "document.issueCountry",
+           "identifier": "claim-cvc:Document.issueCountry-v1",
+           "node": [
+            {
+             "left": "9438bfbdc7079ed5aa65cc474b190b4c94124a645b0a63e7cd7d741e6f260b97"
+            },
+            {
+             "right": "fab9e648b8e8c4c4ea56f449fddf1cfef61248702c0150f5dad2d803d37b4885"
+            },
+            {
+             "left": "4f82466eb5baadc0c4130eab1c56414198d861403949d52e6de12fdd05ea36ac"
+            },
+            {
+             "right": "882b2f4cc6463b588f76bbd25e0c71baa96a9acde3116736d3c0e970482b8e4f"
+            },
+            {
+             "right": "cd79d2a1e7511530666ddfa47528ccbb05633b17f63a864d729b444c71f70e60"
+            }
+           ],
+           "targetHash": "85c8aacbe9c0c262be8912afd9381f4718750951038ba69465f223dc6ab4bb07",
+           "value": "urn:issueCountry:f2a2b3e5aa5311389e705882028bd1159baa5512b51bb403d69e5b7e6b4072e4:GBR|"
+          },
+          {
+           "claimPath": "document.evidences",
+           "identifier": "claim-cvc:Document.evidences-v1",
+           "node": [
+            {
+             "right": "298ddc2866697aba0908342bc33adacc73e4255d4a5820eb8dec597a25186585"
+            },
+            {
+             "left": "a7b5b34b1df5f32aec6e8f1d7aaa79cff168c015b7e8ffc7d06323cb57499530"
+            },
+            {
+             "left": "4f82466eb5baadc0c4130eab1c56414198d861403949d52e6de12fdd05ea36ac"
+            },
+            {
+             "right": "882b2f4cc6463b588f76bbd25e0c71baa96a9acde3116736d3c0e970482b8e4f"
+            },
+            {
+             "right": "cd79d2a1e7511530666ddfa47528ccbb05633b17f63a864d729b444c71f70e60"
+            }
+           ],
+           "targetHash": "22e97d5ec51f45bf699e90a89639d553cbc7feadd6c57a1e6c8fe6a37c0500bb",
+           "value": "urn:evidences.idDocumentFront.algorithm:d9673acb47b081e098c1d0b67f47cbff5b34ab947b37c6b3f63f3a966f010841:sha256|urn:evidences.idDocumentFront.data:60fb5e072f31bf93af7b925b66ae9d464905a7d699d2fbd2b9171b55d20b1e42:393b94a003e52939b4d974097cf6a6160a1269295741c575c766a51fc3da50ab|urn:evidences.selfie.algorithm:2575a743e4d94be8c39788df2ef297bb61542c0b6b53a603b267ea04f7e2c15d:sha256|urn:evidences.selfie.data:bc7f3aa11e75a4d03585d331f99249a42d4b3c87be07c296c352d34d92587412:77d8ad40d95cbd83acde6141b30688b381a1e21e51f32f4d10961b3389b10ab0|"
+          },
+          {
+           "claimPath": "document.evidences.validationEvidences.selfie",
+           "identifier": "claim-cvc:Validation:evidences.selfie-v1",
+           "node": [
+            {
+             "left": "22e97d5ec51f45bf699e90a89639d553cbc7feadd6c57a1e6c8fe6a37c0500bb"
+            },
+            {
+             "left": "a7b5b34b1df5f32aec6e8f1d7aaa79cff168c015b7e8ffc7d06323cb57499530"
+            },
+            {
+             "left": "4f82466eb5baadc0c4130eab1c56414198d861403949d52e6de12fdd05ea36ac"
+            },
+            {
+             "right": "882b2f4cc6463b588f76bbd25e0c71baa96a9acde3116736d3c0e970482b8e4f"
+            },
+            {
+             "right": "cd79d2a1e7511530666ddfa47528ccbb05633b17f63a864d729b444c71f70e60"
+            }
+           ],
+           "targetHash": "298ddc2866697aba0908342bc33adacc73e4255d4a5820eb8dec597a25186585",
+           "value": "urn:selfie.algorithm:2575a743e4d94be8c39788df2ef297bb61542c0b6b53a603b267ea04f7e2c15d:sha256|urn:selfie.data:bc7f3aa11e75a4d03585d331f99249a42d4b3c87be07c296c352d34d92587412:77d8ad40d95cbd83acde6141b30688b381a1e21e51f32f4d10961b3389b10ab0|"
+          },
+          {
+           "claimPath": "document.evidences.validationEvidences.idDocumentFront",
+           "identifier": "claim-cvc:Validation:evidences.idDocumentFront-v1",
+           "node": [
+            {
+             "right": "a9d861edee6c801f88258ee09291055a2bfa9a5270fd8e9bb2c6540cf83c6d0a"
+            },
+            {
+             "right": "c64de647dcf47ebd59589df05fb3931e69dbf2042960a183b27d7db8e5bc640a"
+            },
+            {
+             "right": "295482c0995a3aed2b35398b548d78d86502fcbcae6de37d1603045c8bfbce90"
+            },
+            {
+             "left": "2cf8e2366c0b7d16d5584bff599b69661650827037fc2be2fb04bdc942f056ff"
+            },
+            {
+             "right": "cd79d2a1e7511530666ddfa47528ccbb05633b17f63a864d729b444c71f70e60"
+            }
+           ],
+           "targetHash": "d9eb268dbefd3b22bd0fa97caeae933959a933d9e7b84663e57b8f8654577d56",
+           "value": "urn:idDocumentFront.algorithm:d9673acb47b081e098c1d0b67f47cbff5b34ab947b37c6b3f63f3a966f010841:sha256|urn:idDocumentFront.data:60fb5e072f31bf93af7b925b66ae9d464905a7d699d2fbd2b9171b55d20b1e42:393b94a003e52939b4d974097cf6a6160a1269295741c575c766a51fc3da50ab|"
+          },
+          {
+           "claimPath": "meta.issuer",
+           "identifier": "cvc:Meta:issuer",
+           "node": [
+            {
+             "left": "d9eb268dbefd3b22bd0fa97caeae933959a933d9e7b84663e57b8f8654577d56"
+            },
+            {
+             "right": "c64de647dcf47ebd59589df05fb3931e69dbf2042960a183b27d7db8e5bc640a"
+            },
+            {
+             "right": "295482c0995a3aed2b35398b548d78d86502fcbcae6de37d1603045c8bfbce90"
+            },
+            {
+             "left": "2cf8e2366c0b7d16d5584bff599b69661650827037fc2be2fb04bdc942f056ff"
+            },
+            {
+             "right": "cd79d2a1e7511530666ddfa47528ccbb05633b17f63a864d729b444c71f70e60"
+            }
+           ],
+           "targetHash": "a9d861edee6c801f88258ee09291055a2bfa9a5270fd8e9bb2c6540cf83c6d0a",
+           "value": "urn:issuer:dee3ff779a0030f7660a0b22e8b02b367115e042a97ec47218ce3493cdb6c49b:did:sol:tid652xmv91UHLW3HKnQSYMoNYko6FWd8sUEuYF5LPn|"
+          },
+          {
+           "claimPath": "meta.issuanceDate",
+           "identifier": "cvc:Meta:issuanceDate",
+           "node": [
+            {
+             "right": "943035a062c80be627f13a46a0d4b485202c529e9a88a7dc1c4c69b26e37c1d1"
+            },
+            {
+             "left": "53f9f5f4d0175acfbbb029e8b34e5450fd4daaba00c5be8a5bd1cf965567ad0c"
+            },
+            {
+             "right": "295482c0995a3aed2b35398b548d78d86502fcbcae6de37d1603045c8bfbce90"
+            },
+            {
+             "left": "2cf8e2366c0b7d16d5584bff599b69661650827037fc2be2fb04bdc942f056ff"
+            },
+            {
+             "right": "cd79d2a1e7511530666ddfa47528ccbb05633b17f63a864d729b444c71f70e60"
+            }
+           ],
+           "targetHash": "ac86914c2cc207431d1780238f5d10be7cda73768c20b821e7ee5e1cc26b2ee2",
+           "value": "urn:issuanceDate:ff0ceb3505cf3bb3078ea2058a8946ca6cf8b6e8d22055b6ef75b95585739ad6:2023-01-20T01:18:39.147Z|"
+          },
+          {
+           "claimPath": "meta.expirationDate",
+           "identifier": "cvc:Meta:expirationDate",
+           "node": [
+            {
+             "left": "ac86914c2cc207431d1780238f5d10be7cda73768c20b821e7ee5e1cc26b2ee2"
+            },
+            {
+             "left": "53f9f5f4d0175acfbbb029e8b34e5450fd4daaba00c5be8a5bd1cf965567ad0c"
+            },
+            {
+             "right": "295482c0995a3aed2b35398b548d78d86502fcbcae6de37d1603045c8bfbce90"
+            },
+            {
+             "left": "2cf8e2366c0b7d16d5584bff599b69661650827037fc2be2fb04bdc942f056ff"
+            },
+            {
+             "right": "cd79d2a1e7511530666ddfa47528ccbb05633b17f63a864d729b444c71f70e60"
+            }
+           ],
+           "targetHash": "943035a062c80be627f13a46a0d4b485202c529e9a88a7dc1c4c69b26e37c1d1",
+           "value": "urn:expirationDate:f3c00c11977ca759a466cbe69f13f4871736651016a531b8c7712dc061e5092f:null|"
+          }
+         ],
+         "merkleRoot": "5782e587780964f43bd72514569319af8ac229c916b4a6405792a8e176c47528",
+         "merkleRootSignature": {
+          "signature": "a84e2fa036bcdeb06e8f2182455040a5f359d7786c86847ec7054f6adf65796c1da4f314715cc5f6a47e004a892e4c5bc3432094f7d7772cc6244bc2f8644b07",
+          "verificationMethod": "did:sol:tid652xmv91UHLW3HKnQSYMoNYko6FWd8sUEuYF5LPn#default"
+         },
+         "type": "CvcMerkleProof2018"
+        },
+        "type": [
+         "VerifiableCredential",
+         "IdentityCredential"
+        ]
+       }
+      }
+     ]
+    },
+    "result": {
+     "status": "verified"
+    }
+   }
+  },
+  "created": 1674177316.644,
+  "expires": 1674263717,
+  "externalId": "CPASS_c14587be-79c7-4d86-9aac-ac88801da436",
+  "links": [
+   {
+    "href": "https://preprod.civic.com/sip/v3/scopeRequest/9195ecd4-b3d2-42a0-b116-31391a79a870",
+    "rel": "self"
+   },
+   {
+    "href": "https://preprod.civic.com/sip/v3/scopeRequest/9195ecd4-b3d2-42a0-b116-31391a79a870/status",
+    "rel": "status"
+   },
+   {
+    "href": "https://preprod.civic.com/sip/v3/scopeRequest/9195ecd4-b3d2-42a0-b116-31391a79a870/component/identity",
+    "method": "PATCH",
+    "rel": "component/identity"
+   }
+  ],
+  "status": "verification-success",
+  "timeout": 86400,
+  "updated": 1674177537.476,
+  "validation": {
+   "jwtToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NksifQ.eyJqdGkiOiIxNTRkZjUxYi1mMDUzLTQ3MTUtYTQ4Yy02MGRiZTc1NGM3NjAiLCJpYXQiOjE2NzQxNzczMTYuNTY1LCJleHAiOjE2NzQxNzkxMTYuNTY1LCJpc3MiOiJjaXZpYy1zaXAtcGFydG5lci1zZXJ2aWNlIiwiYXVkIjoiaHR0cHM6Ly9hcGkuY2l2aWMuY29tL3NpcC8iLCJzdWIiOiI3U1hqYUc5VEgiLCJkYXRhIjp7ImV4dGVybmFsSWQiOiJDUEFTU19jMTQ1ODdiZS03OWM3LTRkODYtOWFhYy1hYzg4ODAxZGE0MzYiLCJ2ZXJzaW9uIjp7ImFuZHJvaWQiOnsiYXBwIjoiPj0xLjEuNyJ9LCJpb3MiOnsiYXBwIjoiPj0xLjMwLjAifX0sInV1aWQiOiI5MTk1ZWNkNC1iM2QyLTQyYTAtYjExNi0zMTM5MWE3OWE4NzAiLCJzdGF0dXMiOiJhd2FpdGluZy11c2VyIiwiZXhwaXJlcyI6MTY3NDI2MzcxNywiYXBwIjp7ImlkIjoiN1NYamFHOVRIIiwicGFydG5lciI6eyJpZCI6IkhrTlA2a0pzWiIsInVybCI6Imh0dHBzOi8vcGFzc3YyLWRldi5jaXZpYy5jb20iLCJzdGF0dXMiOjIsImxvZ28iOiJodHRwczovL3MzLnVzLWVhc3QtMi5hbWF6b25hd3MuY29tL3ByZXByb2QtaW50ZWdyYXRpb24tcG9ydGFsLWFwcC1sb2dvcy9Ia05QNmtKc1ovMTYxNzk2NjU2NS1zb2wzLnBuZyIsIm5hbWUiOiJSaWNrIGFuZCBNb3J0eSBJbmMiLCJkZXNjcmlwdGlvbiI6IiRuYW1lIHdvdWxkIGxpa2UgdG8gYWNjZXNzIHRoZSBmb2xsb3dpbmcgZGF0YSBvbiB5b3VyIGlkZW50aXR5IiwibWFya2V0cGxhY2VGaWx0ZXIiOjN9LCJuYW1lIjoiT0NJViBHYXRla2VlcGVyIiwidHlwZSI6InByb2QiLCJwcmltYXJ5Q29sb3IiOiJBODBCMDAiLCJzZWNvbmRhcnlDb2xvciI6IkZGRkZGRiIsImlzVGVzdCI6ZmFsc2V9LCJsaW5rcyI6W3sicmVsIjoic2VsZiIsImhyZWYiOiJodHRwczovL3ByZXByb2QuY2l2aWMuY29tL3NpcC92My9zY29wZVJlcXVlc3QvOTE5NWVjZDQtYjNkMi00MmEwLWIxMTYtMzEzOTFhNzlhODcwIn0seyJyZWwiOiJzdGF0dXMiLCJocmVmIjoiaHR0cHM6Ly9wcmVwcm9kLmNpdmljLmNvbS9zaXAvdjMvc2NvcGVSZXF1ZXN0LzkxOTVlY2Q0LWIzZDItNDJhMC1iMTE2LTMxMzkxYTc5YTg3MC9zdGF0dXMifSx7InJlbCI6ImNvbXBvbmVudC9pZGVudGl0eSIsImhyZWYiOiJodHRwczovL3ByZXByb2QuY2l2aWMuY29tL3NpcC92My9zY29wZVJlcXVlc3QvOTE5NWVjZDQtYjNkMi00MmEwLWIxMTYtMzEzOTFhNzlhODcwL2NvbXBvbmVudC9pZGVudGl0eSIsIm1ldGhvZCI6IlBBVENIIn1dLCJjb21wb25lbnRzIjp7ImlkZW50aXR5Ijp7InJlcXVlc3QiOnsidGVtcGxhdGUiOnsicmVmZXJlbmNlIjoiZ2F0ZWtlZXBlck5pbGVOZXR3b3JrV2l0aElkRG9jdW1lbnQtdjMifSwicGF5bG9hZCI6eyJ2ZXJzaW9uIjoiMSIsImlkIjoiOTE5NWVjZDQtYjNkMi00MmEwLWIxMTYtMzEzOTFhNzlhODcwIiwicmVxdWVzdGVySW5mbyI6eyJhcHAiOnsiaWQiOiI3U1hqYUc5VEgiLCJuYW1lIjoiT0NJViBHYXRla2VlcGVyIiwibG9nbyI6Imh0dHBzOi8vczMudXMtZWFzdC0yLmFtYXpvbmF3cy5jb20vcHJlcHJvZC1pbnRlZ3JhdGlvbi1wb3J0YWwtYXBwLWxvZ29zL0hrTlA2a0pzWi8xNjE3OTY2NTY1LXNvbDMucG5nIiwiZGVzY3JpcHRpb24iOiIkbmFtZSB3b3VsZCBsaWtlIHRvIGFjY2VzcyB0aGUgZm9sbG93aW5nIGRhdGEgb24geW91ciBpZGVudGl0eSIsInByaW1hcnlDb2xvciI6IkE4MEIwMCIsInNlY29uZGFyeUNvbG9yIjoiRkZGRkZGIn0sInJlcXVlc3RlcklkIjoiNG43Z3JGRFNlIn0sImF1dGhlbnRpY2F0aW9uIjp0cnVlLCJ0aW1lc3RhbXAiOiIyMDIzLTAxLTIwVDAxOjE1OjE2LjMwOVoiLCJjcmVkZW50aWFsSXRlbXMiOlt7ImNyZWRlbnRpYWwiOiJjcmVkZW50aWFsLWN2YzpJZERvY3VtZW50LXYzIiwiaWRlbnRpZmllciI6ImNyZWRlbnRpYWwtY3ZjOklkRG9jdW1lbnQtdjMiLCJtYXRjaGluZ0JlaGF2aW91ciI6IkZBSUxfT05fTUlTTUFUQ0giLCJjb25zdHJhaW50cyI6eyJtZXRhIjp7ImNyZWRlbnRpYWwiOiJjcmVkZW50aWFsLWN2YzpJZERvY3VtZW50LXYzIiwiaXNzdWVyIjp7ImlzIjp7IiRlcSI6ImRpZDpzb2w6ZGV2bmV0Okx1Y0o3MjdFN2ZKSFRpcHlId0pDQUh5dFJXY2pMTFRDdHp1WWNuNE5CUVYifX19LCJjbGFpbXMiOlt7InBhdGgiOiJkb2N1bWVudC5pc3N1ZUNvdW50cnkiLCJpcyI6eyIkbmluIjpbIkNVQiIsIklSTiIsIlBSSyIsIlNETiIsIlNTRCIsIlNZUiIsIlZFTiIsIlVLUiIsIkJMUiIsIkNITiJdfX1dfX1dLCJjaGFubmVscyI6eyJldmVudHNVUkwiOiJodHRwczovL3ByZXByb2QuY2l2aWMuY29tL3NpcC92My9zY29wZVJlcXVlc3QvOTE5NWVjZDQtYjNkMi00MmEwLWIxMTYtMzEzOTFhNzlhODcwIiwiZXZpZGVuY2VzIjp7ImlkRG9jdW1lbnRGcm9udCI6eyJhY2NlcHRzIjoiYXBwbGljYXRpb24vanNvbiIsIm1ldGhvZCI6InB1dCIsInVybCI6Imh0dHBzOi8vcHJlcHJvZC1jaXZpYy1wYXlsb2FkLXNlcnZpY2UtcGF5bG9hZC1idWNrZXQuczMudXMtZWFzdC0yLmFtYXpvbmF3cy5jb20vOTE5NWVjZDQtYjNkMi00MmEwLWIxMTYtMzEzOTFhNzlhODcwL2lkRG9jdW1lbnRGcm9udD9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFUVUgzRjJQV05NMlNRVVFEJTJGMjAyMzAxMjAlMkZ1cy1lYXN0LTIlMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjMwMTIwVDAxMTUxNVomWC1BbXotRXhwaXJlcz02MDQ4MDAmWC1BbXotU2lnbmF0dXJlPThjNzI4MjE5MDA1ZThjMjM3OTYzY2VlNGYxYjNjYjQ3NTMxMjU1MzY4MjhkYzdhYTgxZTQ2NjQ4ZDFjZGFlMTkmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0sImlkRG9jdW1lbnRCYWNrIjp7ImFjY2VwdHMiOiJhcHBsaWNhdGlvbi9qc29uIiwibWV0aG9kIjoicHV0IiwidXJsIjoiaHR0cHM6Ly9wcmVwcm9kLWNpdmljLXBheWxvYWQtc2VydmljZS1wYXlsb2FkLWJ1Y2tldC5zMy51cy1lYXN0LTIuYW1hem9uYXdzLmNvbS85MTk1ZWNkNC1iM2QyLTQyYTAtYjExNi0zMTM5MWE3OWE4NzAvaWREb2N1bWVudEJhY2s_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVFVIM0YyUFdOTTJTUVVRRCUyRjIwMjMwMTIwJTJGdXMtZWFzdC0yJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDIzMDEyMFQwMTE1MTVaJlgtQW16LUV4cGlyZXM9NjA0ODAwJlgtQW16LVNpZ25hdHVyZT1jY2IyNDZkNjUzNGM1ZTY2ODY4M2RhNDg3YmQ3MzJkNWM1MzJlYWI3MTdmMTMxMGE1NzliNmYwNWMxY2E4MjI1JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9LCJzZWxmaWUiOnsiYWNjZXB0cyI6ImFwcGxpY2F0aW9uL2pzb24iLCJtZXRob2QiOiJwdXQiLCJ1cmwiOiJodHRwczovL3ByZXByb2QtY2l2aWMtcGF5bG9hZC1zZXJ2aWNlLXBheWxvYWQtYnVja2V0LnMzLnVzLWVhc3QtMi5hbWF6b25hd3MuY29tLzkxOTVlY2Q0LWIzZDItNDJhMC1iMTE2LTMxMzkxYTc5YTg3MC9zZWxmaWU_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVFVIM0YyUFdOTTJTUVVRRCUyRjIwMjMwMTIwJTJGdXMtZWFzdC0yJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDIzMDEyMFQwMTE1MTVaJlgtQW16LUV4cGlyZXM9NjA0ODAwJlgtQW16LVNpZ25hdHVyZT1jZjMwNTBhYTMxOWViYzQ3N2JiMzU4ZDQxZGQ3Yjg5ZmUzMzE0OTUwYjc4MjliYTZjNWFhZDRjNDEyNDQ0YWRiJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9fX0sIm1vZGUiOiJBRFZBTkNFRCJ9LCJzaWduYXR1cmUiOiI3YzhiNjFhMDY0MzA1YWI3YTM3NmUyYTE3NzRhOTJjYWExZTA2MDA5MjA1MTc3ZGZiZGFiMTVhZGZhYmM3Y2IxYTZkOTFiNmY4ZTIwZmZlODFhYjQ3MGI5NWMwYjdiODMwMWI2NDBiZGQ3MjBiOTk0MTZhOWZlMzQ0OWYxNWZkZiIsImFsZ29yaXRobSI6IkVTMjU2IiwieHB1YiI6IjA0Mzc4ZGYzZTQ4MGU2MjY1NDFkYWVjNjZjNGJiYWQ1MzI0MzBkMjhlMWVjYjZiNzBhMDMzMTNmYzA3ZmJhZDVjMGQ4YjI2NDEwZWFjOGYwYjFhNDQ4ODk4Y2JlZDlkNzE0ZmQ5Y2FiMmE4ZDFhNzg4NWJmYmI0OGJkNjczZGEwM2MifSwicmVzdWx0Ijp7InN0YXR1cyI6InBlbmRpbmcifX19LCJ3YWxsZXQiOiIzYTROckNUekxma0t2eVBFRmlqV1BaeHpoSDZlUXhxaEtTQ2lhbTdqa3V6diIsInRpbWVvdXQiOjg2NDAwfX0.B5bUhx5F8XbRA6nB1RU7hYghtRu3rm5dq1LJTyUDCFLzpQkYR9B8kPEiAqp3SVBhfubSK2haeCIOuLPWFqn6HQ",
+   "method": "jwtToken"
+  },
+  "version": {
+   "android": {
+    "app": ">=1.1.7"
+   },
+   "ios": {
+    "app": ">=1.30.0"
+   }
+  },
+  "wallet": "3a4NrCTzLfkKvyPEFijWPZxzhH6eQxqhKSCiam7jkuzv"
+ }
