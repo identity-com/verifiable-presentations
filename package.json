@@ -1,6 +1,6 @@
 {
   "name": "@identity.com/verifiable-presentations",
-  "version": "3.0.2",
+  "version": "3.0.3-alpha.0",
   "description": "Utility Library to securely handle verifiable presentations",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
