@@ -1,5 +1,5 @@
 import * as sjcl from 'sjcl';
-import R from 'ramda';
+import * as R from 'ramda';
 import {
     ClaimIdentifier,
     CredentialIdentifier,

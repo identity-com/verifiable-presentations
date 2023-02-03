@@ -72,7 +72,7 @@ export interface Credential {
     /**
      * The expiration credential date
      */
-    expirationDate: string;
+    expirationDate?: string;
     /**
      * see [[CredentialProof]]
      */
